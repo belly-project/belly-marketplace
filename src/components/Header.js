@@ -3,18 +3,16 @@ import React, { useState } from "react";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { useContractsContext } from "../context/ContractProvider";
+import { ethers } from "ethers";
+import { actionTypes } from "../context/reducer";
+import Web3Modal from "web3modal";
 
 const NavbarContainer = styled(Paper)(({ theme }) => ({
   height: "10vh",
   width: "87vw",
-  position: "fixed",
-  margin: "auto",
-  top: 10,
-  left: "12vw",
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "space-between",
   backgroundColor: "#0D1117",
   border: "1px solid gray",
 }));
@@ -41,12 +39,36 @@ const NavbarOptionsContainer = styled(Container)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+  const [{ wallet }, dispatch] = useContractsContext();
+
+  const connectToWallet = async () => {
+    const web3Modal = new Web3Modal();
+    const instance = await web3Modal.connect();
+    const prov = new ethers.providers.Web3Provider(instance);
+    const signer = prov.getSigner();
+
+    const _wallet = await signer.getAddress();
+
+    console.log(_wallet);
+    dispatch({
+      type: actionTypes.SET_WALLET,
+      signer: signer,
+      provider: prov,
+      wallet: _wallet,
+    });
+  };
   return (
     <NavbarContainer elevation={2}>
-      <NavbarLogoContainer>
-        <NavbarNavigationContainer spacing={2}></NavbarNavigationContainer>
-      </NavbarLogoContainer>
-      <NavbarOptionsContainer></NavbarOptionsContainer>
+      {wallet !== "" ? (
+        <Button variant="contained">
+          {wallet.substring(0, 6)}...
+          {wallet.substring(wallet.length - 6, wallet.lenght)}
+        </Button>
+      ) : (
+        <Button variant="contained" onClick={() => connectToWallet()}>
+          Connect Wallet
+        </Button>
+      )}
     </NavbarContainer>
   );
 }

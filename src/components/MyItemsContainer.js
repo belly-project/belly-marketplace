@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useContractsContext } from "../context/ContractProvider";
 
 import MarketItems from "./MarketItems";
+import MyItems from "./MyItems";
 
 const MarketplaceContainer = styled(Paper)(() => ({
   display: "flex",
@@ -13,11 +14,11 @@ const MarketplaceContainer = styled(Paper)(() => ({
   border: "1px solid gray",
 }));
 
-export default function MarketPlaceContainer() {
+export default function MyItemsContainer() {
   return (
     <MarketplaceContainer elevation={2}>
-      <h1>Market Items</h1>
-      <MarketItems />
+      <h1>My Items</h1>
+      <MyItems />
     </MarketplaceContainer>
   );
 }
