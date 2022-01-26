@@ -1,16 +1,15 @@
 import "./App.css";
-import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Header";
-import MarketPlaceContainer from "./components/MarketplaceBody";
 import { formatEther } from "ethers/lib/utils";
 import { actionTypes } from "./context/reducer";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useContractsContext } from "./context/ContractProvider";
 import Web3Modal from "web3modal";
-import MyItemsContainer from "./components/MyItemsContainer";
 import { Stack } from "@mui/material";
 import { ethers } from "ethers";
+import Filters from "./components/Filters";
+import MarketContainer from "./components/MarketContainer";
 
 const fetchURI = async (item) => {
   const tokenURI = item[2];
@@ -108,15 +107,11 @@ function App() {
 
   return (
     <div className="App">
-      <Stack spacing={1} direction={"row"}>
-        <Sidebar />
-
-        <Stack spacing={2} direction={"column"}>
-          <Navbar />
-          <MarketPlaceContainer />
-          <MyItemsContainer />
-        </Stack>
-      </Stack>
+      <Navbar />
+      <div className="flex flex-column">
+        <Filters />
+        <MarketContainer />
+      </div>
     </div>
   );
 }
