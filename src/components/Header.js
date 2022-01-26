@@ -20,7 +20,6 @@ export default function Navbar() {
 
     const _wallet = await signer.getAddress();
 
-    console.log(_wallet);
     dispatch({
       type: actionTypes.SET_WALLET,
       signer: signer,

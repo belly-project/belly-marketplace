@@ -11,7 +11,7 @@ export default function WalletButton({ wallet, connectToWallet }) {
           style={{ pointerEvents: "none", cursor: "default" }}
         >
           <a
-            href="/profile"
+            href="/profile/inventory"
             className="flex items-center"
             style={{ pointerEvents: "auto", cursor: "pointer" }}
             disabled

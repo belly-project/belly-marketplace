@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react";
 import axios from "axios";
-import { formatEther } from "ethers/lib/utils";
+import { formatEther, parseEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContractsContext } from "../../context/ContractProvider";
 
 const fetchURI = async (item) => {
@@ -29,24 +29,75 @@ const fetchURI = async (item) => {
 
 export default function ItemPageContainer() {
   const [token, setToken] = useState({});
-  const [{ bellyERC721Contract, wallet }] = useContractsContext();
+  const [isOwner, setIsOwner] = useState(false);
+  const [{ bellyERC721Contract, bellyERC20Contract, wallet }] =
+    useContractsContext();
+  let location = useLocation();
   let { tokenId } = useParams();
+  let navigate = useNavigate();
 
   const fetchTokenData = useCallback(async () => {
-    const _response = await bellyERC721Contract.cryptoCardsForSale(tokenId);
+    let _response;
+    if (location.pathname.includes("profile/inventory")) {
+      _response = await bellyERC721Contract.allCryptoCards(tokenId);
+      if (_response[4] !== wallet) {
+        return 0;
+      }
+      setIsOwner(true);
+    } else {
+      _response = await bellyERC721Contract.cryptoCardsForSale(tokenId);
+    }
+
     let formattedItem = [];
     formattedItem = await fetchURI(_response);
 
     return formattedItem;
-  }, [bellyERC721Contract, tokenId]);
+  }, [bellyERC721Contract, location.pathname, tokenId, wallet]);
+
+  const buyToken = async () => {
+    const _approveTransaction = await bellyERC20Contract.approve(
+      bellyERC721Contract.address,
+      parseEther("20")
+    );
+
+    let tx = await _approveTransaction.wait();
+
+    console.log(tx);
+
+    const _buyTokenTransaction = await bellyERC721Contract.buyToken(
+      wallet,
+      bellyERC20Contract.address,
+      token.tokenId,
+      parseEther("20")
+    );
+
+    tx = await _buyTokenTransaction.wait();
+
+    console.log(tx);
+    navigate("/profile/inventory");
+  };
+
+  const putItemforSale = async () => {
+    const transcation = await bellyERC721Contract.toggleForSale(token.tokenId);
+
+    const tx = await transcation.wait();
+
+    console.log(tx);
+
+    navigate("/profile/inventory");
+  };
 
   useEffect(() => {
-    if (wallet !== "") {
+    if (wallet !== "" && !token.owner) {
       fetchTokenData().then((res) => {
-        setToken(res);
+        if (res !== 0) {
+          setToken(res);
+        } else {
+          navigate("/");
+        }
       });
     }
-  }, [fetchTokenData, wallet]);
+  }, [fetchTokenData, location.pathname, navigate, token, wallet]);
   return (
     <div className="mt-20 pb-20 sm:pb-32">
       <div className="mx-auto px-16 flex justify-center">
@@ -90,16 +141,25 @@ export default function ItemPageContainer() {
                   Auction info
                 </div>
               </div>
-              <div className="ml-24 text-right">
-                <h3 className="break-all">Ξ&nbsp;{token.price}</h3>
-                <h5 className="mt-4 text-gray-1 break-all">${token.price}</h5>
-              </div>
+              {!isOwner ? (
+                <div className="ml-24 text-right">
+                  <h3 className="break-all">Ξ&nbsp;{token.price}</h3>
+                  <h5 className="mt-4 text-gray-1 break-all">${token.price}</h5>
+                </div>
+              ) : (
+                <div className="ml-24 text-right">
+                  <h3 className="break-all">You're the owner</h3>
+                </div>
+              )}
               <div className="ml-0 md:ml-8 mt-7 w-full md:w-auto md:mt-0">
                 <div className="inline-block">
-                  <button className="px-4 py-4 relative rounded transition  border  border-[#3a3f50] text-gray-2">
+                  <button
+                    onClick={() => putItemforSale()}
+                    className="px-4 py-4 relative rounded transition  border  border-[#3a3f50] text-gray-2"
+                  >
                     <div className="flex items-center">
                       <Icon icon="logos:metamask-icon" color="white" />
-                      <div className="ml-2">Buy now</div>
+                      <div className="ml-2">Sell token</div>
                     </div>
                   </button>
                 </div>
@@ -137,12 +197,8 @@ export default function ItemPageContainer() {
                 </div>
                 <a href="/profile/ronin:afa8f8e86ea206a20626153eb21a96de628e10e9/axie/">
                   <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
-                    <h5 className="mr-2 hover:text-primary-3 font-semibold truncate">
-                      Luna #4
-                    </h5>
-                    <small className="text-gray-2 truncate">
-                      (ronin:afa8f8e86ea206a20626153eb21a96de628e10e9)
-                    </small>
+                    ({token.owner})
+                    <small className="text-gray-2 truncate"></small>
                   </div>
                 </a>
               </div>

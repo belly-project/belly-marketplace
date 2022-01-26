@@ -24,7 +24,8 @@ export const initialState = {
 export const actionTypes = {
   SET_USER: "SET_USER",
   SET_MARKET_ITEMS: "SET_MARKET_ITEMS",
-  SET_WALLET: "SET_MY_ITEMS",
+  SET_WALLET: "SET_WALLET",
+  SET_MY_ITEMS: "SET_MY_ITEMS",
 };
 
 const getContract = (type, signer) => {

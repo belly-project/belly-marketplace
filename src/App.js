@@ -52,7 +52,12 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="loot" element={<CratesContainer />} />
-          <Route path="profile" element={<ProfileContainer />} />
+          <Route path="profile/inventory" element={<ProfileContainer />} />
+
+          <Route
+            path="profile/inventory/:tokenId"
+            element={<ItemPageContainer />}
+          />
           <Route path="token/:tokenId" element={<ItemPageContainer />} />
           <Route path="" element={<MarketContainer />} />
         </Routes>

@@ -13,6 +13,7 @@ const fetchURI = async (item) => {
   await axios.get(tokenURI).then((res) => {
     if (res.status === 200) {
       const { name, image } = res.data;
+
       let _item = {
         tokenId: parseInt(item[0], 18),
         itemURI: tokenURI,
@@ -34,8 +35,10 @@ export default function MarketContainer() {
     useContractsContext();
 
   const fetchMarketItemsData = useCallback(async () => {
-    console.log(bellyERC721Contract);
-    const _response = await bellyERC721Contract.getItemsForSale({});
+    let _response = await bellyERC721Contract.getItemsForSale({});
+
+    _response = _response.filter((item) => item[4] !== wallet);
+
     let formattedItems = [];
     formattedItems = await Promise.all(
       _response.map(async (item) => {
@@ -43,7 +46,7 @@ export default function MarketContainer() {
       })
     );
     return formattedItems;
-  }, [bellyERC721Contract]);
+  }, [bellyERC721Contract, wallet]);
 
   useEffect(() => {
     if (wallet !== "") {

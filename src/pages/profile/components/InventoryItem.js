@@ -3,10 +3,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useContractsContext } from "../../../context/ContractProvider";
 
-export default function MarketItem({ tokenId, name, price, img }) {
+export default function InventoryItem({ tokenId, name, price, img }) {
   return (
     <div className="border rounded-lg m-3 border-gray bg-gray rounded transition hover:shadow hover:border-gray cursor-pointer">
-      <a href={`/token/${tokenId}`}>
+      <a href={`/profile/inventory/${tokenId}`}>
         <div className="px-4 py-3">
           <div className="flex flex-col leading-16 items-center justify-between">
             <div className="mt-2 mb-1 flex flex-col">
