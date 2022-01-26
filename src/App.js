@@ -1,8 +1,6 @@
 import "./App.css";
 import Navbar from "./components/Header";
-import { formatEther } from "ethers/lib/utils";
 import { actionTypes } from "./context/reducer";
-import axios from "axios";
 import { useCallback, useEffect } from "react";
 import { useContractsContext } from "./context/ContractProvider";
 import Web3Modal from "web3modal";

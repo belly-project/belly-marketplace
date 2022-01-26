@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import React from "react";
 import { useContractsContext } from "../../context/ContractProvider";
 import MarketItem from "../market/components/MarketItem";
@@ -6,7 +5,7 @@ import InventoryFilters from "./components/InventoryFilters";
 import ProfileSidebar from "./components/ProfileSidebar";
 
 export default function ProfileContainer() {
-  const [{ wallet, marketItems, myItems }] = useContractsContext();
+  const [{ wallet, myItems }] = useContractsContext();
   return (
     <div className="flex flex-row">
       <ProfileSidebar wallet={wallet} />

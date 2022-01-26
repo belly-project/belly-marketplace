@@ -1,6 +1,4 @@
-import { Button } from "@mui/material";
-import { formatEther, parseEther } from "ethers/lib/utils";
-import React, { useEffect } from "react";
+import React from "react";
 
 export default function MarketItem({ tokenId, name, price, img }) {
   /* const [

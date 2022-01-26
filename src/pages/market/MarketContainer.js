@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import axios from "axios";
 import { formatEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect } from "react";
@@ -58,7 +57,12 @@ export default function MarketContainer() {
     }
 
     return () => {};
-  }, [bellyERC721Contract.getItemsForSale, fetchMarketItemsData, wallet]);
+  }, [
+    bellyERC721Contract.getItemsForSale,
+    dispatch,
+    fetchMarketItemsData,
+    wallet,
+  ]);
 
   return (
     <div className="flex flex-row">
