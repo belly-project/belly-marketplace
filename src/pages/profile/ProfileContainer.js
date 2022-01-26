@@ -6,7 +6,7 @@ import InventoryFilters from "./components/InventoryFilters";
 import ProfileSidebar from "./components/ProfileSidebar";
 
 export default function ProfileContainer() {
-  const [{ wallet, marketItems }] = useContractsContext();
+  const [{ wallet, marketItems, myItems }] = useContractsContext();
   return (
     <div className="flex flex-row">
       <ProfileSidebar wallet={wallet} />
@@ -20,7 +20,7 @@ export default function ProfileContainer() {
               <InventoryFilters />
 
               <div className="flex mt-8 flex-wrap justify-center w-full">
-                {marketItems?.map((item) => {
+                {myItems?.map((item) => {
                   return (
                     <MarketItem
                       key={item.tokenId}

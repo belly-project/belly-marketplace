@@ -18,13 +18,13 @@ export default function InventoryFilters() {
           </div>
         </div>
         <div className="flex  items-center justify-between">
-          <div class="ml-8 relative hidden md:block">
-            <div class="flex">
-              <button class="px-4 py-3 relative rounded transition focus:outline-none border text-white border-gray-2 hover:border-gray-1 active:border-gray-3 bg-gray-5 hover:bg-gray-4 active:bg-gray-6">
-                <span class="visible">
-                  <div class="flex items-center">
+          <div className="ml-8 relative hidden md:block">
+            <div className="flex">
+              <button className="px-4 py-3 relative rounded transition focus:outline-none border text-white border-gray-2 hover:border-gray-1 active:border-gray-3 bg-gray-5 hover:bg-gray-4 active:bg-gray-6">
+                <span className="visible">
+                  <div className="flex items-center">
                     <Icon icon="fa-solid:filter" color="white" />
-                    <div class="ml-8 truncate" style={{ maxWidth: "36px" }}>
+                    <div className="ml-8 truncate" style={{ maxWidth: "36px" }}>
                       Filter{" "}
                     </div>
                   </div>
