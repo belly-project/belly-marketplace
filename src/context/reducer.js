@@ -19,6 +19,7 @@ export const initialState = {
   myItems: [],
   marketItems: [],
   wallet: "",
+  balance: 0,
 };
 
 export const actionTypes = {
@@ -53,6 +54,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         myItems: action.myItems,
+        balance: action.balance,
       };
     case actionTypes.SET_WALLET:
       return {

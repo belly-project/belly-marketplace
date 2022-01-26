@@ -10,12 +10,17 @@ const fetchURI = async (item) => {
   let result = [];
   await axios.get(tokenURI).then((res) => {
     if (res.status === 200) {
-      const { name, image } = res.data;
+      const { name, description, weapons, image } = res.data;
+
       let _item = {
-        tokenId: parseInt(item[0], 18),
+        tokenId: parseInt(item[0].toHexString().toString(16)),
         itemURI: tokenURI,
         image: image.split("?")[0],
         name: name,
+        _class: res.data.class,
+        description: description,
+        weapons: weapons,
+        stats: res.data.keyvalues,
         price: formatEther(item[6]),
         owner: item[4],
       };
@@ -25,6 +30,151 @@ const fetchURI = async (item) => {
     }
   });
   return result;
+};
+
+const processWeapon = (weaponString) => {
+  console.log(weaponString);
+  switch (weaponString) {
+    case "bows":
+      return (
+        <div className="flex items-center p-2" key={weaponString}>
+          <Icon style={{ fontSize: "36px" }} icon="whh:bow" color="white" />
+          <div className="ml-2">Bows</div>
+        </div>
+      );
+    case "knifes":
+      return (
+        <div className="flex items-center p-2" key={weaponString}>
+          <Icon style={{ fontSize: "36px" }} icon="mdi:knife" color="white" />
+          <div className="ml-2">Knifes</div>
+        </div>
+      );
+    case "swords":
+      return (
+        <div className="flex items-center p-2" key={weaponString}>
+          <Icon
+            style={{ fontSize: "36px" }}
+            icon="akar-icons:sword"
+            color="white"
+          />
+          <div className="ml-2">Swords</div>
+        </div>
+      );
+    case "axes":
+      return (
+        <div className="flex items-center p-2" key={weaponString}>
+          <Icon style={{ fontSize: "36px" }} icon="lucide:axe" color="white" />
+          <div className="ml-2">Axes</div>
+        </div>
+      );
+    case "lance":
+      return (
+        <div className="flex items-center p-2" key={weaponString}>
+          <Icon style={{ fontSize: "36px" }} icon="mdi:spear" color="white" />
+          <div className="ml-2">Lance</div>
+        </div>
+      );
+    case "dark magic":
+      return (
+        <div className="flex items-center p-2" key={weaponString}>
+          <Icon
+            style={{ fontSize: "36px" }}
+            icon="healthicons:death"
+            color="white"
+          />
+          <div className="ml-2">Dark Magic</div>
+        </div>
+      );
+    case "wand":
+      return (
+        <div className="flex items-center p-2" key={weaponString}>
+          <Icon
+            style={{ fontSize: "36px" }}
+            icon="mdi:magic-staff"
+            color="white"
+          />
+          <div className="ml-2">Wand</div>
+        </div>
+      );
+    case "holy magic":
+      return (
+        <div className="flex items-center p-2" key={weaponString}>
+          <Icon icon="carbon:worship-christian" color="white" />
+          <div className="ml-2">Holy Magic</div>
+        </div>
+      );
+    default:
+      return <div></div>;
+  }
+};
+
+const getClassIcon = (classString) => {
+  switch (classString) {
+    case "KILLER":
+      return (
+        <Icon
+          style={{ fontSize: "32px" }}
+          icon={"mdi:knife-military"}
+          color={"white"}
+        />
+      );
+    case "SHOOTER":
+      return (
+        <Icon
+          style={{ fontSize: "32px" }}
+          className="text-xl"
+          icon={"mdi:bow-arrow"}
+          color={"white"}
+        />
+      );
+    case "TANK":
+      return (
+        <Icon
+          style={{ fontSize: "32px" }}
+          className="text-xl"
+          icon={"mdi:shield-account"}
+          color={"white"}
+        />
+      );
+    case "SUPPORT":
+      return (
+        <Icon
+          style={{ fontSize: "32px" }}
+          className="text-xl"
+          icon={"mdi:bottle-tonic-plus"}
+          color={"white"}
+        />
+      );
+    case "PIRATE":
+      return (
+        <Icon
+          style={{ fontSize: "32px" }}
+          className="text-xl"
+          icon={"mdi:skull-crossbones"}
+          color={"white"}
+        />
+      );
+    case "RIDER":
+      return (
+        <Icon
+          style={{ fontSize: "32px" }}
+          className="text-xl"
+          icon={"mdi:horse-variant"}
+          color={"white"}
+        />
+      );
+    case "MAGE":
+      return (
+        <Icon
+          style={{ fontSize: "32px" }}
+          className="text-xl"
+          icon={"mdi:auto-fix"}
+          color={"white"}
+        />
+      );
+    default:
+      return;
+  }
 };
 
 export default function ItemPageContainer() {
@@ -108,6 +258,7 @@ export default function ItemPageContainer() {
           <div
             role="button"
             className="inline-flex items-center cursor-pointer"
+            onClick={() => navigate(-1)}
           >
             <Icon icon="bx:bx-arrow-back" color="white" />
           </div>
@@ -126,14 +277,14 @@ export default function ItemPageContainer() {
               <img
                 className="mt-5"
                 src={token.image}
-                alt={token.name}
+                alt={token.tokenId}
                 width="480"
                 height="480"
               />
             </div>
           </div>
         </div>
-        <div className="block md:inline-block md:w-50 align-top">
+        <div className="block max-w-md md:inline-block md:w-50 align-top">
           <div className="w-full">
             <div className="flex items-center w-full flex-wrap md:justify-end">
               <div className="border-r border-gray-2 py-4 md:hidden">
@@ -144,7 +295,9 @@ export default function ItemPageContainer() {
               {!isOwner ? (
                 <div className="ml-24 text-right">
                   <h3 className="break-all">Ξ&nbsp;{token.price}</h3>
-                  <h5 className="mt-4 text-gray-1 break-all">${token.price}</h5>
+                  <h5 className="mt-4 text-[#a1a6b6] break-all">
+                    ${token.price}
+                  </h5>
                 </div>
               ) : (
                 <div className="ml-24 text-right">
@@ -154,12 +307,14 @@ export default function ItemPageContainer() {
               <div className="ml-0 md:ml-8 mt-7 w-full md:w-auto md:mt-0">
                 <div className="inline-block">
                   <button
-                    onClick={() => putItemforSale()}
+                    onClick={() => (isOwner ? putItemforSale() : buyToken())}
                     className="px-4 py-4 relative rounded transition  border  border-[#3a3f50] text-gray-2"
                   >
                     <div className="flex items-center">
                       <Icon icon="logos:metamask-icon" color="white" />
-                      <div className="ml-2">Sell token</div>
+                      <div className="ml-2">
+                        {isOwner ? "Sell token" : "Buy Token"}
+                      </div>
                     </div>
                   </button>
                 </div>
@@ -171,33 +326,42 @@ export default function ItemPageContainer() {
               About
             </div>
             <div className="py-4 px-4 sm:px-4 sm:py-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg">
-              <div className="flex items-start justify-start">
-                <div className="mr-4" style={{ width: "100px" }}>
-                  <div className="text-gray-1 font-bold leading-14 text-10 tracking-1 uppercase">
-                    Class
-                  </div>
-                  <div className="flex items-center mt-4">
-                    <Icon />
-
-                    <div className="ml-4 capitalize">Shooter</div>
-                  </div>
-                </div>
-                <div style={{ width: "100px" }}>
-                  <div className="text-gray-1 font-bold leading-14 text-10 tracking-1 uppercase">
-                    Skill Level
-                  </div>
-                  <div className="mt-4 text-16 leading-20 flex items-center">
-                    <span>2 / 7</span>
-                  </div>
+              <div className="flex items-start justify-start"></div>
+              <div className="">
+                <div className="text-[#a1a6b6] font-bold leading-14 text-lg tracking-1 uppercase">
+                  {token.name}
                 </div>
               </div>
-              <div className="mt-6">
-                <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
+              <div className="mt-4">
+                <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
                   Owner
                 </div>
-                <a href="/profile/ronin:afa8f8e86ea206a20626153eb21a96de628e10e9/axie/">
+                <a href="https://mumbai.polygonscan.com/address/0xF4aB07FD449f2466975385c04a12Ae6f1c25a311">
                   <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
                     ({token.owner})
+                    <small className="text-gray-2 truncate"></small>
+                  </div>
+                </a>
+              </div>
+              <div className="mt-6">
+                <div className="text-[#a1a6b6] w-75 font-bold leading-14 text-xs tracking-1 uppercase">
+                  Description
+                </div>
+                <a href="https://mumbai.polygonscan.com/address/0xF4aB07FD449f2466975385c04a12Ae6f1c25a311">
+                  <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
+                    {token.description}
+                    <small className="text-gray-2 truncate"></small>
+                  </div>
+                </a>
+              </div>
+              <div className="mt-6">
+                <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                  Class
+                </div>
+                <a href="https://mumbai.polygonscan.com/address/0xF4aB07FD449f2466975385c04a12Ae6f1c25a311">
+                  <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
+                    {getClassIcon(token._class)}
+                    <div className="ml-2">{token._class}</div>
                     <small className="text-gray-2 truncate"></small>
                   </div>
                 </a>
@@ -217,39 +381,47 @@ export default function ItemPageContainer() {
             rounded-lg bg-[#282b39] border border-[#3a3f50]"
             >
               <div className="w-1/2 sm:w-auto mb-4">
-                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
+                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-[#a1a6b6]">
                   Health
                 </div>
                 <div className="flex items-center">
                   <Icon icon="ant-design:heart-filled" color="green" />
-                  <div className="ml-2 text-xl leading-24">47</div>
+                  <div className="ml-2 text-xl leading-24">
+                    {token.stats?.health}
+                  </div>
                 </div>
               </div>
               <div className="w-1/2 sm:w-auto mb-2">
-                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
+                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-[#a1a6b6]">
                   Speed
                 </div>
                 <div className="flex items-center">
                   <Icon icon="bi:lightning-charge-fill" color="yellow" />
-                  <div className="ml-2 text-xl leading-24">52</div>
+                  <div className="ml-2 text-xl leading-24">
+                    {token.stats?.speed}
+                  </div>
                 </div>
               </div>
               <div className="w-1/2 sm:w-auto mb-2">
-                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
+                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-[#a1a6b6]">
                   Skill
                 </div>
                 <div className="flex items-center">
                   <Icon icon="icon-park-outline:muscle" color="red" />
-                  <div className="ml-2 text-xl leading-24">35</div>
+                  <div className="ml-2 text-xl leading-24">
+                    {token.stats?.strength}
+                  </div>
                 </div>
               </div>
               <div className="w-1/2 sm:w-auto mb-2">
-                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
+                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-[#a1a6b6]">
                   Magic
                 </div>
                 <div className="flex items-center">
                   <Icon icon="ant-design:star-filled" color="purple" />
-                  <div className="ml-2 text-xl leading-24">30</div>
+                  <div className="ml-2 text-xl leading-24">
+                    {token.stats?.magic}
+                  </div>
                 </div>
               </div>
             </div>
@@ -267,40 +439,9 @@ export default function ItemPageContainer() {
             rounded-lg bg-[#282b39] border border-[#3a3f50]"
             >
               <div className="w-1/2 sm:w-auto mb-4">
-                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
-                  Health
-                </div>
-                <div className="flex items-center">
-                  <Icon icon="ant-design:heart-filled" color="green" />
-                  <div className="ml-2 text-xl leading-24">47</div>
-                </div>
-              </div>
-              <div className="w-1/2 sm:w-auto mb-2">
-                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
-                  Speed
-                </div>
-                <div className="flex items-center">
-                  <Icon icon="bi:lightning-charge-fill" color="yellow" />
-                  <div className="ml-2 text-xl leading-24">52</div>
-                </div>
-              </div>
-              <div className="w-1/2 sm:w-auto mb-2">
-                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
-                  Skill
-                </div>
-                <div className="flex items-center">
-                  <Icon icon="icon-park-outline:muscle" color="red" />
-                  <div className="ml-2 text-xl leading-24">35</div>
-                </div>
-              </div>
-              <div className="w-1/2 sm:w-auto mb-2">
-                <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
-                  Magic
-                </div>
-                <div className="flex items-center">
-                  <Icon icon="ant-design:star-filled" color="purple" />
-                  <div className="ml-2 text-xl leading-24">30</div>
-                </div>
+                {token.weapons?.map((weapon) => {
+                  return processWeapon(weapon);
+                })}
               </div>
             </div>
           </div>

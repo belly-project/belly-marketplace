@@ -12,13 +12,16 @@ const fetchURI = async (item) => {
   let result = [];
   await axios.get(tokenURI).then((res) => {
     if (res.status === 200) {
-      const { name, image } = res.data;
-
+      const { name, desc, _class, stats, weapons, image } = res.data;
       let _item = {
-        tokenId: parseInt(item[0], 18),
+        tokenId: parseInt(item[0].toHexString().toString(16)),
         itemURI: tokenURI,
         image: image.split("?")[0],
         name: name,
+        _class: _class,
+        description: desc,
+        weapons: weapons,
+        stats: stats,
         price: formatEther(item[6]),
         owner: item[4],
       };
@@ -50,7 +53,6 @@ export default function MarketContainer() {
 
   useEffect(() => {
     if (wallet !== "") {
-      console.log("KE");
       fetchMarketItemsData().then((res) => {
         dispatch({
           type: actionTypes.SET_MARKET_ITEMS,

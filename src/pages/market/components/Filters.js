@@ -27,7 +27,7 @@ export default function Filters() {
                 <ClassFilterItem
                   classText={"Tank"}
                   icon={"mdi:shield-account"}
-                  color={"#4c3ad1"}
+                  color={"#9908A3"}
                 />
                 <ClassFilterItem
                   classText={"Mage"}
@@ -37,7 +37,7 @@ export default function Filters() {
                 <ClassFilterItem
                   classText={"Rider"}
                   icon={"mdi:horse-variant"}
-                  color={"#0039ce"}
+                  color={"#2575cf"}
                 />
                 <ClassFilterItem
                   classText={"Shooter"}
@@ -47,17 +47,17 @@ export default function Filters() {
                 <ClassFilterItem
                   classText={"Killer"}
                   icon={"mdi:knife-military"}
-                  color={"red"}
+                  color={"#ad0c1f"}
                 />
                 <ClassFilterItem
                   classText={"Pirate"}
                   icon={"mdi:skull-crossbones"}
-                  color={"orange"}
+                  color={"#e87021"}
                 />
                 <ClassFilterItem
                   classText={"Support"}
                   icon={"mdi:bottle-tonic-plus"}
-                  color={"green"}
+                  color={"#208a19"}
                 />
               </div>
             </div>

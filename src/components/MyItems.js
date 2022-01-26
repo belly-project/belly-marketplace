@@ -29,7 +29,7 @@ export default function MyItems() {
               <h5 className="truncate font-medium md:text-20 md:leading-24">
                 Ξ 0.013
               </h5>
-              <h6 className="truncate ml-4 text-gray-1 font-medium">$31</h6>
+              <h6 className="truncate ml-4 text-[#a1a6b6] font-medium">$31</h6>
             </div>
           </div>
         </div>
@@ -37,24 +37,3 @@ export default function MyItems() {
     </div>
   );
 }
-
-/* <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-      {myItems.map((item) => {
-        return (
-          <div key={Math.random(1, 99999999)} style={{ padding: "5px" }}>
-            <img
-              loading="lazy"
-              src={
-                item.image !== "" ? item.image : "https://i.gifer.com/V4Jv.gif"
-              }
-              alt={item.name === "" ? item.name : "NEEN"}
-              style={{ width: "128px", height: "128px", objectFit: "contain" }}
-            />
-            <h1>{item?.name}</h1>
-            <h3>{item?.price} BLY</h3>
-            <p>TokenID ={item.tokenId}</p>
-            <button onClick={() => toggleForSale(item)}>Add for Sale</button>
-          </div>
-        );
-      })}
-    </div> */

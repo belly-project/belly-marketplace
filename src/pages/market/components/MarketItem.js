@@ -33,7 +33,7 @@ export default function MarketItem({ tokenId, name, price, img }) {
                 <h5 className="truncate font-medium md:text-20 md:leading-24">
                   Ξ {price}
                 </h5>
-                <h6 className="truncate ml-4 text-gray-1 font-medium">
+                <h6 className="truncate ml-4 text-[#a1a6b6] font-medium">
                   ${price}
                 </h6>
               </div>

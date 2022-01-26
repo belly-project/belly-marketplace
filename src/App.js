@@ -10,9 +10,10 @@ import MarketContainer from "./pages/market/MarketContainer";
 import ProfileContainer from "./pages/profile/ProfileContainer";
 import CratesContainer from "./pages/crates/CratesContainer";
 import ItemPageContainer from "./pages/itemPage/ItemPageContainer";
+import { formatEther } from "ethers/lib/utils";
 
 function App() {
-  const [{ wallet }, dispatch] = useContractsContext();
+  const [{ wallet, bellyERC20Contract }, dispatch] = useContractsContext();
 
   const connectToWallet = useCallback(async () => {
     const web3Modal = new Web3Modal();
@@ -38,6 +39,7 @@ function App() {
         provider: res.provider,
         wallet: res.wallet,
         web3Modal: res.web3Modal,
+        balance: res.balance,
       });
     });
 
