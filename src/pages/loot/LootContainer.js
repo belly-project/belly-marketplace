@@ -1,9 +1,11 @@
 import axios from "axios";
 import { formatEther, parseEther } from "ethers/lib/utils";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useContractsContext } from "../../context/ContractProvider";
 import { actionTypes } from "../../context/reducer";
-import CratesSidebar from "./components/CratesSidebar";
+import ChanceBidContainer from "./components/ChanceBidContainer";
+import CratesContainer from "./components/CratesContainer";
+import LootSidebar from "./components/LootSidebar";
 
 const fetchURI = async (item) => {
   const tokenURI = item[2];
@@ -27,11 +29,14 @@ const fetchURI = async (item) => {
   return result;
 };
 
-export default function CratesContainer() {
+export default function LootContainer() {
   const [
     { wallet, myItems, bellyERC721Contract, bellyERC20Contract },
     dispatch,
   ] = useContractsContext();
+
+  const [section, setSection] = useState("crates")
+
   const fetchMyTokens = useCallback(async () => {
     const _response = await bellyERC721Contract.getMyTokens({});
     let formattedItems = [];
@@ -62,9 +67,13 @@ export default function CratesContainer() {
     return () => {};
   }, [bellyERC721Contract.getItemsForSale, dispatch, fetchMyTokens, wallet]);
 
+  useEffect(()=>{
+    console.log(section)
+  },[section])
+
   return (
     <div className="flex flex-row">
-      <CratesSidebar />
+      <LootSidebar setSection={setSection} />
       <div className="flex flex-col w-full mt-10">
         <div
           className="overflow-x-auto flex-1 px-8 py-4 md:px-32 md:py-0"
@@ -72,31 +81,8 @@ export default function CratesContainer() {
         >
           <div className="w-full h-full relative">
             <div className="w-full h-full relative">
-              <div className="flex mt-8 flex-wrap justify-center w-full">
-
-                <div className="flex flex-col justidy-center  p-2 m-2 bg-[#282b39]">
-                  <img src="https://i.redd.it/udq9asephmpy.png"></img>
-  
-                  <div>
-                    <h4 className="uppercase text-[#a1a6b6]">Simple Crate</h4>
-                    <div className="flex justify-between align-center mt-2">
-                      <div className="">10 BLY</div>
-                      <button className="bg-[#6b7185] p-2 rounded-lg">Open</button>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col justidy-center  p-2 m-2 bg-[#282b39]">
-                  <img src="https://i.redd.it/udq9asephmpy.png"></img>
-  
-                  <div>
-                    <h4 className="uppercase text-[#a1a6b6]">Simple Crate</h4>
-                    <div className="flex justify-between align-center mt-2">
-                      <div className="">10 BLY</div>
-                      <button className="bg-[#6b7185] p-2 rounded-lg">Open</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {section==="crates" && <CratesContainer />}
+              {section==="chanceBid" && <ChanceBidContainer />}
             </div>
           </div>
         </div>

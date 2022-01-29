@@ -2,8 +2,14 @@ import { Icon } from "@iconify/react";
 import React from "react";
 import { useContractsContext } from "../../../context/ContractProvider";
 
-export default function CratesSidebar() {
+export default function LootSidebar({setSection}) {
   const [{ wallet, balance }] = useContractsContext();
+  
+  const changeSection = (section) => {
+    console.log(section)
+    setSection(section)
+  }
+
   return (
     <div
       className="hidden md:flex flex-col flex-none border-[#3a3f50] border-r"
@@ -34,8 +40,25 @@ export default function CratesSidebar() {
         </div>
       </div>
       <div className="flex-1 flex flex-col pt-2">
-       
-      
+        <div className="flex-1 px-4">
+          <div
+            onClick={()=>changeSection('crates')}
+            className="relative mt-4 px-2 py-4 rounded flex flex-row items-center cursor-pointer bg-[#3a3f50]"
+
+          >
+            <Icon icon="ic:round-inventory-2" color="white" />
+            <h6 className="ml-2 text-sx">Crates</h6>
+          </div>
+          <div
+          onClick={()=>changeSection('chanceBid')}
+            className="relative mt-4 px-2 py-4 rounded flex flex-row items-center cursor-pointer"
+          >
+            <Icon icon="ph:activity-bold" color="white" />
+            <h6 className="ml-2 text-sx">Chance Bid</h6>
+          </div>
+          
+        </div>
+    
       </div>
     </div>
   );

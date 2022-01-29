@@ -42,7 +42,7 @@ export default function Navbar() {
         />
         <NavbarItem
           icon={"akar-icons:shipping-box-v2"}
-          text={"Open Crates"}
+          text={"Belly Loot"}
           location={location.pathname}
           to={"/loot"}
         />

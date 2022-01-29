@@ -1,14 +1,14 @@
 import "./App.css";
 import Navbar from "./components/Header";
 import { actionTypes } from "./context/reducer";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useContractsContext } from "./context/ContractProvider";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MarketContainer from "./pages/market/MarketContainer";
 import ProfileContainer from "./pages/profile/ProfileContainer";
-import CratesContainer from "./pages/crates/CratesContainer";
+import LootContainer from "./pages/loot/LootContainer";
 import ItemPageContainer from "./pages/itemPage/ItemPageContainer";
 import { formatEther } from "ethers/lib/utils";
 
@@ -53,7 +53,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="loot" element={<CratesContainer />} />
+          <Route path="loot/" element={<LootContainer />} />
+
           <Route path="profile/inventory" element={<ProfileContainer />} />
 
           <Route
