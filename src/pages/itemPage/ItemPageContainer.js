@@ -2,7 +2,9 @@ import { Icon } from "@iconify/react";
 import axios from "axios";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect, useState } from "react";
+import ReactModal from "react-modal";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import App from "../../App";
 import { useContractsContext } from "../../context/ContractProvider";
 
 const fetchURI = async (item) => {
@@ -179,6 +181,7 @@ const getClassIcon = (classString) => {
 
 export default function ItemPageContainer() {
   const [token, setToken] = useState({});
+  const [showModal, setShowModal] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [{ bellyERC721Contract, bellyERC20Contract, wallet }] =
     useContractsContext();
@@ -186,16 +189,24 @@ export default function ItemPageContainer() {
   let { tokenId } = useParams();
   let navigate = useNavigate();
 
+  const handleOpenModal = (classString) => {
+    setShowModal(true);
+  };
+  const handleCloseModal = (classString) => {
+    setShowModal(false);
+  };
+
   const fetchTokenData = useCallback(async () => {
     let _response;
+
     if (location.pathname.includes("profile/inventory")) {
-      _response = await bellyERC721Contract.allCryptoCards(tokenId);
+      _response = await bellyERC721Contract.allBellyCharacters(tokenId);
       if (_response[4] !== wallet) {
         return 0;
       }
       setIsOwner(true);
     } else {
-      _response = await bellyERC721Contract.cryptoCardsForSale(tokenId);
+      _response = await bellyERC721Contract.bellyCharactersForSale(tokenId);
     }
 
     let formattedItem = [];
@@ -207,7 +218,7 @@ export default function ItemPageContainer() {
   const buyToken = async () => {
     const _approveTransaction = await bellyERC20Contract.approve(
       bellyERC721Contract.address,
-      parseEther("20")
+      parseEther(token.price.toString())
     );
 
     let tx = await _approveTransaction.wait();
@@ -218,7 +229,7 @@ export default function ItemPageContainer() {
       wallet,
       bellyERC20Contract.address,
       token.tokenId,
-      parseEther("20")
+      parseEther(token.price.toString())
     );
 
     tx = await _buyTokenTransaction.wait();
@@ -247,7 +258,14 @@ export default function ItemPageContainer() {
         }
       });
     }
-  }, [fetchTokenData, location.pathname, navigate, token, wallet]);
+  }, [
+    bellyERC721Contract.bellyCharactersForSale,
+    fetchTokenData,
+    location.pathname,
+    navigate,
+    token,
+    wallet,
+  ]);
   return (
     <div className="mt-20 pb-20 sm:pb-32">
       <div className="mx-auto px-16 flex justify-center">
@@ -307,7 +325,10 @@ export default function ItemPageContainer() {
               <div className="ml-0 md:ml-8 mt-7 w-full md:w-auto md:mt-0">
                 <div className="inline-block">
                   <button
-                    onClick={() => (isOwner ? putItemforSale() : buyToken())}
+                    onClick={
+                      () =>
+                        handleOpenModal() /*(isOwner ? putItemforSale() : buyToken())*/
+                    }
                     className="px-4 py-4 relative rounded transition  border  border-[#3a3f50] text-gray-2"
                   >
                     <div className="flex items-center">
@@ -317,6 +338,14 @@ export default function ItemPageContainer() {
                       </div>
                     </div>
                   </button>
+                  <ReactModal
+                    appElement={document.getElementsByClassName("App")}
+                    isOpen={showModal}
+                    onRequestClose={handleCloseModal}
+                    contentLabel="Minimal Modal Example"
+                  >
+                    <button onClick={handleCloseModal}>Close Modal</button>
+                  </ReactModal>
                 </div>
               </div>
             </div>

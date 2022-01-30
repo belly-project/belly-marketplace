@@ -1,4 +1,4 @@
-const bellyErc20 = "0xb54d62341A7e6919d95212635b023830c0506B1a";
-const bellyErc721 = "0x56Bc2c4D77c5A088eFe0914AD6f6874B14a63E0f";
+const bellyErc20 = "0xA7B6A3966041fC8e44121ce9ff922689C3585438";
+const bellyErc721 = "0xD8d7e1C21f66fe1FEF6023f232B779fA38bb6d73";
 
 export { bellyErc20, bellyErc721 };

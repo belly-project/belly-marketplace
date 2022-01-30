@@ -11,6 +11,13 @@ import ProfileContainer from "./pages/profile/ProfileContainer";
 import CratesContainer from "./pages/crates/CratesContainer";
 import ItemPageContainer from "./pages/itemPage/ItemPageContainer";
 import { formatEther } from "ethers/lib/utils";
+import ReactModal from "react-modal";
+
+ReactModal.defaultStyles.overlay.backgroundColor = "rgba(40,43,57,0.8)";
+ReactModal.defaultStyles.content.background = "#3a3f50";
+ReactModal.defaultStyles.content.width = "50%";
+ReactModal.defaultStyles.content.height = "20%";
+ReactModal.defaultStyles.content.margin = "auto";
 
 function App() {
   const [{ wallet, bellyERC20Contract }, dispatch] = useContractsContext();
