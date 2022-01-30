@@ -181,13 +181,23 @@ const getClassIcon = (classString) => {
 
 export default function ItemPageContainer() {
   const [token, setToken] = useState({});
+  const [priceForItem, setPriceForItem] = useState(0.0);
   const [showModal, setShowModal] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
+  const [itemBought, setItemBought] = useState(false);
+
   const [{ bellyERC721Contract, bellyERC20Contract, wallet }] =
     useContractsContext();
   let location = useLocation();
   let { tokenId } = useParams();
   let navigate = useNavigate();
+
+  const goToInventory = () => {
+    navigate("/profile/inventory");
+  };
+  const goToMarketItem = () => {
+    navigate("/token/" + token.tokenId);
+  };
 
   const handleOpenModal = (classString) => {
     setShowModal(true);
@@ -235,17 +245,20 @@ export default function ItemPageContainer() {
     tx = await _buyTokenTransaction.wait();
 
     console.log(tx);
-    navigate("/profile/inventory");
+    setItemBought(true);
   };
 
   const putItemforSale = async () => {
-    const transcation = await bellyERC721Contract.toggleForSale(token.tokenId);
+    const transcation = await bellyERC721Contract.toggleForSale(
+      token.tokenId,
+      parseEther(priceForItem.toString())
+    );
 
     const tx = await transcation.wait();
 
     console.log(tx);
 
-    navigate("/profile/inventory");
+    setItemBought(true);
   };
 
   useEffect(() => {
@@ -344,7 +357,104 @@ export default function ItemPageContainer() {
                     onRequestClose={handleCloseModal}
                     contentLabel="Minimal Modal Example"
                   >
-                    <button onClick={handleCloseModal}>Close Modal</button>
+                    <div className="flex justify-between align-center">
+                      <div>
+                        <img
+                          src={token.image}
+                          alt={token.tokenId}
+                          width="128"
+                          height="128"
+                        />
+                      </div>
+                      {!itemBought ? (
+                        <div>
+                          {isOwner ? (
+                            <div className="flex flex-col items-center justify-between">
+                              <h1 className="text-white">
+                                Enter the price that you're token will be bought
+                                for
+                              </h1>
+                              <input
+                                type="number"
+                                onChange={(e) =>
+                                  setPriceForItem(e.target.value)
+                                }
+                                value={priceForItem}
+                              />
+                              <button
+                                onClick={() =>
+                                  isOwner ? putItemforSale() : buyToken()
+                                }
+                                className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
+                              >
+                                <div className="flex items-center">
+                                  <Icon
+                                    icon="logos:metamask-icon"
+                                    color="white"
+                                  />
+                                  <div className="ml-2">
+                                    {isOwner ? "Sell token" : "Buy Token"}
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-center justify-between">
+                              <h1 className="text-white">
+                                Buy token for {token.price} BLY ?
+                              </h1>
+
+                              <button
+                                onClick={() =>
+                                  isOwner ? putItemforSale() : buyToken()
+                                }
+                                className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
+                              >
+                                <div className="flex items-center">
+                                  <Icon
+                                    icon="logos:metamask-icon"
+                                    color="white"
+                                  />
+                                  <div className="ml-2">
+                                    {isOwner ? "Sell token" : "Buy Token"}
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div>
+                          {isOwner ? (
+                            <div className="flex flex-col items-center">
+                              <h1 className="text-white">
+                                Item added to market as a sale for{" "}
+                                {priceForItem} BLY
+                              </h1>
+                              <button
+                                onClick={() => goToInventory()}
+                                className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
+                              >
+                                Go to inventory
+                              </button>{" "}
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-center">
+                              <h1 className="text-white">
+                                Bought item 0000000{token.tokenId} from{" "}
+                                {token.price} BLY
+                              </h1>
+                              <button
+                                onClick={() => goToInventory()}
+                                className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
+                              >
+                                Go to inventory
+                              </button>{" "}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </ReactModal>
                 </div>
               </div>

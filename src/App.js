@@ -13,10 +13,10 @@ import ItemPageContainer from "./pages/itemPage/ItemPageContainer";
 import { formatEther } from "ethers/lib/utils";
 import ReactModal from "react-modal";
 
-ReactModal.defaultStyles.overlay.backgroundColor = "rgba(40,43,57,0.8)";
+ReactModal.defaultStyles.overlay.backgroundColor = "rgba(10, 11, 15, 0.99)";
 ReactModal.defaultStyles.content.background = "#3a3f50";
-ReactModal.defaultStyles.content.width = "50%";
-ReactModal.defaultStyles.content.height = "20%";
+ReactModal.defaultStyles.content.width = "30%";
+ReactModal.defaultStyles.content.height = "fit-content";
 ReactModal.defaultStyles.content.margin = "auto";
 
 function App() {
