@@ -62,6 +62,7 @@ export default function Navbar() {
           icon={"akar-icons:shipping-box-v2"}
           text={"Belly Loot"}
           location={location.pathname}
+          disabled
           to={"/loot"}
         />
         <div className="hidden  md:flex ml-auto items-center">
