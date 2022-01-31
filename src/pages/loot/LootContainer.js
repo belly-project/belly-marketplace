@@ -35,7 +35,7 @@ export default function LootContainer() {
     dispatch,
   ] = useContractsContext();
 
-  const [section, setSection] = useState("crates")
+  const [section, setSection] = useState("crates");
 
   const fetchMyTokens = useCallback(async () => {
     const _response = await bellyERC721Contract.getMyTokens({});
@@ -67,9 +67,9 @@ export default function LootContainer() {
     return () => {};
   }, [bellyERC721Contract.getItemsForSale, dispatch, fetchMyTokens, wallet]);
 
-  useEffect(()=>{
-    console.log(section)
-  },[section])
+  useEffect(() => {
+    console.log(section);
+  }, [section]);
 
   return (
     <div className="flex flex-row">
@@ -81,8 +81,8 @@ export default function LootContainer() {
         >
           <div className="w-full h-full relative">
             <div className="w-full h-full relative">
-              {section==="crates" && <CratesContainer />}
-              {section==="chanceBid" && <ChanceBidContainer />}
+              {section === "crates" && <CratesContainer />}
+              {section === "chanceBid" && <ChanceBidContainer />}
             </div>
           </div>
         </div>

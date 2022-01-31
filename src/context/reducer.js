@@ -26,6 +26,7 @@ export const actionTypes = {
   SET_USER: "SET_USER",
   SET_MARKET_ITEMS: "SET_MARKET_ITEMS",
   SET_WALLET: "SET_WALLET",
+  SET_BALANCE: "SET_BALANCE",
   SET_MY_ITEMS: "SET_MY_ITEMS",
 };
 
@@ -54,6 +55,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         myItems: action.myItems,
+        balance: action.balance,
+      };
+    case actionTypes.SET_BALANCE:
+      return {
+        ...state,
         balance: action.balance,
       };
     case actionTypes.SET_WALLET:

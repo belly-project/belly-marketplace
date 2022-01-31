@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useContractsContext } from "../context/ContractProvider";
 import { ethers } from "ethers";
@@ -7,10 +7,17 @@ import Web3Modal from "web3modal";
 import WalletButton from "./WalletButton";
 import NavbarItem from "./NavbarItem";
 import { useLocation } from "react-router-dom";
+import { formatEther } from "ethers/lib/utils";
 
 export default function Navbar() {
   const location = useLocation();
-  const [{ wallet, web3Modal }, dispatch] = useContractsContext();
+  const [{ wallet, balance, web3Modal, bellyERC20Contract }, dispatch] =
+    useContractsContext();
+
+  const getWalletBalance = useCallback(async () => {
+    const _balance = await bellyERC20Contract.balanceOf(wallet);
+    return { balance: formatEther(_balance) };
+  }, [bellyERC20Contract, wallet]);
 
   const connectToWallet = async () => {
     const _web3Modal = new Web3Modal();
@@ -28,6 +35,17 @@ export default function Navbar() {
       wallet: _wallet,
     });
   };
+
+  useEffect(() => {
+    if (wallet !== "") {
+      getWalletBalance().then((res) => {
+        dispatch({
+          type: actionTypes.SET_BALANCE,
+          balance: res.balance,
+        });
+      });
+    }
+  }, [dispatch, getWalletBalance, wallet]);
   return (
     <div className="sticky top-0 w-full items-start z-10">
       <div className="inline-flex w-full bg-black">
@@ -47,7 +65,17 @@ export default function Navbar() {
           to={"/loot"}
         />
         <div className="hidden  md:flex ml-auto items-center">
-          <div className="px-16"></div>
+          <div className="px-2">
+            <div className="flex items-center justify-center">
+              <div className="mr-2">
+                <Icon icon="entypo:wallet" color="white" />
+              </div>
+              <div className="flex items-center justify-center">
+                <small className="px-4">{balance} BLY</small>
+                <div className="cursor-pointer"></div>
+              </div>
+            </div>
+          </div>
         </div>
         <WalletButton wallet={wallet} connectToWallet={connectToWallet} />
       </div>
