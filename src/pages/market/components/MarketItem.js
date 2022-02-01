@@ -17,7 +17,7 @@ export default function MarketItem({ tokenId, name, price, img }) {
                 <img
                   className="m-2 rounded-lg"
                   src={img}
-                  alt="6483566"
+                  alt={tokenId}
                   style={{
                     width: "200px",
                     objectFit: "contain",

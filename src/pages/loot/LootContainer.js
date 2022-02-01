@@ -17,7 +17,7 @@ const fetchURI = async (item) => {
       let _item = {
         tokenId: parseInt(item[0].toHexString().toString(16)),
         itemURI: tokenURI,
-        image: image.split("?")[0],
+        image: image,
         name: name,
         price: formatEther(item[6]),
         owner: item[4],

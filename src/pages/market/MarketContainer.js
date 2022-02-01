@@ -16,7 +16,7 @@ const fetchURI = async (item) => {
       let _item = {
         tokenId: parseInt(item[0].toHexString().toString(16)),
         itemURI: tokenURI,
-        image: image.split("?")[0],
+        image: image,
         name: name,
         _class: _class,
         description: desc,
