@@ -38,20 +38,11 @@ export default function LootContainer() {
   const [section, setSection] = useState("crates");
 
   const fetchMyTokens = useCallback(async () => {
-    const _response = await bellyERC721Contract.getMyTokens({});
-    let formattedItems = [];
-    formattedItems = await Promise.all(
-      _response.map(async (item) => {
-        return await fetchURI(item);
-      })
-    );
-
     const _balance = await bellyERC20Contract.balanceOf(wallet);
     return {
-      myItems: formattedItems,
       balance: formatEther(_balance),
     };
-  }, [bellyERC20Contract, bellyERC721Contract, wallet]);
+  }, [bellyERC20Contract, wallet]);
 
   useEffect(() => {
     if (wallet !== "") {

@@ -8,12 +8,16 @@ import WalletButton from "./WalletButton";
 import NavbarItem from "./NavbarItem";
 import { useLocation } from "react-router-dom";
 import { formatEther } from "ethers/lib/utils";
+import { bellyErc721 } from "../context/contracts/addresses";
 
 export default function Navbar() {
   const location = useLocation();
   const [{ wallet, balance, web3Modal, bellyERC20Contract }, dispatch] =
     useContractsContext();
 
+  const copyAddress = (address) => {
+    navigator.clipboard.writeText(address);
+  };
   const getWalletBalance = useCallback(async () => {
     const _balance = await bellyERC20Contract.balanceOf(wallet);
     return { balance: formatEther(_balance) };
@@ -62,10 +66,27 @@ export default function Navbar() {
           icon={"akar-icons:shipping-box-v2"}
           text={"Belly Loot"}
           location={location.pathname}
-          disabled
           to={"/loot"}
         />
         <div className="hidden  md:flex ml-auto items-center">
+          <div className="px-2">
+            <div className="flex flex-col items-center justify-center">
+              <div className="mr-4 flex ">
+                <div className="flex mr-4">
+                  <div>BellyToken</div>
+                  <Icon
+                    onClick={() => copyAddress(bellyErc721)}
+                    icon="akar-icons:copy"
+                    color="white"
+                  />
+                </div>
+                <div className="mr- text-[#a1a6b6]">
+                  {bellyErc721.substring(0, 4)}...
+                  {bellyErc721.substring(wallet.length - 4)}
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="px-2">
             <div className="flex items-center justify-center">
               <div className="mr-2">
