@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useContractsContext } from "../../context/ContractProvider";
 import { actionTypes } from "../../context/reducer";
 import ChanceBidContainer from "./components/ChanceBidContainer";
+import CrateItem from "./components/CrateItem";
 import CratesContainer from "./components/CratesContainer";
 import LootSidebar from "./components/LootSidebar";
 
@@ -36,6 +37,8 @@ export default function LootContainer() {
   ] = useContractsContext();
 
   const [section, setSection] = useState("crates");
+
+  const [detailItem, setDetailItem] = useState({});
 
   const fetchMyTokens = useCallback(async () => {
     const _balance = await bellyERC20Contract.balanceOf(wallet);
@@ -72,8 +75,14 @@ export default function LootContainer() {
         >
           <div className="w-full h-full relative">
             <div className="w-full h-full relative">
-              {section === "crates" && <CratesContainer />}
+              {section === "crates" && (
+                <CratesContainer
+                  setSection={setSection}
+                  setDetailItem={setDetailItem}
+                />
+              )}
               {section === "chanceBid" && <ChanceBidContainer />}
+              {section === "crateItem" && <CrateItem detailItem={detailItem} />}
             </div>
           </div>
         </div>

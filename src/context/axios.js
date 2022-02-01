@@ -4,4 +4,8 @@ const marketplaceApi = axios.create({
   baseURL: "https://belly-marketplace-api.herokuapp.com/",
 });
 
-export { marketplaceApi };
+const localMarketplaceApi = axios.create({
+  baseURL: "http://192.168.1.143:9000/",
+});
+
+export { marketplaceApi, localMarketplaceApi };
