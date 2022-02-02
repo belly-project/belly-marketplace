@@ -5,6 +5,7 @@ import { formatEther, id } from "ethers/lib/utils";
 export const basicFetchURI = async (item) => {
   const tokenURI = item[2];
   let result = [];
+
   await axios.get(tokenURI).then((res) => {
     if (res.status === 200) {
       const { name, desc, _class, stats, weapons, image } = res.data;

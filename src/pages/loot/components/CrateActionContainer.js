@@ -1,10 +1,9 @@
-import { Icon } from "@iconify/react";
 import { parseEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ActionModal from "../../../components/ActionModal";
 import MetamaskActionButton from "../../../components/MetamaskActionButton";
-import { localMarketplaceApi, marketplaceApi } from "../../../context/axios";
+import { localMarketplaceApi } from "../../../context/axios";
 import { useContractsContext } from "../../../context/ContractProvider";
 import { basicFetchURI } from "../../../context/utils";
 

@@ -13,6 +13,7 @@ export default function ActionModal({
   action,
   notCompletedText,
   completedText,
+  image,
 }) {
   return (
     <ReactModal
@@ -25,7 +26,7 @@ export default function ActionModal({
         <div className="flex justify-between align-center">
           <div>
             <img
-              src={"https://i.redd.it/udq9asephmpy.png"}
+              src={image ? image : "https://i.redd.it/udq9asephmpy.png"}
               alt={"jkaf"}
               width="128"
               height="128"

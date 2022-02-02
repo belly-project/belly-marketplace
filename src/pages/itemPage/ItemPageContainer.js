@@ -5,12 +5,12 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BuyableItemWrapper from "../../components/BuyableItemWrapper";
 import { useContractsContext } from "../../context/ContractProvider";
 import { basicFetchURI } from "../../context/utils";
+import ItemInfoPage from "./components/ItemInfoPage";
+import ItemPageActionContainer from "./components/ItemPageActionContainer";
 
 export default function ItemPageContainer() {
   const [token, setToken] = useState({});
-  const [priceForItem, setPriceForItem] = useState(0.0);
   const [showModal, setShowModal] = useState(false);
-  const [itemBought, setItemBought] = useState(false);
 
   const [{ bellyERC721Contract, bellyERC20Contract, wallet }] =
     useContractsContext();
@@ -35,42 +35,6 @@ export default function ItemPageContainer() {
 
     return formattedItem;
   }, [bellyERC721Contract, location.pathname, tokenId, wallet]);
-
-  const buyToken = async () => {
-    const _approveTransaction = await bellyERC20Contract.approve(
-      bellyERC721Contract.address,
-      parseEther(token.price.toString())
-    );
-
-    let tx = await _approveTransaction.wait();
-
-    console.log(tx);
-
-    const _buyTokenTransaction = await bellyERC721Contract.buyToken(
-      wallet,
-      bellyERC20Contract.address,
-      token.tokenId,
-      parseEther(token.price.toString())
-    );
-
-    tx = await _buyTokenTransaction.wait();
-
-    console.log(tx);
-    setItemBought(true);
-  };
-
-  const putItemforSale = async () => {
-    const transcation = await bellyERC721Contract.toggleForSale(
-      token.tokenId,
-      parseEther(priceForItem.toString())
-    );
-
-    const tx = await transcation.wait();
-
-    console.log(tx);
-
-    setItemBought(true);
-  };
 
   useEffect(() => {
     if (wallet !== "" && !token.owner) {
@@ -126,12 +90,12 @@ export default function ItemPageContainer() {
             </div>
           </div>
         </div>
-        <BuyableItemWrapper
-          token={token}
-          isOwner={wallet === token.owner}
-          isNotOwnerAction={buyToken}
-          isOwnerAction={putItemforSale}
-        />
+        {token.owner && (
+          <BuyableItemWrapper>
+            <ItemPageActionContainer detailItem={token} />
+            <ItemInfoPage />
+          </BuyableItemWrapper>
+        )}
       </div>
     </div>
   );
