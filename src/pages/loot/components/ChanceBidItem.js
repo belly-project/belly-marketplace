@@ -37,7 +37,7 @@ const fetchURI = async (item) => {
 export default function ChanceBidItem({ detailItem }) {
   const [bidValue, setBidValue] = useState(0);
   const [bidsForItem, setBidsForItem] = useState([]);
-  const [resultCrate, setResultCrate] = useState(null);
+  const [bidCompleted, setBidCompleted] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const goToInventory = () => {
@@ -64,39 +64,6 @@ export default function ChanceBidItem({ detailItem }) {
     { bellyChanceBidContract, bellyERC20Contract, bellyERC721Contract, wallet },
   ] = useContractsContext();
 
-  const mintCrateToken = useCallback(
-    async (randomResult) => {
-      const resultCrate = await marketplaceApi.get(
-        `getResultFromCase?random=${randomResult}`
-      );
-
-      const resultData = resultCrate.data;
-      const tokenUri = resultData.tokenURI;
-      if (tokenUri) {
-        console.log(resultData);
-        console.log("MINT CHARACTER");
-
-        const mintTx = await bellyERC721Contract.mintBellyCharacter(
-          0,
-          bellyERC20Contract.address,
-          tokenUri
-        );
-        let tx = await mintTx.wait();
-        console.log(tx);
-      }
-
-      const tokenId = await bellyERC721Contract._tokenIds();
-
-      const itemMinted = await bellyERC721Contract.allBellyCharacters(tokenId);
-
-      const data = await fetchURI(itemMinted);
-
-      console.log(data);
-      return data;
-    },
-    [bellyERC20Contract.address, bellyERC721Contract]
-  );
-
   const fetchBidsForItem = useCallback(
     async (detailItem) => {
       const bids = await bellyChanceBidContract.getBidsForItem(
@@ -108,7 +75,17 @@ export default function ChanceBidItem({ detailItem }) {
     [bellyChanceBidContract]
   );
 
-  const addBidForChanceBid = async () => {};
+  const addBidForChanceBid = async (item) => {
+    let tx = await bellyChanceBidContract.enterChanceBid(
+      detailItem[0].toString(),
+      bidValue
+    );
+
+    tx = await tx.wait();
+
+    console.log(tx);
+    setBidCompleted(true);
+  };
 
   useEffect(() => {
     if (wallet !== "") {
@@ -116,14 +93,7 @@ export default function ChanceBidItem({ detailItem }) {
         setBidsForItem(res);
       });
     }
-  }, [
-    bellyChanceBidContract,
-    detailItem,
-    fetchBidsForItem,
-    mintCrateToken,
-
-    wallet,
-  ]);
+  }, [bellyChanceBidContract, detailItem, fetchBidsForItem, wallet]);
 
   return (
     <div className="mt-20 pb-20 sm:pb-32">
@@ -183,7 +153,6 @@ export default function ChanceBidItem({ detailItem }) {
               <div className="ml-0 md:ml-8 mt-7 w-full md:w-auto md:mt-0">
                 <div className="inline-block">
                   <button
-                    disabled
                     onClick={
                       () =>
                         handleOpenModal() /*(isOwner ? putItemforSale() : buyToken())*/
@@ -205,36 +174,58 @@ export default function ChanceBidItem({ detailItem }) {
                       <div className="flex justify-between align-center">
                         <div>
                           <img
-                            src={detailItem.img}
+                            src={
+                              detailItem.img
+                                ? detailItem.img
+                                : "https://i.redd.it/udq9asephmpy.png"
+                            }
                             alt={detailItem.crateId}
                             width="128"
                             height="128"
                           />
                         </div>
-                        <div>
-                          <div className="flex flex-col items-center justify-between">
-                            <h1 className="text-white">
-                              Add bid and have chances to win
-                            </h1>
-                            <input
-                              type="number"
-                              onChange={(e) => setBidValue(e.target.value)}
-                              value={bidValue}
-                            />
+                        {bidCompleted ? (
+                          <div>
+                            <div className="flex flex-col items-center justify-between">
+                              <h1 className="text-white">Bid completed!</h1>
 
-                            <button
-                              onClick={() => addBidForChanceBid()}
-                              className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
-                            >
-                              <div className="flex items-center">
-                                <Icon
-                                  icon="logos:metamask-icon"
-                                  color="white"
-                                />
-                              </div>
-                            </button>
+                              <button
+                                onClick={() => goToInventory()}
+                                className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
+                              >
+                                <div className="flex items-center">
+                                  <div className="ml-2">Go to Inventory</div>
+                                </div>
+                              </button>
+                            </div>
                           </div>
-                        </div>
+                        ) : (
+                          <div>
+                            <div className="flex flex-col items-center justify-between">
+                              <h1 className="text-white">
+                                Add bid and have chances to win
+                              </h1>
+                              <input
+                                type="number"
+                                onChange={(e) => setBidValue(e.target.value)}
+                                value={bidValue}
+                              />
+
+                              <button
+                                onClick={() => addBidForChanceBid()}
+                                className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
+                              >
+                                <div className="flex items-center">
+                                  <Icon
+                                    icon="logos:metamask-icon"
+                                    color="white"
+                                  />
+                                  <div className="ml-2">Add Bid</div>
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </>
                   </ReactModal>
