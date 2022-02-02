@@ -20,9 +20,10 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
   const fetchLatestChanceBids = useCallback(async () => {
     const bids = await bellyChanceBidContract.getCompletedChanceBids();
     let formattedItems = [];
+    console.log(bids);
     formattedItems = await Promise.all(
       bids.map(async (item) => {
-        return await chanceBidFor(item, 2);
+        return await chanceBidFetchURI(item, 2);
       })
     );
     return formattedItems;
@@ -99,7 +100,7 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
         {latest?.map((item) => {
           return (
             <div
-              key={item.name}
+              key={Math.random(1, 999)}
               className="flex jusify-evenly w-fit mt-2 my-4 py-4 px-4 sm:px-4 sm:py-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg"
             >
               <div>

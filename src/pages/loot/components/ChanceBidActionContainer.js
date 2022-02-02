@@ -54,7 +54,7 @@ export default function ChanceBidActionContainer({ token }) {
           <div className="inline-block">
             <MetamaskActionButton
               text={"Add Bid"}
-              handleOpenModal={handleOpenModal}
+              _onClick={handleOpenModal}
               Modal={
                 <ActionModal
                   item={token}

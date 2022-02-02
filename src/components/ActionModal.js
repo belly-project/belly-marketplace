@@ -35,14 +35,13 @@ export default function ActionModal({
             <div>
               <div className="flex flex-col items-center justify-between">
                 <h1 className="text-white">{notCompletedText.msg}</h1>
-                {typeof inputValue === "number" ||
-                  (typeof inputValue === "string" && (
-                    <input
-                      type="number"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                    />
-                  ))}
+                {inputValue !== undefined && (
+                  <input
+                    type="number"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                  />
+                )}
                 <MetamaskActionButton
                   className={"mt-4"}
                   text={notCompletedText.button}
