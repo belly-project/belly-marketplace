@@ -6,7 +6,6 @@ export default function LootSidebar({ setSection }) {
   const [{ wallet, balance }] = useContractsContext();
 
   const changeSection = (section) => {
-    console.log(section);
     setSection(section);
   };
 

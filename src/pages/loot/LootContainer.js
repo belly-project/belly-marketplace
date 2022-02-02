@@ -14,10 +14,6 @@ export default function LootContainer() {
 
   const [detailItem, setDetailItem] = useState({});
 
-  useEffect(() => {
-    console.log(section);
-  }, [section]);
-
   return (
     <div className="flex flex-row">
       <LootSidebar setSection={setSection} />

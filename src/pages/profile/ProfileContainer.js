@@ -6,29 +6,7 @@ import { actionTypes } from "../../context/reducer.js";
 import InventoryFilters from "./components/InventoryFilters.js";
 import ProfileSidebar from "./components/ProfileSidebar.js";
 import InventoryItem from "./components/InventoryItem.js";
-import { bellyErc20 } from "../../context/contracts/addresses.js";
-
-const fetchURI = async (item) => {
-  const tokenURI = item[2];
-  let result = [];
-  await axios.get(tokenURI).then((res) => {
-    if (res.status === 200) {
-      const { name, image } = res.data;
-      let _item = {
-        tokenId: parseInt(item[0].toHexString().toString(16)),
-        itemURI: tokenURI,
-        image: image,
-        name: name,
-        price: formatEther(item[6]),
-        owner: item[4],
-      };
-      result = _item;
-    } else {
-      console.log("EII");
-    }
-  });
-  return result;
-};
+import { profileFetchURI } from "../../context/utils.js";
 
 export default function ProfileContainer() {
   const [
@@ -40,7 +18,7 @@ export default function ProfileContainer() {
     let formattedItems = [];
     formattedItems = await Promise.all(
       _response.map(async (item) => {
-        return await fetchURI(item);
+        return await profileFetchURI(item);
       })
     );
 

@@ -2,29 +2,7 @@ import axios from "axios";
 import { formatEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect, useState } from "react";
 import { useContractsContext } from "../../../context/ContractProvider";
-
-const fetchURI = async (item, index = 2) => {
-  const tokenURI = item[index];
-  let result = [];
-  await axios.get(tokenURI).then((res) => {
-    if (res.status === 200) {
-      const { name, description, weapons, image } = res.data;
-
-      let _item = {
-        itemURI: tokenURI,
-        image: image,
-        name: name,
-        owner: item[1],
-        total: item[3].toString(),
-        paidFor: item[4].toString(),
-      };
-      result = _item;
-    } else {
-      console.log("EII");
-    }
-  });
-  return result;
-};
+import { chanceBidFetchURI, chanceBidFor } from "../../../context/utils";
 
 export default function ChanceBidContainer({ setSection, setDetailItem }) {
   const [latest, setLatest] = useState([]);
@@ -41,11 +19,10 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
 
   const fetchLatestChanceBids = useCallback(async () => {
     const bids = await bellyChanceBidContract.getCompletedChanceBids();
-    console.log(bids);
     let formattedItems = [];
     formattedItems = await Promise.all(
       bids.map(async (item) => {
-        return await fetchURI(item, 2);
+        return await chanceBidFor(item, 2);
       })
     );
     return formattedItems;
@@ -53,25 +30,23 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
 
   const fetchChanceBidsItems = useCallback(async () => {
     const bids = await bellyChanceBidContract.getChanceBidsItems();
-    console.log(bids);
     let formattedItems = [];
+
     formattedItems = await Promise.all(
       bids.map(async (item) => {
-        return await fetchURI(item, 2);
+        return await chanceBidFetchURI(item, 2);
       })
     );
-    return bids;
+    return formattedItems;
   }, [bellyChanceBidContract]);
 
   useEffect(() => {
     if (wallet !== "") {
       fetchLatestChanceBids().then((res) => {
-        console.log(res);
         setLatest(res);
       });
 
       fetchChanceBidsItems().then((res) => {
-        console.log(res);
         setChanceBiItems(res);
       });
     }
@@ -90,21 +65,19 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
       <div className="flex mt-8 flex-wrap justify-between w-full">
         {chanceBidItems?.map((item) => {
           return (
-            <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]">
-              <img
-                src={
-                  item.image ? item.image : "https://i.redd.it/udq9asephmpy.png"
-                }
-                alt="dfaf"
-              ></img>
+            <div
+              key={Math.random(1, 999)}
+              className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]"
+            >
+              <img src={"https://i.redd.it/udq9asephmpy.png"} alt="dfaf"></img>
 
               <div>
                 <h4 className="uppercase text-[#a1a6b6]">
-                  #0000000{item[0].toString()}
+                  #0000000{item.itemId}
                 </h4>
                 <div className="flex justify-between align-center mt-2">
                   <div className="">
-                    {item[4].toString()} / {item[3].toString()} BLY{" "}
+                    {item.paidFor} / {item.total} BLY{" "}
                   </div>
                   <button
                     onClick={() => goToOpenCrate(item)}

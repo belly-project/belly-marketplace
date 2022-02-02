@@ -1,37 +1,10 @@
-import axios from "axios";
-import { formatEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect } from "react";
 import { useContractsContext } from "../../context/ContractProvider.js";
 import { actionTypes } from "../../context/reducer.js";
+import { basicFetchURI } from "../../context/utils.js";
 import Filters from "./components/Filters.js";
 import MarketBodyOptions from "./components/MarketBodyOptions.js";
 import MarketItem from "./components/MarketItem.js";
-
-const fetchURI = async (item) => {
-  const tokenURI = item[2];
-  let result = [];
-  await axios.get(tokenURI).then((res) => {
-    if (res.status === 200) {
-      const { name, desc, _class, stats, weapons, image } = res.data;
-      let _item = {
-        tokenId: parseInt(item[0].toHexString().toString(16)),
-        itemURI: tokenURI,
-        image: image,
-        name: name,
-        _class: _class,
-        description: desc,
-        weapons: weapons,
-        stats: stats,
-        price: formatEther(item[6]),
-        owner: item[4],
-      };
-      result = _item;
-    } else {
-      console.log("EII");
-    }
-  });
-  return result;
-};
 
 export default function MarketContainer() {
   const [{ marketItems, bellyERC721Contract, wallet }, dispatch] =
@@ -45,7 +18,7 @@ export default function MarketContainer() {
     let formattedItems = [];
     formattedItems = await Promise.all(
       _response.map(async (item) => {
-        return await fetchURI(item);
+        return await basicFetchURI(item);
       })
     );
     return formattedItems;

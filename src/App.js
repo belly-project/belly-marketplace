@@ -1,7 +1,7 @@
 import "./App.css";
 import Navbar from "./components/Header";
 import { actionTypes } from "./context/reducer";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useContractsContext } from "./context/ContractProvider";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
@@ -10,7 +10,6 @@ import MarketContainer from "./pages/market/MarketContainer.js";
 import ProfileContainer from "./pages/profile/ProfileContainer.js";
 import LootContainer from "./pages/loot/LootContainer.js";
 import ItemPageContainer from "./pages/itemPage/ItemPageContainer.js";
-import { formatEther } from "ethers/lib/utils";
 import ReactModal from "react-modal";
 
 ReactModal.defaultStyles.overlay.backgroundColor = "rgba(10, 11, 15, 0.99)";
@@ -20,7 +19,7 @@ ReactModal.defaultStyles.content.height = "fit-content";
 ReactModal.defaultStyles.content.margin = "auto";
 
 function App() {
-  const [{ wallet, bellyERC20Contract }, dispatch] = useContractsContext();
+  const [{ wallet }, dispatch] = useContractsContext();
 
   const connectToWallet = useCallback(async () => {
     const web3Modal = new Web3Modal();

@@ -6,33 +6,7 @@ import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { marketplaceApi } from "../../../context/axios.js";
 import { useContractsContext } from "../../../context/ContractProvider.js";
-
-const fetchURI = async (item) => {
-  const tokenURI = item[2];
-  let result = [];
-  await axios.get(tokenURI).then((res) => {
-    if (res.status === 200) {
-      const { name, description, weapons, image } = res.data;
-
-      let _item = {
-        tokenId: parseInt(item[0].toHexString().toString(16)),
-        itemURI: tokenURI,
-        image: image,
-        name: name,
-        _class: res.data.class,
-        description: description,
-        weapons: weapons,
-        stats: res.data.keyvalues,
-        price: formatEther(item[6]),
-        owner: item[4],
-      };
-      result = _item;
-    } else {
-      console.log("EII");
-    }
-  });
-  return result;
-};
+import { basicFetchURI } from "../../../context/utils.js";
 
 export default function CrateItem({ detailItem }) {
   const [openCrate, setOpenCrate] = useState(false);
@@ -65,12 +39,9 @@ export default function CrateItem({ detailItem }) {
       const resultData = resultCrate.data;
       const tokenUri = resultData.tokenURI;
       if (tokenUri) {
-        console.log(resultData);
-        console.log("MINT CHARACTER");
-
         const mintTx = await bellyERC721Contract.mintBellyCharacter(
           0,
-          bellyERC20Contract.address,
+          wallet,
           tokenUri
         );
         let tx = await mintTx.wait();
@@ -81,9 +52,8 @@ export default function CrateItem({ detailItem }) {
 
       const itemMinted = await bellyERC721Contract.allBellyCharacters(tokenId);
 
-      const data = await fetchURI(itemMinted);
+      const data = await basicFetchURI(itemMinted);
 
-      console.log(data);
       return data;
     },
     [bellyERC20Contract.address, bellyERC721Contract]
@@ -115,7 +85,6 @@ export default function CrateItem({ detailItem }) {
           if (openCrate) {
             setOpenCrate(false);
             mintCrateToken(random).then((res) => {
-              console.log(res);
               setCrateSucced(true);
               setResultCrate(res);
             });
