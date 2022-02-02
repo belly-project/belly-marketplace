@@ -96,10 +96,10 @@ export default function ItemPageActionContainer({ detailItem }) {
                     handleCloseModal={handleCloseModal}
                     completed={itemBought}
                     inputValue={
-                      wallet !== detailItem.owner ? null : priceForItem
+                      wallet !== detailItem.owner ? undefined : priceForItem
                     }
                     setInputValue={
-                      wallet !== detailItem.owner ? null : setPriceForItem
+                      wallet !== detailItem.owner ? undefined : setPriceForItem
                     }
                     image={detailItem.image}
                     notCompletedText={{

@@ -40,6 +40,7 @@ export default function ItemPageContainer() {
     if (wallet !== "" && !token.owner) {
       fetchTokenData().then((res) => {
         if (res !== 0) {
+          console.log(res);
           setToken(res);
         } else {
           navigate("/");
@@ -93,7 +94,7 @@ export default function ItemPageContainer() {
         {token.owner && (
           <BuyableItemWrapper>
             <ItemPageActionContainer detailItem={token} />
-            <ItemInfoPage />
+            <ItemInfoPage detailItem={token} />
           </BuyableItemWrapper>
         )}
       </div>
