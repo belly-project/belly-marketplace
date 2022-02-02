@@ -1,7 +1,4 @@
-import { parseEther } from "ethers/lib/utils";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useContractsContext } from "../../../context/ContractProvider";
 
 export default function InventoryItem({ tokenId, name, price, img }) {
   return (

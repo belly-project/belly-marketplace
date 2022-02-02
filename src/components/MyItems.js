@@ -1,5 +1,5 @@
 import React from "react";
-import { useContractsContext } from "../context/ContractProvider";
+import { useContractsContext } from "../context/ContractProvider.js";
 
 export default function MyItems() {
   const [{ myItems, bellyERC721Contract, bellyErc20Contract }, dispatch] =

@@ -34,7 +34,8 @@ const fetchURI = async (item) => {
   return result;
 };
 
-export default function CrateItem({ detailItem }) {
+export default function ChanceBidItem({ detailItem }) {
+  const [bidValue, setBidValue] = useState(0);
   const [openCrate, setOpenCrate] = useState(false);
   const [crateSuceed, setCrateSucced] = useState(false);
   const [resultCrate, setResultCrate] = useState(null);
@@ -89,7 +90,7 @@ export default function CrateItem({ detailItem }) {
     [bellyERC20Contract.address, bellyERC721Contract]
   );
 
-  const requestOpenCrate = async () => {
+  const addBidForChanceBid = async () => {
     const _approveTransaction = await bellyERC20Contract.approve(
       bellyDropsContract.address,
       parseEther("10")
@@ -187,7 +188,7 @@ export default function CrateItem({ detailItem }) {
                   >
                     <div className="flex items-center">
                       <Icon icon="logos:metamask-icon" color="white" />
-                      <div className="ml-2">Buy Crate</div>
+                      <div className="ml-2">Add Bid</div>
                     </div>
                   </button>
                   <ReactModal
@@ -210,11 +211,16 @@ export default function CrateItem({ detailItem }) {
                           <div>
                             <div className="flex flex-col items-center justify-between">
                               <h1 className="text-white">
-                                Buy crate for 10 BLY ?
+                                Add bid and have chances to win
                               </h1>
+                              <input
+                                type="number"
+                                onChange={(e) => setBidValue(e.target.value)}
+                                value={bidValue}
+                              />
 
                               <button
-                                onClick={() => requestOpenCrate()}
+                                onClick={() => addBidForChanceBid()}
                                 className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
                               >
                                 <div className="flex items-center">
@@ -223,7 +229,7 @@ export default function CrateItem({ detailItem }) {
                                     color="white"
                                   />
                                   {!openCrate ? (
-                                    <div className="ml-2">Buy Crate</div>
+                                    <div className="ml-2">Add Bid</div>
                                   ) : (
                                     <div className="ml-2">Loading...</div>
                                   )}

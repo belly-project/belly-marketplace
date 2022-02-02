@@ -6,10 +6,10 @@ import { useContractsContext } from "./context/ContractProvider";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MarketContainer from "./pages/market/MarketContainer";
-import ProfileContainer from "./pages/profile/ProfileContainer";
-import LootContainer from "./pages/loot/LootContainer";
-import ItemPageContainer from "./pages/itemPage/ItemPageContainer";
+import MarketContainer from "./pages/market/MarketContainer.js";
+import ProfileContainer from "./pages/profile/ProfileContainer.js";
+import LootContainer from "./pages/loot/LootContainer.js";
+import ItemPageContainer from "./pages/itemPage/ItemPageContainer.js";
 import { formatEther } from "ethers/lib/utils";
 import ReactModal from "react-modal";
 
@@ -59,18 +59,20 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route path="loot/" element={<LootContainer />} />
+        {wallet !== "" && (
+          <Routes>
+            <Route path="loot/" element={<LootContainer />} />
 
-          <Route path="profile/inventory" element={<ProfileContainer />} />
+            <Route path="profile/inventory" element={<ProfileContainer />} />
 
-          <Route
-            path="profile/inventory/:tokenId"
-            element={<ItemPageContainer />}
-          />
-          <Route path="token/:tokenId" element={<ItemPageContainer />} />
-          <Route path="" element={<MarketContainer />} />
-        </Routes>
+            <Route
+              path="profile/inventory/:tokenId"
+              element={<ItemPageContainer />}
+            />
+            <Route path="token/:tokenId" element={<ItemPageContainer />} />
+            <Route path="" element={<MarketContainer />} />
+          </Routes>
+        )}
       </BrowserRouter>
     </div>
   );

@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import React from "react";
-import ClassFilterItem from "./ClassFilterItem";
+import ClassFilterItem from "./ClassFilterItem.js";
 
 export default function Filters() {
   return (

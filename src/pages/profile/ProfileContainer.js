@@ -1,12 +1,12 @@
 import axios from "axios";
-import { formatEther, parseEther } from "ethers/lib/utils";
+import { formatEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect } from "react";
-import { useContractsContext } from "../../context/ContractProvider";
-import { actionTypes } from "../../context/reducer";
-import MarketItem from "../market/components/MarketItem";
-import InventoryFilters from "./components/InventoryFilters";
-import ProfileSidebar from "./components/ProfileSidebar";
-import InventoryItem from "./components/InventoryItem";
+import { useContractsContext } from "../../context/ContractProvider.js";
+import { actionTypes } from "../../context/reducer.js";
+import InventoryFilters from "./components/InventoryFilters.js";
+import ProfileSidebar from "./components/ProfileSidebar.js";
+import InventoryItem from "./components/InventoryItem.js";
+import { bellyErc20 } from "../../context/contracts/addresses.js";
 
 const fetchURI = async (item) => {
   const tokenURI = item[2];
@@ -63,7 +63,13 @@ export default function ProfileContainer() {
     }
 
     return () => {};
-  }, [bellyERC721Contract.getItemsForSale, dispatch, fetchMyTokens, wallet]);
+  }, [
+    bellyERC20Contract,
+    bellyERC721Contract,
+    dispatch,
+    fetchMyTokens,
+    wallet,
+  ]);
 
   return (
     <div className="flex flex-row">

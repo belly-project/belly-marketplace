@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import React from "react";
-import { useContractsContext } from "../../../context/ContractProvider";
+import { useContractsContext } from "../../../context/ContractProvider.js";
 
 export default function ProfileSidebar() {
   const [{ wallet, balance }] = useContractsContext();

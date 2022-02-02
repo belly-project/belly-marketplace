@@ -1,11 +1,11 @@
 import axios from "axios";
 import { formatEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect } from "react";
-import { useContractsContext } from "../../context/ContractProvider";
-import { actionTypes } from "../../context/reducer";
-import Filters from "./components/Filters";
-import MarketBodyOptions from "./components/MarketBodyOptions";
-import MarketItem from "./components/MarketItem";
+import { useContractsContext } from "../../context/ContractProvider.js";
+import { actionTypes } from "../../context/reducer.js";
+import Filters from "./components/Filters.js";
+import MarketBodyOptions from "./components/MarketBodyOptions.js";
+import MarketItem from "./components/MarketItem.js";
 
 const fetchURI = async (item) => {
   const tokenURI = item[2];
@@ -62,12 +62,7 @@ export default function MarketContainer() {
     }
 
     return () => {};
-  }, [
-    bellyERC721Contract.getItemsForSale,
-    dispatch,
-    fetchMarketItemsData,
-    wallet,
-  ]);
+  }, [bellyERC721Contract, dispatch, fetchMarketItemsData, wallet]);
 
   return (
     <div className="flex flex-row">
@@ -82,7 +77,7 @@ export default function MarketContainer() {
               <MarketBodyOptions />
 
               <div className="flex mt-8 flex-wrap justify-center w-full">
-                {marketItems.map((item) => {
+                {marketItems?.map((item) => {
                   return (
                     <MarketItem
                       key={item.tokenId}

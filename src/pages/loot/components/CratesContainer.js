@@ -1,7 +1,4 @@
-import { parseEther } from "ethers/lib/utils";
-import React, { useCallback, useEffect, useState } from "react";
-import { marketplaceApi } from "../../../context/axios";
-import { useContractsContext } from "../../../context/ContractProvider";
+import React from "react";
 
 export default function CratesContainer({ setSection, setDetailItem }) {
   const goToOpenCrate = () => {
