@@ -36,13 +36,20 @@ const fetchURI = async (item) => {
 
 export default function ChanceBidItem({ detailItem }) {
   const [bidValue, setBidValue] = useState(0);
-  const [openCrate, setOpenCrate] = useState(false);
-  const [crateSuceed, setCrateSucced] = useState(false);
+  const [bidsForItem, setBidsForItem] = useState([]);
   const [resultCrate, setResultCrate] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const goToInventory = () => {
     navigate("/profile/inventory");
+  };
+
+  const formatPercentatge = (item) => {
+    let myBid = parseFloat(item[0].toString());
+    let total = parseFloat(detailItem[3].toString());
+    let perc = (myBid / total) * 100;
+
+    return perc;
   };
 
   const handleOpenModal = (classString) => {
@@ -54,7 +61,7 @@ export default function ChanceBidItem({ detailItem }) {
   const navigate = useNavigate();
 
   const [
-    { bellyDropsContract, bellyERC20Contract, bellyERC721Contract, wallet },
+    { bellyChanceBidContract, bellyERC20Contract, bellyERC721Contract, wallet },
   ] = useContractsContext();
 
   const mintCrateToken = useCallback(
@@ -90,46 +97,39 @@ export default function ChanceBidItem({ detailItem }) {
     [bellyERC20Contract.address, bellyERC721Contract]
   );
 
-  const addBidForChanceBid = async () => {
-    const _approveTransaction = await bellyERC20Contract.approve(
-      bellyDropsContract.address,
-      parseEther("10")
-    );
+  const fetchBidsForItem = useCallback(
+    async (detailItem) => {
+      const bids = await bellyChanceBidContract.getBidsForItem(
+        detailItem[0].toString()
+      );
+      console.log(bids);
+      return bids;
+    },
+    [bellyChanceBidContract]
+  );
 
-    let tx = await _approveTransaction.wait();
-    setOpenCrate(true);
-
-    const _buyCrateTransaction = await bellyDropsContract.openCrate(
-      bellyERC20Contract.address,
-      parseEther("10")
-    );
-
-    tx = await _buyCrateTransaction.wait();
-
-    console.log(tx);
-  };
+  const addBidForChanceBid = async () => {};
 
   useEffect(() => {
     if (wallet !== "") {
-      bellyDropsContract
-        .once("CrateOpened", (random, event) => {
-          if (openCrate) {
-            setOpenCrate(false);
-            mintCrateToken(random).then((res) => {
-              console.log(res);
-              setCrateSucced(true);
-              setResultCrate(res);
-            });
-          }
-        })
-        .on("error", console.error);
+      fetchBidsForItem(detailItem).then((res) => {
+        setBidsForItem(res);
+      });
     }
-  }, [bellyDropsContract, mintCrateToken, openCrate, wallet]);
+  }, [
+    bellyChanceBidContract,
+    detailItem,
+    fetchBidsForItem,
+    mintCrateToken,
+
+    wallet,
+  ]);
+
   return (
     <div className="mt-20 pb-20 sm:pb-32">
-      <div className="mx-auto px-16 flex justify-center">
+      <div className="mx-auto px-4 flex justify-center">
         <div
-          className="block md:sticky md:inline-block md:w-1/2 align-top"
+          className="block md:sticky md:inline-block md:w-2/3 align-top"
           style={{ top: "120px" }}
         >
           <div
@@ -141,8 +141,8 @@ export default function ChanceBidItem({ detailItem }) {
           </div>
           <br />
           <div className="mt-8 leading-16 inline-flex item-center">
-            <span className="flex px-8 rounded text-12  border border-transparent pt-1 pt-2, bg-[#3a3f50] border-transparent">
-              {detailItem.crateId}
+            <span className="flex px-2 rounded text-12  border border-transparent pt-1 pt-2, bg-[#3a3f50] border-transparent">
+              #00000000{detailItem[0].toString()}
             </span>
           </div>
           <div className="text-28 flex items-end"></div>
@@ -153,10 +153,14 @@ export default function ChanceBidItem({ detailItem }) {
             >
               <img
                 className="mt-5"
-                src={detailItem.img}
+                src={
+                  detailItem.img
+                    ? detailItem.img
+                    : "https://i.redd.it/udq9asephmpy.png"
+                }
                 alt={detailItem.crateId}
-                width="480"
-                height="480"
+                width="240"
+                height="240"
               />
             </div>
           </div>
@@ -171,15 +175,15 @@ export default function ChanceBidItem({ detailItem }) {
               </div>
 
               <div className="ml-24 text-right">
-                <h3 className="break-all">Ξ&nbsp;{detailItem.price}</h3>
-                <h5 className="mt-4 text-[#a1a6b6] break-all">
-                  ${detailItem.price}
-                </h5>
+                <h3 className="break-all">
+                  {detailItem[4].toString()} / {detailItem[3].toString()} BLY
+                </h3>
               </div>
 
               <div className="ml-0 md:ml-8 mt-7 w-full md:w-auto md:mt-0">
                 <div className="inline-block">
                   <button
+                    disabled
                     onClick={
                       () =>
                         handleOpenModal() /*(isOwner ? putItemforSale() : buyToken())*/
@@ -197,82 +201,85 @@ export default function ChanceBidItem({ detailItem }) {
                     onRequestClose={handleCloseModal}
                     contentLabel="Minimal Modal Example"
                   >
-                    {!crateSuceed ? (
-                      <>
-                        <div className="flex justify-between align-center">
-                          <div>
-                            <img
-                              src={detailItem.img}
-                              alt={detailItem.crateId}
-                              width="128"
-                              height="128"
+                    <>
+                      <div className="flex justify-between align-center">
+                        <div>
+                          <img
+                            src={detailItem.img}
+                            alt={detailItem.crateId}
+                            width="128"
+                            height="128"
+                          />
+                        </div>
+                        <div>
+                          <div className="flex flex-col items-center justify-between">
+                            <h1 className="text-white">
+                              Add bid and have chances to win
+                            </h1>
+                            <input
+                              type="number"
+                              onChange={(e) => setBidValue(e.target.value)}
+                              value={bidValue}
                             />
-                          </div>
-                          <div>
-                            <div className="flex flex-col items-center justify-between">
-                              <h1 className="text-white">
-                                Add bid and have chances to win
-                              </h1>
-                              <input
-                                type="number"
-                                onChange={(e) => setBidValue(e.target.value)}
-                                value={bidValue}
-                              />
 
-                              <button
-                                onClick={() => addBidForChanceBid()}
-                                className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
-                              >
-                                <div className="flex items-center">
-                                  <Icon
-                                    icon="logos:metamask-icon"
-                                    color="white"
-                                  />
-                                  {!openCrate ? (
-                                    <div className="ml-2">Add Bid</div>
-                                  ) : (
-                                    <div className="ml-2">Loading...</div>
-                                  )}
-                                </div>
-                              </button>
-                            </div>
+                            <button
+                              onClick={() => addBidForChanceBid()}
+                              className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
+                            >
+                              <div className="flex items-center">
+                                <Icon
+                                  icon="logos:metamask-icon"
+                                  color="white"
+                                />
+                              </div>
+                            </button>
                           </div>
                         </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="flex flex-col justify-between align-center">
-                          <div>
-                            <img
-                              src={resultCrate?.image}
-                              alt={resultCrate?.tokenId}
-                              width="128"
-                              height="128"
-                            />
-                          </div>
-                          <div>
-                            <div className="flex flex-col items-center justify-between">
-                              <h1 className="text-white">
-                                Congrats you minted an:
-                              </h1>
-                              <h1 className="text-gray">{resultCrate?.name}</h1>
-                              <button
-                                onClick={() => goToInventory()}
-                                className="mt-4 px-4 py-4 text-white relative rounded transition border border-gray text-gray-2"
-                              >
-                                <div className="flex items-center">
-                                  <div>Go to inventory</div>
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    )}
+                      </div>
+                    </>
                   </ReactModal>
                 </div>
               </div>
             </div>
+          </div>
+          <div className="flex mt-8 flex-col justify-center items-end w-full">
+            <div className="font-bold text-xl leading-24 text-white mb-4">
+              Latest Chance Bids Completed
+            </div>
+            {bidsForItem?.map((item) => {
+              return (
+                <div
+                  key={item.name}
+                  className="flex jusify-evenly w-fit mt-2 my-4 py-4 px-4 sm:px-4 sm:py-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg"
+                >
+                  <div>
+                    <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                      Owner
+                    </div>
+                    <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
+                      {item[1].substring(0, 4)}...
+                      {item[1].substring(wallet.length - 4)}
+                    </div>
+                  </div>
+                  <div className="ml-8">
+                    <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                      BLY Paid
+                    </div>
+                    <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
+                      {item[0].toString()} BLY
+                    </div>
+                  </div>
+                  <div className="ml-8">
+                    <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                      Pertentatge
+                    </div>
+                    <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
+                      {formatPercentatge(item)}%
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

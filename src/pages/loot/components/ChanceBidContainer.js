@@ -28,18 +28,15 @@ const fetchURI = async (item, index = 2) => {
 
 export default function ChanceBidContainer({ setSection, setDetailItem }) {
   const [latest, setLatest] = useState([]);
+  const [chanceBidItems, setChanceBiItems] = useState([]);
   const [
     { wallet, bellyDropsContract, bellyERC20Contract, bellyChanceBidContract },
     dispatch,
   ] = useContractsContext();
 
-  const goToOpenCrate = () => {
+  const goToOpenCrate = (item) => {
     setSection("chanceBidItem");
-    setDetailItem({
-      crateId: 1,
-      img: "https://i.redd.it/udq9asephmpy.png",
-      price: 10,
-    });
+    setDetailItem(item);
   };
 
   const fetchLatestChanceBids = useCallback(async () => {
@@ -54,69 +51,74 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
     return formattedItems;
   }, [bellyChanceBidContract]);
 
+  const fetchChanceBidsItems = useCallback(async () => {
+    const bids = await bellyChanceBidContract.getChanceBidsItems();
+    console.log(bids);
+    let formattedItems = [];
+    formattedItems = await Promise.all(
+      bids.map(async (item) => {
+        return await fetchURI(item, 2);
+      })
+    );
+    return bids;
+  }, [bellyChanceBidContract]);
+
   useEffect(() => {
     if (wallet !== "") {
       fetchLatestChanceBids().then((res) => {
         console.log(res);
         setLatest(res);
       });
+
+      fetchChanceBidsItems().then((res) => {
+        console.log(res);
+        setChanceBiItems(res);
+      });
     }
 
     return () => {};
-  }, [bellyERC20Contract, dispatch, fetchLatestChanceBids, wallet]);
+  }, [
+    bellyERC20Contract,
+    dispatch,
+    fetchChanceBidsItems,
+    fetchLatestChanceBids,
+    wallet,
+  ]);
 
   return (
     <div className="flex flex-row justify-between w-full">
       <div className="flex mt-8 flex-wrap justify-between w-full">
-        <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]">
-          <img src="https://i.redd.it/udq9asephmpy.png" alt="dfaf"></img>
+        {chanceBidItems?.map((item) => {
+          return (
+            <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]">
+              <img
+                src={
+                  item.image ? item.image : "https://i.redd.it/udq9asephmpy.png"
+                }
+                alt="dfaf"
+              ></img>
 
-          <div>
-            <h4 className="uppercase text-[#a1a6b6]">Random Bid</h4>
-            <div className="flex justify-between align-center mt-2">
-              <div className="">10 BLY </div>
-              <button
-                onClick={() => goToOpenCrate()}
-                className="bg-[#6b7185] p-2 rounded-lg"
-              >
-                Open
-              </button>
+              <div>
+                <h4 className="uppercase text-[#a1a6b6]">
+                  #0000000{item[0].toString()}
+                </h4>
+                <div className="flex justify-between align-center mt-2">
+                  <div className="">
+                    {item[4].toString()} / {item[3].toString()} BLY{" "}
+                  </div>
+                  <button
+                    onClick={() => goToOpenCrate(item)}
+                    className="bg-[#6b7185] p-2 rounded-lg"
+                  >
+                    BID
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]">
-          <img src="https://i.redd.it/udq9asephmpy.png" alt="dfaf"></img>
-
-          <div>
-            <h4 className="uppercase text-[#a1a6b6]">Random Bid</h4>
-            <div className="flex justify-between align-center mt-2">
-              <div className="">10 BLY </div>
-              <button
-                onClick={() => goToOpenCrate()}
-                className="bg-[#6b7185] p-2 rounded-lg"
-              >
-                Open
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]">
-          <img src="https://i.redd.it/udq9asephmpy.png" alt="dfaf"></img>
-
-          <div>
-            <h4 className="uppercase text-[#a1a6b6]">Random Bid</h4>
-            <div className="flex justify-between align-center mt-2">
-              <div className="">10 BLY </div>
-              <button
-                onClick={() => goToOpenCrate()}
-                className="bg-[#6b7185] p-2 rounded-lg"
-              >
-                Open
-              </button>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
+
       <div className="flex mt-8 flex-col justify-center items-end w-full">
         <div className="font-bold text-xl leading-24 text-white mb-4">
           Latest Chance Bids Completed
