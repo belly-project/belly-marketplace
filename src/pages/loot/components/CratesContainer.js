@@ -58,7 +58,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
       </div>
       <div className="flex mt-8 flex-col justify-center items-end w-full">
         <div className="font-bold text-xl leading-24 text-white mb-4">
-          Latest Chance Bids Completed
+          Latest Crates Drops
         </div>
         {latest?.map((item) => {
           return (

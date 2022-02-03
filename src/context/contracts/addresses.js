@@ -1,6 +1,6 @@
-const bellyErc20 = "0xad0838aa7909b7067657Ff2F12F27036d7555F25";
-const bellyErc721 = "0x6aa313bf9BED6FffCCfd7A08FF3aA92CDA974068";
-const bellyLoot = "0xc025a60C43ed7092e05d498E485a7d8E69A72303";
-const bellyChanceBid = "0x5BFB61427B52b653E09bB4b6fcF1D79Af6e5Dc12";
+const bellyErc20 = "0x0CBcf9c8822fA5BBE5cE7c11ad292656FBaDe7cE";
+const bellyErc721 = "0x67072F42b5D1Bdd2dE11CA2d349F5CFD435D09c9";
+const bellyLoot = "0x1aB3c938f18fD6Ee2e1D8Ffcd312A31aeCB2616f";
+const bellyChanceBid = "0x3D45627cEC5f0E41765e31F6a9A98294180535FE";
 
 export { bellyErc20, bellyErc721, bellyLoot, bellyChanceBid };

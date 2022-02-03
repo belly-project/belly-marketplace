@@ -8,7 +8,7 @@ import WalletButton from "./WalletButton";
 import NavbarItem from "./NavbarItem";
 import { useLocation } from "react-router-dom";
 import { formatEther } from "ethers/lib/utils";
-import { bellyErc721 } from "../context/contracts/addresses";
+import { bellyErc20, bellyErc721 } from "../context/contracts/addresses";
 
 export default function Navbar() {
   const location = useLocation();
@@ -81,8 +81,8 @@ export default function Navbar() {
                   />
                 </div>
                 <div className="mr- text-[#a1a6b6]">
-                  {bellyErc721.substring(0, 4)}...
-                  {bellyErc721.substring(wallet.length - 4)}
+                  {bellyErc20.substring(0, 4)}...
+                  {bellyErc20.substring(wallet.length - 4)}
                 </div>
               </div>
             </div>
