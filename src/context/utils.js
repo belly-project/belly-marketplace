@@ -53,6 +53,27 @@ export const chanceBidFetchURI = async (item) => {
   return result;
 };
 
+export const crateFetchURI = async (item) => {
+  const tokenURI = item[3];
+  let result = [];
+  await axios.get(tokenURI).then((res) => {
+    if (res.status === 200) {
+      const { name, description, weapons, image } = res.data;
+
+      let _item = {
+        image: image,
+        name: name,
+        mintedBy: item[1],
+        price: item[2].toString(),
+      };
+      result = _item;
+    } else {
+      console.log("EII");
+    }
+  });
+  return result;
+};
+
 export const chanceBidFor = async (item, detailItem) => {
   console.log(item, detailItem);
   let _item = {

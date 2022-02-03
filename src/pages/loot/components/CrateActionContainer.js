@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ActionModal from "../../../components/ActionModal";
 import MetamaskActionButton from "../../../components/MetamaskActionButton";
-import { localMarketplaceApi } from "../../../context/axios";
+import { localMarketplaceApi, marketplaceApi } from "../../../context/axios";
 import { useContractsContext } from "../../../context/ContractProvider";
 import { basicFetchURI } from "../../../context/utils";
 
@@ -56,12 +56,13 @@ export default function CrateActionContainer({ detailItem }) {
       );
 
       const resultData = resultCrate.data;
-      const tokenUri = resultData.tokenURI;
-      if (tokenUri) {
+      const tokenURI = resultData.tokenURI;
+      console.log(resultData);
+      if (tokenURI) {
         const mintTx = await bellyERC721Contract.mintBellyCharacter(
           0,
           wallet,
-          tokenUri
+          tokenURI
         );
         let tx = await mintTx.wait();
         console.log(tx);
@@ -73,6 +74,14 @@ export default function CrateActionContainer({ detailItem }) {
 
       const data = await basicFetchURI(itemMinted);
 
+      console.log("KE");
+      await localMarketplaceApi.post("addCrateResult", {
+        crateId: 1,
+        mintedBy: wallet,
+        price: 10,
+        tokenURI,
+      });
+
       return data;
     },
     [bellyERC721Contract, wallet]
@@ -81,13 +90,16 @@ export default function CrateActionContainer({ detailItem }) {
   useEffect(() => {
     if (wallet !== "") {
       bellyDropsContract
-        .once("CrateOpened", (random, event) => {
+        .once("CrateOpened", (random, requester) => {
           if (openCrate) {
-            mintCrateToken(random).then((res) => {
-              setOpenCrate(false);
-              setCrateSucced(true);
-              setResultCrate(res);
-            });
+            if (requester === wallet) {
+              console.log("K");
+              mintCrateToken(random).then((res) => {
+                setOpenCrate(false);
+                setCrateSucced(true);
+                setResultCrate(res);
+              });
+            }
           }
         })
         .on("error", console.error);
