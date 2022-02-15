@@ -5,7 +5,7 @@ const marketplaceApi = axios.create({
 });
 
 const localMarketplaceApi = axios.create({
-  baseURL: "http://192.168.1.143:9000/",
+  baseURL: "http://192.168.1.168:9000/",
 });
 
 export { marketplaceApi, localMarketplaceApi };

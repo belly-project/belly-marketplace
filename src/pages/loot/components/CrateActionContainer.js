@@ -11,7 +11,7 @@ export default function CrateActionContainer({ detailItem }) {
   const [resultCrate, setResultCrate] = useState(null);
   const [openCrate, setOpenCrate] = useState(false);
   const [crateSuceed, setCrateSucced] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const [
@@ -31,6 +31,7 @@ export default function CrateActionContainer({ detailItem }) {
   const navigate = useNavigate();
 
   const requestOpenCrate = async () => {
+    setLoading(true);
     setOpenCrate(true);
     const _approveTransaction = await bellyERC20Contract.approve(
       bellyDropsContract.address,
@@ -51,7 +52,7 @@ export default function CrateActionContainer({ detailItem }) {
 
   const mintCrateToken = useCallback(
     async (randomResult) => {
-      const resultCrate = await marketplaceApi.get(
+      const resultCrate = await localMarketplaceApi.get(
         `getResultFromCase?random=${randomResult}`
       );
 
@@ -75,12 +76,14 @@ export default function CrateActionContainer({ detailItem }) {
       const data = await basicFetchURI(itemMinted);
 
       console.log("KE");
-      await marketplaceApi.post("addCrateResult", {
+      await localMarketplaceApi.post("addCrateResult", {
         crateId: 1,
         mintedBy: wallet,
         price: 10,
         tokenURI,
       });
+
+      setLoading(false);
 
       return data;
     },
@@ -131,6 +134,7 @@ export default function CrateActionContainer({ detailItem }) {
                 Modal={
                   <ActionModal
                     item={detailItem}
+                    loading={loading}
                     showModal={showModal}
                     action={requestOpenCrate}
                     onceCompleted={goToInventory}

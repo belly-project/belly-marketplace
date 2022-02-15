@@ -31,6 +31,7 @@ export const basicFetchURI = async (item) => {
 
 export const chanceBidFetchURI = async (item) => {
   const tokenURI = item[2];
+  console.log(item);
   let result = [];
   await axios.get(tokenURI).then((res) => {
     if (res.status === 200) {

@@ -115,7 +115,11 @@ export default function ItemPageActionContainer({ detailItem }) {
                     }`,
                   }}
                   completedText={{
-                    msg: `Item Bought`,
+                    msg: `${
+                      wallet !== detailItem.owner
+                        ? "Item Bought!"
+                        : "Item on Sale!"
+                    }`,
                     button: "Go to Inventory",
                   }}
                 />

@@ -37,9 +37,9 @@ export default function CratesContainer({ setSection, setDetailItem }) {
     return () => {};
   }, [bellyERC20Contract, dispatch, fetchLatestChanceBids, wallet]);
   return (
-    <div className="flex flex-row justify-between w-full">
-      <div className="flex mt-8 flex-wrap justify-center w-full">
-        <div className="flex flex-col justidy-center  p-2 m-2 bg-[#282b39]">
+    <div className="flex flex-row justify-between w-75">
+      <div className="flex mt-8 flex-wrap justify-center w-75">
+        <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]">
           <img src="https://i.redd.it/udq9asephmpy.png" alt="dfaf"></img>
 
           <div>
@@ -56,7 +56,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
           </div>
         </div>
       </div>
-      <div className="flex mt-8 flex-col justify-center items-end w-full">
+      <div className="flex mt-8 flex-col justify-center items-end w-25">
         <div className="font-bold text-xl leading-24 text-white mb-4">
           Latest Crates Drops
         </div>
@@ -64,7 +64,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
           return (
             <div
               key={Math.random(1, 999)}
-              className="flex jusify-evenly w-fit mt-2 my-4 py-4 px-4 sm:px-4 sm:py-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg"
+              className="flex  jusify-evenly w-full mt-2 my-4 py-4 px-4 sm:px-4 sm:py-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg"
             >
               <div>
                 <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">

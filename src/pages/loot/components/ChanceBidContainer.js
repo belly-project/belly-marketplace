@@ -7,10 +7,8 @@ import { chanceBidFetchURI, chanceBidFor } from "../../../context/utils";
 export default function ChanceBidContainer({ setSection, setDetailItem }) {
   const [latest, setLatest] = useState([]);
   const [chanceBidItems, setChanceBiItems] = useState([]);
-  const [
-    { wallet, bellyDropsContract, bellyERC20Contract, bellyChanceBidContract },
-    dispatch,
-  ] = useContractsContext();
+  const [{ wallet, bellyERC20Contract, bellyChanceBidContract }, dispatch] =
+    useContractsContext();
 
   const goToOpenCrate = (item) => {
     setSection("chanceBidItem");

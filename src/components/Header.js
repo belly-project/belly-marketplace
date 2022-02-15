@@ -75,7 +75,7 @@ export default function Navbar() {
                 <div className="flex mr-4">
                   <div>BellyToken</div>
                   <Icon
-                    onClick={() => copyAddress(bellyErc721)}
+                    onClick={() => copyAddress(bellyErc20)}
                     icon="akar-icons:copy"
                     color="white"
                   />
