@@ -26,7 +26,9 @@ export default function CrateActionContainer({ detailItem }) {
     setShowModal(true);
   };
   const handleCloseModal = (classString) => {
-    setShowModal(false);
+    if (!loading) {
+      setShowModal(false);
+    }
   };
   const navigate = useNavigate();
 
@@ -76,7 +78,7 @@ export default function CrateActionContainer({ detailItem }) {
       const data = await basicFetchURI(itemMinted);
 
       console.log("KE");
-      await marketplaceApi.post("addCrateResult", {
+      await localMarketplaceApi.post("addCrateResult", {
         crateId: 1,
         mintedBy: wallet,
         price: 10,

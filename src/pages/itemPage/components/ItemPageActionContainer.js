@@ -63,7 +63,9 @@ export default function ItemPageActionContainer({ detailItem }) {
     setShowModal(true);
   };
   const handleCloseModal = (classString) => {
-    setShowModal(false);
+    if (!loading) {
+      setShowModal(false);
+    }
   };
 
   return (
@@ -107,7 +109,7 @@ export default function ItemPageActionContainer({ detailItem }) {
                   notCompletedText={{
                     msg: `${
                       wallet !== detailItem.owner
-                        ? `Buy for for ${detailItem.price} BLY`
+                        ? `Buy for ${detailItem.price} BLY`
                         : "Add Item for sale"
                     }`,
                     button: `${

@@ -7,6 +7,7 @@ import MetamaskActionButton from "../../../components/MetamaskActionButton";
 import { useContractsContext } from "../../../context/ContractProvider";
 
 export default function ChanceBidActionContainer({ token }) {
+  const [loading, setLoading] = useState(false);
   const [{ bellyChanceBidContract }] = useContractsContext();
   const addBidForChanceBid = async () => {
     console.log("HJE");
@@ -33,7 +34,9 @@ export default function ChanceBidActionContainer({ token }) {
     setShowModal(true);
   };
   const handleCloseModal = () => {
-    setShowModal(false);
+    if (!loading) {
+      setShowModal(false);
+    }
   };
   return (
     <div className="w-full">

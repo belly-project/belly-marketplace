@@ -1,9 +1,45 @@
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useState } from "react";
 import { useContractsContext } from "../../../context/ContractProvider.js";
-
+import ActionModal from "../../../components/ActionModal.js";
+import FaucetModal from "../../../components/FaucetModal.js";
+import { useNavigate } from "react-router-dom";
+import { localMarketplaceApi } from "../../../context/axios.js";
+import { parseEther } from "ethers/lib/utils";
 export default function ProfileSidebar() {
   const [{ wallet, balance }] = useContractsContext();
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
+
+  const openFaucetModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    window.location.reload(false);
+  };
+  const getFundsFromFaucet = async () => {
+    setLoading(true);
+    const res = await localMarketplaceApi.post("/faucetFundMe", {
+      to: wallet,
+      amount: parseEther("100"),
+    });
+
+    if (res.status === 204) {
+      setLoading(false);
+      setCompleted(true);
+      setIsBlocked(true);
+    } else {
+      setLoading(false);
+      setCompleted(true);
+    }
+  };
+
+  const goToInventory = () => {
+    handleCloseModal();
+  };
+
   return (
     <div
       className="hidden md:flex flex-col flex-none border-[#3a3f50] border-r"
@@ -49,13 +85,30 @@ export default function ProfileSidebar() {
             <Icon icon="ph:activity-bold" color="white" />
             <h6 className="ml-2 text-sx">Activity</h6>
           </a>
-          <a
+          <button
             className="relative mt-4 px-2 py-4 rounded flex flex-row items-center cursor-pointer"
-            href="/profile/faucet/"
+            onClick={() => openFaucetModal()}
           >
             <Icon icon="jam:medal-f" color="#white" />
             <h6 className="ml-2 text-sx">Claim Tokens</h6>
-          </a>
+            <FaucetModal
+              loading={loading}
+              showModal={showModal}
+              action={getFundsFromFaucet}
+              onceCompleted={goToInventory}
+              handleCloseModal={handleCloseModal}
+              completed={completed}
+              isBlocked={isBlocked}
+              notCompletedText={{
+                msg: "Request 100 BLY for your account",
+                button: "Get BELLY",
+              }}
+              completedText={{
+                msg: `You recieved 100 BLY!`,
+                button: "Go to Inventory",
+              }}
+            />
+          </button>
           <a
             className="relative mt-4 px-2 py-4 rounded flex flex-row items-center cursor-pointer cursor-not-allowed"
             href="/profile/inventory/axie/"
