@@ -62,64 +62,58 @@ export default function ItemPageActionContainer({ detailItem }) {
   };
 
   return (
-    <div className="block max-w-md md:inline-block md:w-50 align-top">
-      <div className="w-full">
-        <div className="flex items-center w-full flex-wrap md:justify-end">
-          <div className="border-r border-gray-2 py-4 md:hidden">
-            <div className="flex items-center text-gray-2 cursor-pointer pr-20">
-              Auction info
-            </div>
+    <div className="w-full">
+      <div className="flex items-center w-full flex-wrap md:justify-end">
+        <div className="border-r border-gray-2 py-4 md:hidden">
+          <div className="flex items-center text-gray-2 cursor-pointer pr-20">
+            Auction info
           </div>
+        </div>
 
-          <div className="ml-24 text-right">
-            <h3 className="break-all">Ξ&nbsp;{detailItem.price}</h3>
-            <h5 className="mt-4 text-[#a1a6b6] break-all">
-              ${detailItem.price}
-            </h5>
-          </div>
+        <div className="ml-24 text-right">
+          <h3 className="break-all">Ξ&nbsp;{detailItem.price}</h3>
+          <h5 className="mt-4 text-[#a1a6b6] break-all">${detailItem.price}</h5>
+        </div>
 
-          <div className="ml-0 md:ml-8 mt-7 w-full md:w-auto md:mt-0">
-            <div className="inline-block">
-              <MetamaskActionButton
-                text={`${
-                  wallet !== detailItem.owner ? "Buy Item" : "Sell Item"
-                }`}
-                _onClick={handleOpenModal}
-                Modal={
-                  <ActionModal
-                    item={detailItem}
-                    showModal={showModal}
-                    action={
-                      wallet !== detailItem.owner ? buyToken : putItemforSale
-                    }
-                    onceCompleted={goToInventory}
-                    handleCloseModal={handleCloseModal}
-                    completed={itemBought}
-                    inputValue={
-                      wallet !== detailItem.owner ? undefined : priceForItem
-                    }
-                    setInputValue={
-                      wallet !== detailItem.owner ? undefined : setPriceForItem
-                    }
-                    image={detailItem.image}
-                    notCompletedText={{
-                      msg: `${
-                        wallet !== detailItem.owner
-                          ? "Buy for for 10 BLY"
-                          : "Add Item for sale"
-                      }`,
-                      button: `${
-                        wallet !== detailItem.owner ? "Buy Item" : "Sell Item"
-                      }`,
-                    }}
-                    completedText={{
-                      msg: `Item Bought`,
-                      button: "Go to Inventory",
-                    }}
-                  />
-                }
-              />
-            </div>
+        <div className="ml-0 md:ml-8 mt-7 w-full md:w-auto md:mt-0">
+          <div className="inline-block">
+            <MetamaskActionButton
+              text={`${wallet !== detailItem.owner ? "Buy Item" : "Sell Item"}`}
+              _onClick={handleOpenModal}
+              Modal={
+                <ActionModal
+                  item={detailItem}
+                  showModal={showModal}
+                  action={
+                    wallet !== detailItem.owner ? buyToken : putItemforSale
+                  }
+                  onceCompleted={goToInventory}
+                  handleCloseModal={handleCloseModal}
+                  completed={itemBought}
+                  inputValue={
+                    wallet !== detailItem.owner ? undefined : priceForItem
+                  }
+                  setInputValue={
+                    wallet !== detailItem.owner ? undefined : setPriceForItem
+                  }
+                  image={detailItem.image}
+                  notCompletedText={{
+                    msg: `${
+                      wallet !== detailItem.owner
+                        ? "Buy for for 10 BLY"
+                        : "Add Item for sale"
+                    }`,
+                    button: `${
+                      wallet !== detailItem.owner ? "Buy Item" : "Sell Item"
+                    }`,
+                  }}
+                  completedText={{
+                    msg: `Item Bought`,
+                    button: "Go to Inventory",
+                  }}
+                />
+              }
+            />
           </div>
         </div>
       </div>

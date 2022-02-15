@@ -4,7 +4,7 @@ import { getClassIcon, processWeapon } from "../../../context/utils";
 
 export default function ItemInfoPage({ detailItem }) {
   return (
-    <div className="flex mt-8 flex-col justify-center items-end w-full">
+    <div className="flex mt-8 flex-col">
       <div className="mt-10">
         <div className="font-bold text-xl leading-24 text-white mb-4">
           About
