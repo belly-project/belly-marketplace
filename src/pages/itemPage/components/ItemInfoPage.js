@@ -3,7 +3,6 @@ import React from "react";
 import { getClassIcon, processWeapon } from "../../../context/utils";
 
 export default function ItemInfoPage({ detailItem }) {
-  console.log(detailItem);
   return (
     <div className="flex mt-8 flex-col">
       <div className="mt-10">

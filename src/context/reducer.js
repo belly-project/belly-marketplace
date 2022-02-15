@@ -33,6 +33,7 @@ export const initialState = {
   web3Modal: {},
   myItems: [],
   marketItems: [],
+  marketItemsFiltered: [],
   wallet: "",
   balance: 0,
 };
@@ -40,6 +41,7 @@ export const initialState = {
 export const actionTypes = {
   SET_USER: "SET_USER",
   SET_MARKET_ITEMS: "SET_MARKET_ITEMS",
+  SET_MARKET_ITEMS_FILTERED: "SET_MARKET_ITEMS_FILTERED",
   SET_WALLET: "SET_WALLET",
   SET_BALANCE: "SET_BALANCE",
   SET_MY_ITEMS: "SET_MY_ITEMS",
@@ -78,6 +80,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         marketItems: action.marketItems,
+        marketItemsFiltered: action.marketItems,
+      };
+    case actionTypes.SET_MARKET_ITEMS_FILTERED:
+      return {
+        ...state,
+        marketItemsFiltered: action.marketItems,
       };
     case actionTypes.SET_MY_ITEMS:
       return {

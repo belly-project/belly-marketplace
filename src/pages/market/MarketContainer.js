@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useContractsContext } from "../../context/ContractProvider.js";
 import { actionTypes } from "../../context/reducer.js";
 import { basicFetchURI } from "../../context/utils.js";
@@ -7,9 +7,11 @@ import MarketBodyOptions from "./components/MarketBodyOptions.js";
 import MarketItem from "./components/MarketItem.js";
 
 export default function MarketContainer() {
-  const [{ marketItems, bellyERC721Contract, wallet }, dispatch] =
-    useContractsContext();
-
+  const [
+    { marketItems, marketItemsFiltered, bellyERC721Contract, wallet },
+    dispatch,
+  ] = useContractsContext();
+  const [filters, setFilters] = useState({});
   const fetchMarketItemsData = useCallback(async () => {
     let _response = await bellyERC721Contract.getItemsForSale({});
 
@@ -39,7 +41,7 @@ export default function MarketContainer() {
 
   return (
     <div className="flex flex-row">
-      <Filters />
+      <Filters setFilterItem={setFilters} />
       <div className="flex flex-col w-full mt-4">
         <div
           className="overflow-x-auto flex-1 px-8 py-4 md:px-32 md:py-0"
@@ -47,10 +49,10 @@ export default function MarketContainer() {
         >
           <div className="w-full h-full relative">
             <div className="w-full h-full relative">
-              <MarketBodyOptions />
+              {/* <MarketBodyOptions /> */}
 
               <div className="flex mt-8 flex-wrap justify-center w-full">
-                {marketItems?.map((item) => {
+                {marketItemsFiltered?.map((item) => {
                   return (
                     <MarketItem
                       key={item.tokenId}
