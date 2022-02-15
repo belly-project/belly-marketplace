@@ -4,7 +4,7 @@ import { useContractsContext } from "../../../context/ContractProvider.js";
 import ActionModal from "../../../components/ActionModal.js";
 import FaucetModal from "../../../components/FaucetModal.js";
 import { useNavigate } from "react-router-dom";
-import { localMarketplaceApi } from "../../../context/axios.js";
+import { localMarketplaceApi, marketplaceApi } from "../../../context/axios.js";
 import { parseEther } from "ethers/lib/utils";
 export default function ProfileSidebar() {
   const [{ wallet, balance }] = useContractsContext();
@@ -21,7 +21,7 @@ export default function ProfileSidebar() {
   };
   const getFundsFromFaucet = async () => {
     setLoading(true);
-    const res = await localMarketplaceApi.post("/faucetFundMe", {
+    const res = await marketplaceApi.post("/faucetFundMe", {
       to: wallet,
       amount: parseEther("100"),
     });

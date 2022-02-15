@@ -78,7 +78,7 @@ export default function CrateActionContainer({ detailItem }) {
       const data = await basicFetchURI(itemMinted);
 
       console.log("KE");
-      await localMarketplaceApi.post("addCrateResult", {
+      await marketplaceApi.post("addCrateResult", {
         crateId: 1,
         mintedBy: wallet,
         price: 10,
