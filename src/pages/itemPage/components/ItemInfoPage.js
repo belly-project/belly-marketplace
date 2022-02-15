@@ -3,6 +3,7 @@ import React from "react";
 import { getClassIcon, processWeapon } from "../../../context/utils";
 
 export default function ItemInfoPage({ detailItem }) {
+  console.log(detailItem);
   return (
     <div className="flex mt-8 flex-col">
       <div className="mt-10">
@@ -20,35 +21,30 @@ export default function ItemInfoPage({ detailItem }) {
             <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
               Owner
             </div>
-            <a href="https://mumbai.polygonscan.com/address/0xF4aB07FD449f2466975385c04a12Ae6f1c25a311">
-              <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
-                ({detailItem.owner})
-                <small className="text-gray-2 truncate"></small>
-              </div>
-            </a>
+
+            <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
+              ({detailItem.owner})
+              <small className="text-gray-2 truncate"></small>
+            </div>
           </div>
           <div className="mt-6">
             <div className="text-[#a1a6b6] w-75 font-bold leading-14 text-xs tracking-1 uppercase">
               Description
             </div>
-            <a href="https://mumbai.polygonscan.com/address/0xF4aB07FD449f2466975385c04a12Ae6f1c25a311">
-              <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
-                {detailItem.description}
-                <small className="text-gray-2 truncate"></small>
-              </div>
-            </a>
+            <div className="mt-2 text-lg leading-20 flex items-center cursor-pointer">
+              {detailItem.description}
+            </div>
           </div>
           <div className="mt-6">
             <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
               Class
             </div>
-            <a href="https://mumbai.polygonscan.com/address/0xF4aB07FD449f2466975385c04a12Ae6f1c25a311">
-              <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
-                {getClassIcon(detailItem._class)}
-                <div className="ml-2">{detailItem._class}</div>
-                <small className="text-gray-2 truncate"></small>
-              </div>
-            </a>
+
+            <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
+              {getClassIcon(detailItem.class)}
+              <div className="ml-2">{detailItem.class}</div>
+              <small className="text-gray-2 truncate"></small>
+            </div>
           </div>
         </div>
       </div>

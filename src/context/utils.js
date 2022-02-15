@@ -8,14 +8,15 @@ export const basicFetchURI = async (item) => {
 
   await axios.get(tokenURI).then((res) => {
     if (res.status === 200) {
-      const { name, desc, _class, keyvalues, weapons, image } = res.data;
+      const { name, description, keyvalues, weapons, image } = res.data;
+      const _class = res.data["class"];
       let _item = {
         tokenId: parseInt(item[0].toHexString().toString(16)),
         itemURI: tokenURI,
         image: image,
         name: name,
-        _class: _class,
-        description: desc,
+        class: _class,
+        description: description,
         weapons: weapons,
         stats: keyvalues,
         price: formatEther(item[6]),
