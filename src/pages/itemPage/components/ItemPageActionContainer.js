@@ -8,6 +8,7 @@ import { useContractsContext } from "../../../context/ContractProvider";
 export default function ItemPageActionContainer({ detailItem }) {
   const [showModal, setShowModal] = useState(false);
   const [itemBought, setItemBought] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [priceForItem, setPriceForItem] = useState(0.0);
 
   const [{ bellyERC721Contract, bellyERC20Contract, wallet }] =
@@ -19,6 +20,7 @@ export default function ItemPageActionContainer({ detailItem }) {
   };
 
   const buyToken = async () => {
+    setLoading(true);
     const _approveTransaction = await bellyERC20Contract.approve(
       bellyERC721Contract.address,
       parseEther(detailItem.price)
@@ -38,10 +40,12 @@ export default function ItemPageActionContainer({ detailItem }) {
     tx = await _buyTokenTransaction.wait();
 
     console.log(tx);
+    setLoading(false);
     setItemBought(true);
   };
 
   const putItemforSale = async () => {
+    setLoading(true);
     const transcation = await bellyERC721Contract.toggleForSale(
       detailItem.tokenId,
       parseEther(priceForItem.toString())
@@ -50,6 +54,7 @@ export default function ItemPageActionContainer({ detailItem }) {
     const tx = await transcation.wait();
 
     console.log(tx);
+    setLoading(false);
 
     setItemBought(true);
   };
@@ -78,6 +83,7 @@ export default function ItemPageActionContainer({ detailItem }) {
         <div className="ml-0 md:ml-8 mt-7 w-full md:w-auto md:mt-0">
           <div className="inline-block">
             <MetamaskActionButton
+              stlye={{ display: loading ? "none" : "flex" }}
               text={`${wallet !== detailItem.owner ? "Buy Item" : "Sell Item"}`}
               _onClick={handleOpenModal}
               Modal={
@@ -96,11 +102,12 @@ export default function ItemPageActionContainer({ detailItem }) {
                   setInputValue={
                     wallet !== detailItem.owner ? undefined : setPriceForItem
                   }
+                  loading={loading}
                   image={detailItem.image}
                   notCompletedText={{
                     msg: `${
                       wallet !== detailItem.owner
-                        ? "Buy for for 10 BLY"
+                        ? `Buy for for ${detailItem.price} BLY`
                         : "Add Item for sale"
                     }`,
                     button: `${

@@ -14,6 +14,7 @@ export default function ActionModal({
   notCompletedText,
   completedText,
   image,
+  loading,
 }) {
   return (
     <ReactModal
@@ -34,7 +35,7 @@ export default function ActionModal({
           </div>
           {!completed ? (
             <div>
-              <div className="flex flex-col items-center justify-between">
+              <div className="flex flex-col items-center justify-between h-full">
                 <h1 className="text-white">{notCompletedText.msg}</h1>
                 {inputValue !== undefined && (
                   <input
@@ -43,11 +44,22 @@ export default function ActionModal({
                     onChange={(e) => setInputValue(e.target.value)}
                   />
                 )}
-                <MetamaskActionButton
-                  className={"mt-4"}
-                  text={notCompletedText.button}
-                  _onClick={action}
-                />
+                {loading ? (
+                  <button
+                    className={`flex justify-evenly items-center border-[#3a3f50] border px-4 py-4 relative rounded transition  border text-gray-2`}
+                  >
+                    <div className="w-2 h-2 p-2 border-blue border-4 rounded-lg animate-spin">
+                      {" "}
+                    </div>
+                    <p className="pl-4 text-white">Processing...</p>
+                  </button>
+                ) : (
+                  <MetamaskActionButton
+                    className={"mt-4"}
+                    text={notCompletedText.button}
+                    _onClick={action}
+                  />
+                )}
               </div>
             </div>
           ) : (
