@@ -48,11 +48,11 @@ export default function LootSidebar({ setSection }) {
             <h6 className="ml-2 text-sx">Crates</h6>
           </div>
           <div
-            onClick={() => changeSection("chanceBid")}
-            className="relative mt-4 px-2 py-4 rounded flex flex-row items-center cursor-pointer"
+            /*  onClick={() => changeSection("chanceBid")} */
+            className="relative mt-4 px-2 py-4 rounded flex flex-row items-center"
           >
-            <Icon icon="ph:activity-bold" color="white" />
-            <h6 className="ml-2 text-sx">Chance Bid</h6>
+            <Icon icon="ph:activity-bold" color="#3a3f50" />
+            <h6 className="ml-2 text-sx text-[#3a3f50]">Chance Bid</h6>
           </div>
         </div>
       </div>
