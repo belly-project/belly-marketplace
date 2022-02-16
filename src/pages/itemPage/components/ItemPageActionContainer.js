@@ -28,8 +28,6 @@ export default function ItemPageActionContainer({ detailItem }) {
 
     let tx = await _approveTransaction.wait();
 
-    console.log(tx);
-
     const _buyTokenTransaction = await bellyERC721Contract.buyToken(
       wallet,
       bellyERC20Contract.address,
@@ -39,7 +37,6 @@ export default function ItemPageActionContainer({ detailItem }) {
 
     tx = await _buyTokenTransaction.wait();
 
-    console.log(tx);
     setLoading(false);
     setItemBought(true);
   };
@@ -51,9 +48,8 @@ export default function ItemPageActionContainer({ detailItem }) {
       parseEther(priceForItem.toString())
     );
 
-    const tx = await transcation.wait();
+    await transcation.wait();
 
-    console.log(tx);
     setLoading(false);
 
     setItemBought(true);

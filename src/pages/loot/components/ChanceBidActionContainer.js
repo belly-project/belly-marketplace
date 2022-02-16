@@ -10,7 +10,6 @@ export default function ChanceBidActionContainer({ token }) {
   const [loading, setLoading] = useState(false);
   const [{ bellyChanceBidContract }] = useContractsContext();
   const addBidForChanceBid = async () => {
-    console.log("HJE");
     let tx = await bellyChanceBidContract.enterChanceBid(
       token.itemId,
       bidValue
@@ -18,7 +17,6 @@ export default function ChanceBidActionContainer({ token }) {
 
     tx = await tx.wait();
 
-    console.log(tx);
     setBidCompleted(true);
   };
   const [bidCompleted, setBidCompleted] = useState(false);
