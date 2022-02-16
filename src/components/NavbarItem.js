@@ -1,14 +1,14 @@
 import { Icon } from "@iconify/react";
-import { Link } from "@mui/material";
 import React from "react";
 
 export default function NavbarItem({ icon, text, to, location, disabled }) {
+  console.log(location, to);
   return (
     <a
       className={`flex px-4 items-center cursor-pointer ${
         disabled && "text-[#232931]"
-      } bg-${
-        location === to ? "[#232931]" : "transparent"
+      } ${
+        location === to ? "bg-[#232931]" : "bg-transparent"
       } mx-4 hidden md:flex`}
       href={!disabled && to}
     >

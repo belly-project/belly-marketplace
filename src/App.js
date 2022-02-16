@@ -1,5 +1,5 @@
 import "./App.css";
-import Navbar from "./components/Header";
+import Navbar from "./components/Navbar";
 import { actionTypes } from "./context/reducer";
 import { useCallback, useEffect } from "react";
 import { useContractsContext } from "./context/ContractProvider";
@@ -60,7 +60,7 @@ function App() {
         <Navbar />
         {wallet !== "" && (
           <Routes>
-            <Route path="loot/" element={<LootContainer />} />
+            <Route path="loot" element={<LootContainer />} />
 
             <Route path="profile/inventory" element={<ProfileContainer />} />
 
