@@ -7,11 +7,14 @@ import MarketBodyOptions from "./components/MarketBodyOptions.js";
 import MarketItem from "./components/MarketItem.js";
 
 export default function MarketContainer() {
+  const [classSelected, setClassSelected] = useState("");
+  const [orderSelected, setOrderSelected] = useState(1);
   const [
     { marketItems, marketItemsFiltered, bellyERC721Contract, wallet },
     dispatch,
   ] = useContractsContext();
   const [filters, setFilters] = useState({});
+  const [ordered, setOrdered] = useState({});
   const fetchMarketItemsData = useCallback(async () => {
     let _response = await bellyERC721Contract.getItemsForSale({});
 
@@ -41,7 +44,12 @@ export default function MarketContainer() {
 
   return (
     <div className="flex flex-row">
-      <Filters setFilterItem={setFilters} />
+      <Filters
+        setFilterItem={setFilters}
+        orderSelected={orderSelected}
+        classSelected={classSelected}
+        setClassSelected={setClassSelected}
+      />
       <div className="flex flex-col w-full mt-4">
         <div
           className="overflow-x-auto flex-1 px-8 py-4 md:px-32 md:py-0"
@@ -49,7 +57,11 @@ export default function MarketContainer() {
         >
           <div className="w-full h-full relative">
             <div className="w-full h-full relative">
-              {/* <MarketBodyOptions /> */}
+              <MarketBodyOptions
+                classSelected={classSelected}
+                orderSelected={orderSelected}
+                setOrderSelected={setOrderSelected}
+              />
 
               <div className="flex mt-8 flex-wrap justify-center w-full">
                 {marketItemsFiltered?.map((item) => {

@@ -247,3 +247,61 @@ export const processWeapon = (weaponString) => {
       return <div></div>;
   }
 };
+
+const compareLower = (a, b) => {
+  if (a.price < b.price) {
+    return -1;
+  }
+  if (a.price > b.price) {
+    return 1;
+  }
+  return 0;
+};
+const compareHigher = (a, b) => {
+  if (a.price > b.price) {
+    return -1;
+  }
+  if (a.price < b.price) {
+    return 1;
+  }
+  return 0;
+};
+const compareHigherId = (a, b) => {
+  if (a.tokenId > b.tokenId) {
+    return -1;
+  }
+  if (a.tokenId < b.tokenId) {
+    return 1;
+  }
+  return 0;
+};
+
+const compareLowerId = (a, b) => {
+  if (a.tokenId < b.tokenId) {
+    return -1;
+  }
+  if (a.tokenId > b.tokenId) {
+    return 1;
+  }
+  return 0;
+};
+
+export const orderItems = (value, itemsToOrder, setValue) => {
+  if (setValue) {
+    setValue(value);
+  }
+  switch (value) {
+    case "1":
+      return itemsToOrder.sort(compareLower);
+
+    case "2":
+      return itemsToOrder.sort(compareHigher);
+
+    case "3":
+      return itemsToOrder.sort(compareHigherId);
+    case "4":
+      return itemsToOrder.sort(compareLowerId);
+    default:
+      return itemsToOrder;
+  }
+};

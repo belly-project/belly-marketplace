@@ -1,32 +1,43 @@
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useState } from "react";
+import { useContractsContext } from "../../../context/ContractProvider";
+import { actionTypes } from "../../../context/reducer";
+import { orderItems } from "../../../context/utils";
 
-export default function MarketBodyOptions() {
+export default function MarketBodyOptions({
+  classSelected,
+  orderSelected,
+  setOrderSelected,
+}) {
+  const [{ marketItems, marketItemsFiltered }, dispatch] =
+    useContractsContext();
+  const orderMarketItems = (value) => {
+    const orderedItems = orderItems(
+      value,
+      classSelected !== "" ? marketItemsFiltered : marketItems,
+      setOrderSelected
+    );
+    dispatch({
+      type: actionTypes.SET_MARKET_ITEMS_FILTERED,
+      marketItems: orderedItems,
+    });
+  };
+
   return (
     <div className="relative flex flex-wrap justify-between flex-col-reverse xl:flex-row">
       <div className="flex justify- items-center xl:justify-center">
         <div className="flex items-center w-full justify-between xl:w-auto">
-          <div className="mr-4">
-            <div className="text-left" style={{ width: "158px" }}>
-              <button className="px-2 py-2 relative rounded transition focus:outline-none border w-full text-white border-gray-2 hover:border-[#a1a6b6] active:border-[#3a3f50] bg-gray-5 hover:bg-gray-4 active:bg-gray-6">
-                <span className="visible">
-                  <div className="flex items-center text-left justify-between">
-                    <Icon icon="fe:search" color="white" />
-                  </div>
-                </span>
-              </button>
-            </div>
-          </div>
           <div>
             <div className="text-left" style={{ width: "158px" }}>
-              <button className="px-2 py-2 relative rounded transition focus:outline-none border w-full text-white border-gray-2 hover:border-[#a1a6b6] active:border-[#3a3f50] bg-gray-5 hover:bg-gray-4 active:bg-gray-6">
-                <span className="visible">
-                  <div className="flex items-center text-left justify-between">
-                    <div>Lowest Price</div>
-                    <Icon icon="ant-design:down-outlined" color="white" />
-                  </div>
-                </span>
-              </button>
+              <select
+                onChange={(e) => orderMarketItems(e.target.value)}
+                className="text-white bg-[#242735] px-2 py-2 relative rounded transition focus:outline-none border w-full text-white border-gray-2 hover:border-[#a1a6b6] active:border-[#3a3f50] bg-gray-5 hover:bg-gray-4 active:bg-gray-6"
+              >
+                <option value={1}>Lowest Price</option>
+                <option value={2}>Highest Price</option>
+                <option value={3}>More Recent</option>
+                <option value={4}>Older</option>
+              </select>
             </div>
           </div>
 

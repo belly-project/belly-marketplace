@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import { useContractsContext } from "../../../context/ContractProvider.js";
 import { actionTypes } from "../../../context/reducer.js";
+import { orderItems } from "../../../context/utils.js";
 import ClassFilterItem from "./ClassFilterItem.js";
 
 const statsFilter = [
@@ -49,8 +50,11 @@ const classFilters = [
   },
 ];
 
-export default function Filters() {
-  const [classSelected, setClassSelected] = useState("");
+export default function Filters({
+  classSelected,
+  setClassSelected,
+  orderSelected,
+}) {
   const [healthFilter, setHealthFilter] = useState({
     min: 10,
     max: 300,
@@ -73,6 +77,9 @@ export default function Filters() {
     //Filtrar por clase
     if (_class === classSelected) {
       setClassSelected("");
+      if (orderSelected) {
+        filteredItems = orderItems(orderSelected, filteredItems);
+      }
     } else {
       filteredItems = marketItems.filter(
         (item) => item.class === _class.toUpperCase()
