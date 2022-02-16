@@ -1,9 +1,10 @@
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useState } from "react";
 import { useContractsContext } from "../../../context/ContractProvider.js";
 import { actionTypes } from "../../../context/reducer.js";
 import { filterByStats, orderItems } from "../../../context/utils.js";
 import ClassFilterItem from "./ClassFilterItem.js";
+import { Collapse } from "react-collapse";
 
 const classFilters = [
   {
@@ -49,6 +50,8 @@ export default function Filters({
   orderSelected,
   statsFiltersState,
 }) {
+  const [collapsedClass, setCollapseClass] = useState(true);
+  const [collapsedStats, setCollapseStats] = useState(true);
   const { health, speed, strength, magic } = statsFiltersState;
   const statsFilter = [
     {
@@ -183,50 +186,72 @@ export default function Filters({
           <div className="" style={{ boxSizing: "border-box" }}>
             <div className="CollapsePannel_container_classes py-4 pr-2 pl-4 border-t border-#3a3f50">
               <div className="flex items-center justify-between">
-                <div className="flex items-center cursor-pointer w-full">
+                <div
+                  onClick={() => setCollapseClass(!collapsedClass)}
+                  className="flex items-center cursor-pointer w-full"
+                >
                   <div className="CollapseTrigger_icon__2dF5B CollapseTrigger_isOpen__EdE8Y">
-                    <Icon icon="ant-design:caret-down-filled" color="gray" />
+                    <Icon
+                      icon={`ant-design:caret-${
+                        collapsedClass ? "down" : "right"
+                      }-filled`}
+                      color="gray"
+                    />
                   </div>
                   <div className="ml-3 font-la text-28">Class</div>
                 </div>
               </div>
-              <div className="flex flex-wrap mt-4">
-                {classFilters.map((item) => {
-                  return (
-                    <ClassFilterItem
-                      selected={item.classText === classSelected}
-                      key={item.classText}
-                      classText={item.classText}
-                      icon={item.icon}
-                      color={item.color}
-                      onClick={() => filterByClass(item.classText)}
-                    />
-                  );
-                })}
-              </div>
+              <Collapse isOpened={collapsedClass}>
+                <div className="flex flex-wrap mt-4">
+                  {classFilters.map((item) => {
+                    return (
+                      <ClassFilterItem
+                        selected={item.classText === classSelected}
+                        key={item.classText}
+                        classText={item.classText}
+                        icon={item.icon}
+                        color={item.color}
+                        onClick={() => filterByClass(item.classText)}
+                      />
+                    );
+                  })}
+                </div>
+              </Collapse>
             </div>
           </div>
           <div className="" style={{ boxSizing: "border-box" }}>
-            <div className="CollapsePannel_container_classes py-4 pr-2 pl-4 border-t border-[#3a3f50]">
+            <div className="py-4 pr-2 pl-4 border-t border-[#3a3f50]">
               <div className="flex items-center justify-between">
-                <div className="flex items-center cursor-pointer w-full">
-                  <div className="CollapseTrigger_icon__2dF5B CollapseTrigger_isOpen__EdE8Y">
-                    <Icon icon="ant-design:caret-down-filled" color="gray" />
+                <div
+                  onClick={() => setCollapseStats(!collapsedStats)}
+                  className="flex items-center cursor-pointer w-full"
+                >
+                  <div>
+                    <Icon
+                      icon={`ant-design:caret-${
+                        collapsedStats ? "down" : "right"
+                      }-filled`}
+                      color="gray"
+                    />
                   </div>
                   <div className="flex w-full justify-between">
                     <div className="ml-3 font-la text-28">Stats</div>
-                    <button
-                      onClick={(e) => applyStatsFilter()}
-                      className="mr-3 font-la text-[#046cfc] text-28"
-                    >
-                      Apply
-                    </button>
-                    <button
-                      onClick={(e) => resetStatsFilter()}
-                      className="mr-3 font-la text-[#046cfc] text-28"
-                    >
-                      Reset
-                    </button>
+                    {collapsedStats && (
+                      <>
+                        <button
+                          onClick={(e) => applyStatsFilter()}
+                          className="mr-3 font-la text-[#046cfc] text-28"
+                        >
+                          Apply
+                        </button>
+                        <button
+                          onClick={(e) => resetStatsFilter()}
+                          className="mr-3 font-la text-[#046cfc] text-28"
+                        >
+                          Reset
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -234,72 +259,74 @@ export default function Filters({
                 className="CollapseContent_container__2FLT6 CollapseContent_isOpen__3LOKg"
                 style={{}}
               >
-                <div className="px-2 mt-2 sm:px-0">
-                  {statsFilter?.map((filterItem) => {
-                    return (
-                      <div key={filterItem.name}>
-                        <div className="flex justify-between mt-4">
-                          <div className="flex items-center">
-                            <Icon
-                              icon={filterItem.icon}
-                              color={filterItem.color}
-                            />
-                            <div className="text-xs text-gray-1 uppercase ml-4 font-bold tracking-1">
-                              {filterItem.name}
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="mt-4"
-                          style={{ width: "calc(100% - 16px)" }}
-                        >
-                          <div className="InputRangeTextBox_container__3pMgJ pb-4 InputRangeTextBox_hasTextbox__yJ__-">
-                            <div className="flex justify-between items-center relative StatFilter_containerInputs__LdeKA">
-                              <div className="InputRangeTextBox_input__2rEFp">
-                                <div className="input-group inline-block rounded relative w-full">
-                                  <input
-                                    size="20"
-                                    required=""
-                                    type="number"
-                                    className="p-1 mx-1 w-28 border transition text-14 input-field border-[#3a3f50] focus:border-[#046cfc] bg-[#11131b] text-white placeholder-[#6b7185]"
-                                    value={filterItem.state.min}
-                                    onChange={(e) =>
-                                      handleChange(
-                                        "min",
-                                        e.target.value,
-                                        filterItem
-                                      )
-                                    }
-                                  />
-                                </div>
-                              </div>
-                              <span className="InputRangeTextBox_divide__33-W0">
-                                -
-                              </span>
-                              <div className="InputRangeTextBox_input__2rEFp">
-                                <div className="input-group inline-block rounded relative w-full">
-                                  <input
-                                    size="20"
-                                    type="number"
-                                    className="p-1 mx-2 w-28 border transition text-14 input-field border-[#3a3f50] focus:border-[#046cfc] bg-[#11131b] text-white placeholder-[#6b7185]"
-                                    value={filterItem.state.max}
-                                    onChange={(e) =>
-                                      handleChange(
-                                        "max",
-                                        e.target.value,
-                                        filterItem
-                                      )
-                                    }
-                                  />
-                                </div>
+                <Collapse isOpened={collapsedStats}>
+                  <div className="px-2 mt-2 sm:px-0">
+                    {statsFilter?.map((filterItem) => {
+                      return (
+                        <div key={filterItem.name}>
+                          <div className="flex justify-between mt-4">
+                            <div className="flex items-center">
+                              <Icon
+                                icon={filterItem.icon}
+                                color={filterItem.color}
+                              />
+                              <div className="text-xs text-gray-1 uppercase ml-4 font-bold tracking-1">
+                                {filterItem.name}
                               </div>
                             </div>
                           </div>
+                          <div
+                            className="mt-4"
+                            style={{ width: "calc(100% - 16px)" }}
+                          >
+                            <div className="InputRangeTextBox_container__3pMgJ pb-4 InputRangeTextBox_hasTextbox__yJ__-">
+                              <div className="flex justify-between items-center relative StatFilter_containerInputs__LdeKA">
+                                <div className="InputRangeTextBox_input__2rEFp">
+                                  <div className="input-group inline-block rounded relative w-full">
+                                    <input
+                                      size="20"
+                                      required=""
+                                      type="number"
+                                      className="p-1 mx-1 w-28 border transition text-14 input-field border-[#3a3f50] focus:border-[#046cfc] bg-[#11131b] text-white placeholder-[#6b7185]"
+                                      value={filterItem.state.min}
+                                      onChange={(e) =>
+                                        handleChange(
+                                          "min",
+                                          e.target.value,
+                                          filterItem
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <span className="InputRangeTextBox_divide__33-W0">
+                                  -
+                                </span>
+                                <div className="InputRangeTextBox_input__2rEFp">
+                                  <div className="input-group inline-block rounded relative w-full">
+                                    <input
+                                      size="20"
+                                      type="number"
+                                      className="p-1 mx-2 w-28 border transition text-14 input-field border-[#3a3f50] focus:border-[#046cfc] bg-[#11131b] text-white placeholder-[#6b7185]"
+                                      value={filterItem.state.max}
+                                      onChange={(e) =>
+                                        handleChange(
+                                          "max",
+                                          e.target.value,
+                                          filterItem
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                </Collapse>
               </div>
             </div>
           </div>

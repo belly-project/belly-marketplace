@@ -79,8 +79,9 @@ export default function ProfileSidebar() {
             <h6 className="ml-2 text-sx">Inventory</h6>
           </a>
           <a
-            className="relative mt-4 px-2 py-4 rounded flex flex-row items-center cursor-pointer"
+            className="relative mt-4 px-2 py-4 rounded flex flex-row items-center cursor-not-allowed"
             href="/profile/activity/"
+            style={{ opacity: 0.3 }}
           >
             <Icon icon="ph:activity-bold" color="white" />
             <h6 className="ml-2 text-sx">Activity</h6>

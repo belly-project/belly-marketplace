@@ -85,16 +85,29 @@ export default function Navbar() {
           <Icon icon="mdi:alpha-b-circle-outline" color="white" fontSize={32} />
         </div>
         <NavbarItem
-          icon={"healthicons:market-stall"}
+          icon={"map:storage"}
+          text={"Inventory"}
+          to={"/profile/inventory"}
+          location={location.pathname}
+        />
+        <NavbarItem
+          icon={"map:grocery-or-supermarket"}
           text={"Marketplace"}
           to={"/"}
           location={location.pathname}
         />
         <NavbarItem
-          icon={"akar-icons:shipping-box-v2"}
+          icon={"map:jewelry-store"}
           text={"Belly Loot"}
           location={location.pathname}
           to={"/loot"}
+        />
+        <NavbarItem
+          icon={"map:museum"}
+          text={"Battleground"}
+          to={"/battle"}
+          location={location.pathname}
+          disabled={true}
         />
         <div className="hidden  md:flex ml-auto items-center">
           <div className="px-2">
