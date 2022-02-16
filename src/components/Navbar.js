@@ -12,8 +12,10 @@ import { bellyErc20, bellyErc721 } from "../context/contracts/addresses";
 
 export default function Navbar() {
   const location = useLocation();
-  const [{ wallet, balance, web3Modal, bellyERC20Contract }, dispatch] =
-    useContractsContext();
+  const [
+    { wallet, balance, web3Modal, bellyERC20Contract, correctChain },
+    dispatch,
+  ] = useContractsContext();
 
   const copyAddress = (address) => {
     navigator.clipboard.writeText(address);
@@ -42,14 +44,16 @@ export default function Navbar() {
 
   useEffect(() => {
     if (wallet !== "") {
-      getWalletBalance().then((res) => {
-        dispatch({
-          type: actionTypes.SET_BALANCE,
-          balance: res.balance,
+      if (correctChain) {
+        getWalletBalance().then((res) => {
+          dispatch({
+            type: actionTypes.SET_BALANCE,
+            balance: res.balance,
+          });
         });
-      });
+      }
     }
-  }, [dispatch, getWalletBalance, location.pathname, wallet]);
+  }, [correctChain, dispatch, getWalletBalance, location.pathname, wallet]);
   return (
     <div className="sticky top-0 w-full items-start z-10">
       <div className="inline-flex w-full bg-black">

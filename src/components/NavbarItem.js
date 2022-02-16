@@ -2,7 +2,6 @@ import { Icon } from "@iconify/react";
 import React from "react";
 
 export default function NavbarItem({ icon, text, to, location, disabled }) {
-  console.log(location, to);
   return (
     <a
       className={`flex px-4 items-center cursor-pointer ${

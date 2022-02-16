@@ -36,6 +36,7 @@ export const initialState = {
   marketItemsFiltered: [],
   wallet: "",
   balance: 0,
+  correctChain: true,
 };
 
 export const actionTypes = {
@@ -109,6 +110,7 @@ const reducer = (state, action) => {
         wallet: action.wallet,
         provider: action.provider,
         web3Modal: action.web3Modal,
+        correctChain: action.correctChain,
       };
     default:
       return state;
