@@ -24,7 +24,6 @@ export const basicFetchURI = async (item) => {
       };
       result = _item;
     } else {
-      console.log("EII");
     }
   });
   return result;
@@ -32,7 +31,7 @@ export const basicFetchURI = async (item) => {
 
 export const chanceBidFetchURI = async (item) => {
   const tokenURI = item[2];
-  console.log(item);
+
   let result = [];
   await axios.get(tokenURI).then((res) => {
     if (res.status === 200) {
@@ -49,7 +48,6 @@ export const chanceBidFetchURI = async (item) => {
       };
       result = _item;
     } else {
-      console.log("EII");
     }
   });
   return result;
@@ -70,14 +68,12 @@ export const crateFetchURI = async (item) => {
       };
       result = _item;
     } else {
-      console.log("EII");
     }
   });
   return result;
 };
 
 export const chanceBidFor = async (item, detailItem) => {
-  console.log(item, detailItem);
   let _item = {
     owner: item[1],
     total: detailItem.total,
@@ -103,7 +99,6 @@ export const profileFetchURI = async (item) => {
       };
       result = _item;
     } else {
-      console.log("EII");
     }
   });
   return result;

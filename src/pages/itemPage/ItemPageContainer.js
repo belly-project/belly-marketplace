@@ -40,7 +40,6 @@ export default function ItemPageContainer() {
     if (wallet !== "" && !token.owner) {
       fetchTokenData().then((res) => {
         if (res !== 0) {
-          console.log(res);
           setToken(res);
         } else {
           navigate("/");

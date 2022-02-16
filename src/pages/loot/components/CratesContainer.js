@@ -18,7 +18,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
   const fetchLatestChanceBids = useCallback(async () => {
     const bids = await bellyDropsContract.getCrateResults();
     let formattedItems = [];
-    console.log(bids);
+
     formattedItems = await Promise.all(
       bids.map(async (item) => {
         return await crateFetchURI(item, 4);

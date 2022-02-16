@@ -37,10 +37,7 @@ export default function Navbar() {
       });
 
       if (wasAdded) {
-        console.log("Thanks for your interest!");
-        throw Error("Already Imported");
       } else {
-        console.log("Your loss!");
       }
     } catch (error) {
       console.log(error);

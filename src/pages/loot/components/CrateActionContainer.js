@@ -47,9 +47,7 @@ export default function CrateActionContainer({ detailItem }) {
       parseEther("10")
     );
 
-    tx = await _buyCrateTransaction.wait();
-
-    console.log(tx);
+    await _buyCrateTransaction.wait();
   };
 
   const mintCrateToken = useCallback(
@@ -60,15 +58,14 @@ export default function CrateActionContainer({ detailItem }) {
 
       const resultData = resultCrate.data;
       const tokenURI = resultData.tokenURI;
-      console.log(resultData);
+
       if (tokenURI) {
         const mintTx = await bellyERC721Contract.mintBellyCharacter(
           0,
           wallet,
           tokenURI
         );
-        let tx = await mintTx.wait();
-        console.log(tx);
+        await mintTx.wait();
       }
 
       const tokenId = await bellyERC721Contract._tokenIds();
@@ -77,7 +74,6 @@ export default function CrateActionContainer({ detailItem }) {
 
       const data = await basicFetchURI(itemMinted);
 
-      console.log("KE");
       await marketplaceApi.post("addCrateResult", {
         crateId: 1,
         mintedBy: wallet,
@@ -98,7 +94,6 @@ export default function CrateActionContainer({ detailItem }) {
         .once("CrateOpened", (random, requester) => {
           if (openCrate) {
             if (requester === wallet) {
-              console.log("K");
               mintCrateToken(random).then((res) => {
                 setOpenCrate(false);
                 setCrateSucced(true);

@@ -66,9 +66,7 @@ function App() {
     });
 
     if (created) {
-      console.log("Thanks for your interest!");
     } else {
-      console.log("Your loss!");
     }
   };
   window.ethereum.on("chainChanged", handleChainChanged);

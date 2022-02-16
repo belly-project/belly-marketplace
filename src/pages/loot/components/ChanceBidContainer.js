@@ -18,7 +18,7 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
   const fetchLatestChanceBids = useCallback(async () => {
     const bids = await bellyChanceBidContract.getCompletedChanceBids();
     let formattedItems = [];
-    console.log(bids);
+
     formattedItems = await Promise.all(
       bids.map(async (item) => {
         return await chanceBidFetchURI(item, 2);
