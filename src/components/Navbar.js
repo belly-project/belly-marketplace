@@ -38,6 +38,7 @@ export default function Navbar() {
 
       if (wasAdded) {
         console.log("Thanks for your interest!");
+        throw Error("Already Imported");
       } else {
         console.log("Your loss!");
       }
@@ -101,22 +102,25 @@ export default function Navbar() {
         <div className="hidden  md:flex ml-auto items-center">
           <div className="px-2">
             <div className="flex flex-col items-center justify-center">
-              <div className="mr-4 flex ">
-                <div className="flex items-center mr-4">
-                  <div>BellyToken</div>
-                  <Icon
-                    className="animate-bounce mx-2 cursor-pointer hover:animate-ping"
-                    onClick={() => addToken(bellyErc20)}
-                    icon="gg:import"
-                    color="white"
-                    width={24}
-                  />
+              {balance < 0.0 && (
+                <div className="mr-4 flex ">
+                  <div className="flex items-center mr-4">
+                    <div>BellyToken</div>
+                    <Icon
+                      className="animate-bounce mx-2 cursor-pointer hover:animate-ping"
+                      onClick={() => addToken(bellyErc20)}
+                      icon="gg:import"
+                      color="white"
+                      width={24}
+                    />
+                  </div>
+
+                  <div className="mr- text-[#a1a6b6]">
+                    {bellyErc20.substring(0, 4)}...
+                    {bellyErc20.substring(wallet.length - 4)}
+                  </div>
                 </div>
-                <div className="mr- text-[#a1a6b6]">
-                  {bellyErc20.substring(0, 4)}...
-                  {bellyErc20.substring(wallet.length - 4)}
-                </div>
-              </div>
+              )}
             </div>
           </div>
           <div className="px-2">
