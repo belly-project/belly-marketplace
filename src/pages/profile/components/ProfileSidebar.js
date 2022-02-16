@@ -89,7 +89,7 @@ export default function ProfileSidebar() {
             className="relative mt-4 px-2 py-4 rounded flex flex-row items-center cursor-pointer"
             onClick={() => openFaucetModal()}
           >
-            <Icon icon="jam:medal-f" color="#white" />
+            <Icon className="animate-ping" icon="jam:medal-f" color="#white" />
             <h6 className="ml-2 text-sx">Claim Tokens</h6>
             <FaucetModal
               loading={loading}

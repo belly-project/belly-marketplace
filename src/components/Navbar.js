@@ -17,9 +17,35 @@ export default function Navbar() {
     dispatch,
   ] = useContractsContext();
 
-  const copyAddress = (address) => {
-    navigator.clipboard.writeText(address);
+  const addToken = async () => {
+    const tokenAddress = "0xa035dFb92Fb3a3Dd8Be8ad5E2E8E5B872D940B7F";
+    const tokenSymbol = "BLY";
+    const tokenDecimals = 18;
+
+    try {
+      // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+      const wasAdded = await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20", // Initially only supports ERC20, but eventually more!
+          options: {
+            address: tokenAddress, // The address that the token is at.
+            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+            decimals: tokenDecimals, // The number of decimals in the token
+          },
+        },
+      });
+
+      if (wasAdded) {
+        console.log("Thanks for your interest!");
+      } else {
+        console.log("Your loss!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const getWalletBalance = useCallback(async () => {
     const _balance = await bellyERC20Contract.balanceOf(wallet);
     return { balance: formatEther(_balance) };
@@ -76,12 +102,14 @@ export default function Navbar() {
           <div className="px-2">
             <div className="flex flex-col items-center justify-center">
               <div className="mr-4 flex ">
-                <div className="flex mr-4">
+                <div className="flex items-center mr-4">
                   <div>BellyToken</div>
                   <Icon
-                    onClick={() => copyAddress(bellyErc20)}
-                    icon="akar-icons:copy"
+                    className="animate-bounce mx-2 cursor-pointer hover:animate-ping"
+                    onClick={() => addToken(bellyErc20)}
+                    icon="gg:import"
                     color="white"
+                    width={24}
                   />
                 </div>
                 <div className="mr- text-[#a1a6b6]">
