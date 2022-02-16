@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { Icon } from "@iconify/react";
 import axios from "axios";
-import { formatEther, id } from "ethers/lib/utils";
+import { formatEther } from "ethers/lib/utils";
 
 export const basicFetchURI = async (item) => {
   const tokenURI = item[2];
@@ -288,8 +289,9 @@ const compareLowerId = (a, b) => {
 
 export const orderItems = (value, itemsToOrder, setValue) => {
   if (setValue) {
-    setValue(value);
+    setValue(parseInt(value));
   }
+  console.log(itemsToOrder);
   switch (value) {
     case "1":
       return itemsToOrder.sort(compareLower);
@@ -304,4 +306,54 @@ export const orderItems = (value, itemsToOrder, setValue) => {
     default:
       return itemsToOrder;
   }
+};
+
+export const filterByStats = (statsFiltersState, itemsToFilter) => {
+  //Comprobar quins estan fora dels minims u maxims,
+
+  let filteredItems = itemsToFilter;
+  if (
+    statsFiltersState.health.state.min !== 10 &&
+    statsFiltersState.health.state.min !== 300
+  ) {
+    console.log(statsFiltersState.health.state);
+    filteredItems = filteredItems.filter(
+      (item) =>
+        item.stats.health >= statsFiltersState.health.state.min &&
+        item.stats.health <= statsFiltersState.health.state.max
+    );
+  }
+
+  if (
+    statsFiltersState.speed.state.min !== 10 &&
+    statsFiltersState.speed.state.min !== 200
+  ) {
+    filteredItems = filteredItems.filter(
+      (item) =>
+        item.stats.speed >= statsFiltersState.speed.state.min &&
+        item.stats.speed <= statsFiltersState.speed.state.max
+    );
+  }
+  console.log(statsFiltersState.strength.state);
+  if (
+    statsFiltersState.strength.state.min !== 10 &&
+    statsFiltersState.strength.state.min !== 200
+  ) {
+    filteredItems = filteredItems.filter(
+      (item) =>
+        item.stats.strength >= parseInt(statsFiltersState.strength.state.min) &&
+        item.stats.strength <= statsFiltersState.strength.state.max
+    );
+  }
+  if (
+    statsFiltersState.magic.state.min !== 0 &&
+    statsFiltersState.magic.state.min !== 200
+  ) {
+    filteredItems = filteredItems.filter(
+      (item) =>
+        item.stats.magic >= statsFiltersState.magic.min &&
+        item.stats.magic <= statsFiltersState.magic.max
+    );
+  }
+  return filteredItems;
 };

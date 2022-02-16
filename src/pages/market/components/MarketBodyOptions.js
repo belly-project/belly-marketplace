@@ -2,21 +2,25 @@ import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import { useContractsContext } from "../../../context/ContractProvider";
 import { actionTypes } from "../../../context/reducer";
-import { orderItems } from "../../../context/utils";
+import { filterByStats, orderItems } from "../../../context/utils";
 
 export default function MarketBodyOptions({
   classSelected,
   orderSelected,
   setOrderSelected,
+  statsFiltersState,
 }) {
   const [{ marketItems, marketItemsFiltered }, dispatch] =
     useContractsContext();
   const orderMarketItems = (value) => {
-    const orderedItems = orderItems(
+    let orderedItems = orderItems(
       value,
       classSelected !== "" ? marketItemsFiltered : marketItems,
       setOrderSelected
     );
+
+    orderedItems = filterByStats(statsFiltersState, orderedItems);
+
     dispatch({
       type: actionTypes.SET_MARKET_ITEMS_FILTERED,
       marketItems: orderedItems,

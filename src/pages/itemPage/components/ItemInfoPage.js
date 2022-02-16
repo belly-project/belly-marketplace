@@ -83,7 +83,7 @@ export default function ItemInfoPage({ detailItem }) {
           </div>
           <div className="w-1/2 sm:w-auto mb-2">
             <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-[#a1a6b6]">
-              Skill
+              strength
             </div>
             <div className="flex items-center">
               <Icon icon="icon-park-outline:muscle" color="red" />

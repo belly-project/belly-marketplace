@@ -1,20 +1,35 @@
+/* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useState } from "react";
 import { useContractsContext } from "../../context/ContractProvider.js";
 import { actionTypes } from "../../context/reducer.js";
-import { basicFetchURI } from "../../context/utils.js";
+import { basicFetchURI, orderItems } from "../../context/utils.js";
 import Filters from "./components/Filters.js";
 import MarketBodyOptions from "./components/MarketBodyOptions.js";
 import MarketItem from "./components/MarketItem.js";
 
 export default function MarketContainer() {
   const [classSelected, setClassSelected] = useState("");
-  const [orderSelected, setOrderSelected] = useState(1);
+  const [orderSelected, setOrderSelected] = useState("1");
   const [
     { marketItems, marketItemsFiltered, bellyERC721Contract, wallet },
     dispatch,
   ] = useContractsContext();
-  const [filters, setFilters] = useState({});
-  const [ordered, setOrdered] = useState({});
+  const [healthFilter, setHealthFilter] = useState({
+    min: 10,
+    max: 300,
+  });
+  const [speedFilter, setSpeedFilter] = useState({
+    min: 10,
+    max: 200,
+  });
+  const [strengthFilter, setStrengthFilter] = useState({
+    min: 10,
+    max: 200,
+  });
+  const [magicFilter, setMagicFilter] = useState({
+    min: 0,
+    max: 200,
+  });
   const fetchMarketItemsData = useCallback(async () => {
     let _response = await bellyERC721Contract.getItemsForSale({});
 
@@ -26,12 +41,15 @@ export default function MarketContainer() {
         return await basicFetchURI(item);
       })
     );
+
+    formattedItems = orderItems("1", formattedItems);
     return formattedItems;
   }, [bellyERC721Contract, wallet]);
 
   useEffect(() => {
     if (wallet !== "") {
       fetchMarketItemsData().then((res) => {
+        console.log(res);
         dispatch({
           type: actionTypes.SET_MARKET_ITEMS,
           marketItems: res,
@@ -41,14 +59,31 @@ export default function MarketContainer() {
 
     return () => {};
   }, [bellyERC721Contract, dispatch, fetchMarketItemsData, wallet]);
-
+  const statsFiltersState = {
+    health: {
+      state: healthFilter,
+      setState: setHealthFilter,
+    },
+    speed: {
+      state: speedFilter,
+      setState: setSpeedFilter,
+    },
+    strength: {
+      state: strengthFilter,
+      setState: setStrengthFilter,
+    },
+    magic: {
+      state: magicFilter,
+      setState: setMagicFilter,
+    },
+  };
   return (
     <div className="flex flex-row">
       <Filters
-        setFilterItem={setFilters}
         orderSelected={orderSelected}
         classSelected={classSelected}
         setClassSelected={setClassSelected}
+        statsFiltersState={statsFiltersState}
       />
       <div className="flex flex-col w-full mt-4">
         <div
@@ -61,6 +96,7 @@ export default function MarketContainer() {
                 classSelected={classSelected}
                 orderSelected={orderSelected}
                 setOrderSelected={setOrderSelected}
+                statsFiltersState={statsFiltersState}
               />
 
               <div className="flex mt-8 flex-wrap justify-center w-full">

@@ -1,16 +1,9 @@
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
+import React from "react";
 import { useContractsContext } from "../../../context/ContractProvider.js";
 import { actionTypes } from "../../../context/reducer.js";
-import { orderItems } from "../../../context/utils.js";
+import { filterByStats, orderItems } from "../../../context/utils.js";
 import ClassFilterItem from "./ClassFilterItem.js";
-
-const statsFilter = [
-  { name: "Health", icon: "ant-design:heart-filled", color: "green" },
-  { name: "Speed", icon: "bi:lightning-charge-fill", color: "yellow" },
-  { name: "Skill", icon: "icon-park-outline:muscle", color: "red" },
-  { name: "Magic", icon: "ant-design:star-filled", color: "purple" },
-];
 
 const classFilters = [
   {
@@ -54,58 +47,127 @@ export default function Filters({
   classSelected,
   setClassSelected,
   orderSelected,
+  statsFiltersState,
 }) {
-  const [healthFilter, setHealthFilter] = useState({
-    min: 10,
-    max: 300,
-  });
-  const [speedFilter, setSpeedFilter] = useState({
-    min: 10,
-    max: 200,
-  });
-  const [skillFilter, setSkillFilter] = useState({
-    min: 10,
-    max: 200,
-  });
-  const [magicFilter, setMagicFilter] = useState({
-    min: 0,
-    max: 200,
-  });
-  const [{ marketItems }, dispatch] = useContractsContext();
+  const { health, speed, strength, magic } = statsFiltersState;
+  const statsFilter = [
+    {
+      name: "Health",
+      icon: "ant-design:heart-filled",
+      color: "green",
+      state: statsFiltersState.health.state,
+      setState: statsFiltersState.health.setState,
+    },
+    {
+      name: "Speed",
+      icon: "bi:lightning-charge-fill",
+      color: "yellow",
+      state: statsFiltersState.speed.state,
+      setState: statsFiltersState.speed.setState,
+    },
+    {
+      name: "Strength",
+      icon: "icon-park-outline:muscle",
+      color: "red",
+      state: statsFiltersState.strength.state,
+      setState: statsFiltersState.strength.setState,
+    },
+    {
+      name: "Magic",
+      icon: "ant-design:star-filled",
+      color: "purple",
+      state: statsFiltersState.magic.state,
+      setState: statsFiltersState.magic.setState,
+    },
+  ];
+  const [{ marketItems, marketItemsFiltered }, dispatch] =
+    useContractsContext();
+
   const filterByClass = (_class) => {
     let filteredItems = marketItems;
     //Filtrar por clase
     if (_class === classSelected) {
       setClassSelected("");
-      if (orderSelected) {
-        filteredItems = orderItems(orderSelected, filteredItems);
-      }
     } else {
       filteredItems = marketItems.filter(
         (item) => item.class === _class.toUpperCase()
       );
+
       setClassSelected(_class);
     }
+    filteredItems = orderItems(orderSelected, filteredItems);
+    filteredItems = filterByStats(statsFiltersState, filteredItems);
     dispatch({
       type: actionTypes.SET_MARKET_ITEMS_FILTERED,
       marketItems: filteredItems,
     });
   };
 
-  const handleChange = (type, value) => {
+  const handleChange = (type, value, item) => {
     if (type === "max") {
       if (value <= 200) {
-        setMagicFilter({ ...magicFilter, max: value });
+        item.setState({ ...item.state, max: value });
       } else {
-        setMagicFilter({ ...magicFilter, max: 200 });
+        item.setState({ ...item.state, max: 200 });
       }
     } else {
       if (value >= 199) {
-        setMagicFilter({ ...magicFilter, min: 199 });
+        item.setState({ ...item.state, min: 199 });
       } else {
-        setMagicFilter({ ...magicFilter, min: value });
+        item.setState({ ...item.state, min: value });
       }
     }
+  };
+
+  const resetStatsFilter = () => {
+    health.setState({
+      min: 10,
+      max: 300,
+    });
+    speed.setState({
+      min: 10,
+      max: 200,
+    });
+    strength.setState({
+      min: 10,
+      max: 300,
+    });
+    magic.setState({
+      min: 0,
+      max: 200,
+    });
+
+    let filteredItems = marketItems;
+
+    if (classSelected !== "") {
+      filteredItems = marketItems.filter(
+        (item) => item.class === classSelected.toUpperCase()
+      );
+    }
+
+    if (orderSelected) {
+      filteredItems = orderItems(orderSelected, filteredItems);
+    }
+
+    dispatch({
+      type: actionTypes.SET_MARKET_ITEMS_FILTERED,
+      marketItems: filteredItems,
+    });
+  };
+
+  const applyStatsFilter = () => {
+    let filteredItems = marketItems;
+    if (classSelected !== "") {
+      filteredItems = marketItems.filter(
+        (item) => item.class === classSelected.toUpperCase()
+      );
+    }
+    filteredItems = orderItems(orderSelected, filteredItems);
+    filteredItems = filterByStats(statsFiltersState, filteredItems);
+    dispatch({
+      type: actionTypes.SET_MARKET_ITEMS_FILTERED,
+      marketItems: filteredItems,
+    });
   };
 
   return (
@@ -151,7 +213,21 @@ export default function Filters({
                   <div className="CollapseTrigger_icon__2dF5B CollapseTrigger_isOpen__EdE8Y">
                     <Icon icon="ant-design:caret-down-filled" color="gray" />
                   </div>
-                  <div className="ml-3 font-la text-28">Stats</div>
+                  <div className="flex w-full justify-between">
+                    <div className="ml-3 font-la text-28">Stats</div>
+                    <button
+                      onClick={(e) => applyStatsFilter()}
+                      className="mr-3 font-la text-[#046cfc] text-28"
+                    >
+                      Apply
+                    </button>
+                    <button
+                      onClick={(e) => resetStatsFilter()}
+                      className="mr-3 font-la text-[#046cfc] text-28"
+                    >
+                      Reset
+                    </button>
+                  </div>
                 </div>
               </div>
               <div
@@ -186,9 +262,13 @@ export default function Filters({
                                     required=""
                                     type="number"
                                     className="p-1 mx-1 w-28 border transition text-14 input-field border-[#3a3f50] focus:border-[#046cfc] bg-[#11131b] text-white placeholder-[#6b7185]"
-                                    value={magicFilter.min}
+                                    value={filterItem.state.min}
                                     onChange={(e) =>
-                                      handleChange("min", e.target.value)
+                                      handleChange(
+                                        "min",
+                                        e.target.value,
+                                        filterItem
+                                      )
                                     }
                                   />
                                 </div>
@@ -202,9 +282,13 @@ export default function Filters({
                                     size="20"
                                     type="number"
                                     className="p-1 mx-2 w-28 border transition text-14 input-field border-[#3a3f50] focus:border-[#046cfc] bg-[#11131b] text-white placeholder-[#6b7185]"
-                                    value={magicFilter.max}
+                                    value={filterItem.state.max}
                                     onChange={(e) =>
-                                      handleChange("max", e.target.value)
+                                      handleChange(
+                                        "max",
+                                        e.target.value,
+                                        filterItem
+                                      )
                                     }
                                   />
                                 </div>
