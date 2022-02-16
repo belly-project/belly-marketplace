@@ -24,7 +24,8 @@ export default function CratesContainer({ setSection, setDetailItem }) {
         return await crateFetchURI(item, 4);
       })
     );
-    return formattedItems;
+    formattedItems = formattedItems.reverse();
+    return formattedItems.slice(0, 6);
   }, [bellyDropsContract]);
 
   useEffect(() => {
@@ -56,15 +57,15 @@ export default function CratesContainer({ setSection, setDetailItem }) {
           </div>
         </div>
       </div>
-      <div className="flex mt-8 flex-col justify-center items-end w-25">
-        <div className="font-bold text-xl leading-24 text-white mb-4">
+      <div className="h-full mt-8 w-25">
+        <div className="font-bold text-xl leading-24 text-white mb-4 ">
           Latest Crates Drops
         </div>
         {latest?.map((item) => {
           return (
             <div
               key={Math.random(1, 999)}
-              className="flex  jusify-evenly w-full mt-2 my-4 py-4 px-4 sm:px-4 sm:py-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg"
+              className="flex items-center justify-between w-full mt-2 my-4 py-4 px-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg"
             >
               <div>
                 <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
