@@ -6,7 +6,7 @@ import CrateActionContainer from "./CrateActionContainer.js";
 
 export default function CrateItem({ detailItem }) {
   return (
-    <div className="mt-20 pb-20 sm:pb-32">
+    <div className="mt-20 pb-20 sm:pb-32 hover:border:">
       <div className="mx-auto px-16 flex justify-center">
         <div
           className="block md:sticky md:inline-block md:w-1/2 align-top"

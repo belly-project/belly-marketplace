@@ -14,7 +14,7 @@ export default function MarketItem({
   const weapons = formatWeapons(weaponsArray);
 
   return type === "GRID" ? (
-    <div className="border rounded-lg m-3 border-gray bg-gray rounded transition hover:shadow hover:border-gray cursor-pointer">
+    <div className="border rounded-lg m-2 border-gray bg-gray transition rounded hover:shadow hover:border-[#046cfc] cursor-pointer">
       <a href={`/token/${tokenId}`}>
         <div className="px-4 py-3">
           <div className="flex flex-col leading-16 items-center justify-between">
@@ -52,10 +52,10 @@ export default function MarketItem({
       </a>
     </div>
   ) : (
-    <div className="m-8 cursor-pointer">
+    <div className="m-1 cursor-pointer">
       <a href={`/token/${tokenId}`}>
-        <div className="border rounded-lg m-3 border-gray bg-gray rounded transition hover:shadow hover:border-gray cursor-pointer">
-          <div className="flex items-center justify-between flex-wrap border w-full border-white">
+        <div className="border rounded-lg m-3 border-gray bg-gray rounded transition hover:shadow hover:border-[#046cfc]  cursor-pointer">
+          <div className="flex items-center justify-between flex-wrap w-full">
             <div className="w-1/5">
               <div className="w-full">
                 <img

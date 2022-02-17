@@ -2,7 +2,7 @@ import React from "react";
 
 export default function InventoryItem({ tokenId, name, price, img }) {
   return (
-    <div className="border rounded-lg m-3 border-gray bg-gray rounded transition hover:shadow hover:border-gray cursor-pointer">
+    <div className="border rounded-lg m-3 border-gray bg-gray rounded transition hover:shadow hover:border-[#046cfc] cursor-pointer">
       <a href={`/profile/inventory/${tokenId}`}>
         <div className="px-4 py-3">
           <div className="flex flex-col leading-16 items-center justify-between">

@@ -39,7 +39,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
   }, [bellyERC20Contract, dispatch, fetchLatestChanceBids, wallet]);
   return (
     <div className="flex flex-row justify-between w-75">
-      <div className="flex mt-8 flex-wrap justify-center w-75">
+      <div className="border rounded-lg m-3 h-full border-gray bg-gray rounded transition hover:shadow hover:border-[#046cfc] cursor-pointer">
         <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]">
           <img src="https://i.redd.it/udq9asephmpy.png" alt="dfaf"></img>
 
