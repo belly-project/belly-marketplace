@@ -30,6 +30,34 @@ export const basicFetchURI = async (item) => {
   return result;
 };
 
+export const changeChainToMumbai = async () => {
+  let chainID = 80001;
+  chainID = "0x" + chainID.toString(16);
+
+  //Comprobar si esta creada MUMBAI
+
+  //SI no ho esta fer wallet_addEthereumChain
+
+  const created = await window.ethereum.request({
+    method: "wallet_addEthereumChain",
+    params: [
+      {
+        chainId: chainID,
+        chainName: "Mumbai Matic Testnet",
+        nativeCurrency: {
+          name: "Mumbai Matic Testnet",
+          symbol: "MATIC", // 2-6 characters long
+          decimals: 18,
+        },
+        rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
+      },
+    ],
+  });
+  if (created) {
+  } else {
+  }
+};
+
 export const chanceBidFetchURI = async (item) => {
   const tokenURI = item[2];
 

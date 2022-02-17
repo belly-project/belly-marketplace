@@ -12,6 +12,7 @@ import LootContainer from "./pages/loot/LootContainer.js";
 import ItemPageContainer from "./pages/itemPage/ItemPageContainer.js";
 import ReactModal from "react-modal";
 import ActionModal from "./components/ActionModal";
+import ConnectionModal from "./components/ConnectionModal";
 
 ReactModal.defaultStyles.overlay.backgroundColor = "rgba(10, 11, 15, 0.99)";
 ReactModal.defaultStyles.content.background = "#3a3f50";
@@ -41,34 +42,6 @@ function App() {
     window.location.reload();
   }
 
-  const changeChainToMumbai = async () => {
-    let chainID = 80001;
-    chainID = "0x" + chainID.toString(16);
-
-    //Comprobar si esta creada MUMBAI
-
-    //SI no ho esta fer wallet_addEthereumChain
-
-    const created = await window.ethereum.request({
-      method: "wallet_addEthereumChain",
-      params: [
-        {
-          chainId: chainID,
-          chainName: "Mumbai Matic Testnet",
-          nativeCurrency: {
-            name: "Mumbai Matic Testnet",
-            symbol: "MATIC", // 2-6 characters long
-            decimals: 18,
-          },
-          rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
-        },
-      ],
-    });
-
-    if (created) {
-    } else {
-    }
-  };
   window.ethereum.on("chainChanged", handleChainChanged);
 
   const [showModal, setShowModal] = useState(false);
@@ -127,24 +100,10 @@ function App() {
       <BrowserRouter>
         <Navbar />
         {!correctChain && (
-          <ReactModal
-            appElement={document.getElementsByClassName("App")}
-            isOpen={showModal}
-            onRequestClose={handleCloseModal}
-            contentLabel="Minimal Modal Example"
-          >
-            <>
-              <div className="flex justify-between align-center">
-                <h1 className="text-white">PLEASE CONNECT TO MUMBAI!!!</h1>
-                <button
-                  onClick={() => changeChainToMumbai()}
-                  className="text-white"
-                >
-                  Swithc to Mumbai
-                </button>
-              </div>
-            </>
-          </ReactModal>
+          <ConnectionModal
+            showModal={showModal}
+            handleCloseModal={handleCloseModal}
+          />
         )}
         {wallet !== "" && correctChain && (
           <Routes>

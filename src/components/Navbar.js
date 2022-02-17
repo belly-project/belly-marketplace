@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useContractsContext } from "../context/ContractProvider";
 import { ethers } from "ethers";
@@ -9,13 +9,19 @@ import NavbarItem from "./NavbarItem";
 import { useLocation } from "react-router-dom";
 import { formatEther } from "ethers/lib/utils";
 import { bellyErc20, bellyErc721 } from "../context/contracts/addresses";
+import NavbarHelpItem from "./NavbarHelpItem";
 
 export default function Navbar() {
   const location = useLocation();
+  const [showHelp, setShowHelp] = useState(false);
   const [
     { wallet, balance, web3Modal, bellyERC20Contract, correctChain },
     dispatch,
   ] = useContractsContext();
+
+  const closeModal = () => {
+    setShowHelp(false);
+  };
 
   const addToken = async () => {
     const tokenAddress = "0xa035dFb92Fb3a3Dd8Be8ad5E2E8E5B872D940B7F";
@@ -84,6 +90,15 @@ export default function Navbar() {
         <div className="my-3 mx-6">
           <Icon icon="mdi:alpha-b-circle-outline" color="white" fontSize={32} />
         </div>
+        <NavbarHelpItem
+          icon={"map:compass"}
+          to={"help"}
+          location={location.pathname}
+          setShowHelpModal={setShowHelp}
+          showHelpModal={showHelp}
+          closeModal={closeModal}
+          disabled
+        />
         <NavbarItem
           icon={"map:storage"}
           text={"Inventory"}
