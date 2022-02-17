@@ -40,9 +40,10 @@ export default function CrateItem({ detailItem }) {
             </div>
           </div>
         </div>
-        <BuyableItemWrapper>
-          <CrateActionContainer detailItem={detailItem} />
-        </BuyableItemWrapper>
+        <BuyableItemWrapper
+          ItemAction={CrateActionContainer}
+          detailItem={detailItem}
+        />
       </div>
     </div>
   );

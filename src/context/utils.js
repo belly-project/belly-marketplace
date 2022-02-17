@@ -22,6 +22,7 @@ export const basicFetchURI = async (item) => {
         stats: keyvalues,
         price: formatEther(item[6]),
         owner: item[4],
+        forSale: formatEther(item[6]) > 0.0 ? true : false,
       };
       result = _item;
     } else {

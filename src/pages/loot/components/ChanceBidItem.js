@@ -81,14 +81,11 @@ export default function ChanceBidItem({ detailItem }) {
             </div>
           </div>
         </div>
-        <BuyableItemWrapper>
-          <ChanceBidActionContainer token={detailItem} isOwner={false} />
-          <ChanceBidItemInfo
-            detailItem={detailItem}
-            wallet={wallet}
-            bidsForItem={bidsForItem}
-          />
-        </BuyableItemWrapper>
+        <BuyableItemWrapper
+          ItemAction={ChanceBidActionContainer}
+          ItemInfo={ChanceBidItemInfo}
+          detailItem={detailItem}
+        />
       </div>
     </div>
   );

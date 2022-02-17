@@ -1,16 +1,23 @@
 import React from "react";
+import { useContractsContext } from "../../../context/ContractProvider";
 import { formatWeapons, getClassIcon } from "../../../context/utils";
 
 export default function MarketItem(props) {
-  const { tokenId, item, type } = props;
+  const { item, type } = props;
+  const [{ wallet }] = useContractsContext();
+  const { tokenId, owner, weapons, name, price, forSale, image, _class } = item;
 
-  const { weapons, name, price, image, _class } = item;
-  console.log(item);
   const _weapons = formatWeapons(weapons);
 
   return type === "GRID" ? (
     <div className="m-1 cursor-pointer">
-      <a href={`/token/${tokenId}`}>
+      <a
+        href={
+          owner === wallet
+            ? `/profile/inventory/${tokenId}`
+            : `/token/${tokenId}`
+        }
+      >
         <div className="border rounded-lg m-2 border-gray bg-gray transition rounded hover:shadow hover:border-[#046cfc] cursor-pointer">
           <div className="px-4 py-3">
             <div className="flex flex-col leading-16 items-center justify-between">
@@ -50,7 +57,13 @@ export default function MarketItem(props) {
     </div>
   ) : (
     <div className="m-1 cursor-pointer">
-      <a href={`/token/${tokenId}`}>
+      <a
+        href={
+          owner === wallet
+            ? `/profile/inventory/${tokenId}`
+            : `/token/${tokenId}`
+        }
+      >
         <div className="border rounded-lg m-3 border-gray bg-gray rounded transition hover:shadow hover:border-[#046cfc]  cursor-pointer">
           <div className="flex items-center justify-between flex-wrap w-full">
             <div className="w-1/5">

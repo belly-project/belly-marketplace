@@ -55,6 +55,20 @@ export default function ItemPageActionContainer({ detailItem }) {
     setItemBought(true);
   };
 
+  const saveItemInInventory = async () => {
+    setLoading(true);
+    const transcation = await bellyERC721Contract.toggleForSale(
+      detailItem.tokenId,
+      parseEther(priceForItem.toString())
+    );
+
+    await transcation.wait();
+
+    setLoading(false);
+
+    setItemBought(true);
+  };
+
   const handleOpenModal = (classString) => {
     setShowModal(true);
   };
@@ -67,12 +81,6 @@ export default function ItemPageActionContainer({ detailItem }) {
   return (
     <div className="w-full">
       <div className="flex items-center w-full flex-wrap md:justify-end">
-        <div className="border-r border-gray-2 py-4 md:hidden">
-          <div className="flex items-center text-gray-2 cursor-pointer pr-20">
-            Auction info
-          </div>
-        </div>
-
         <div className="ml-24 text-right">
           <h3 className="break-all">Ξ&nbsp;{detailItem.price}</h3>
           <h5 className="mt-4 text-[#a1a6b6] break-all">${detailItem.price}</h5>
@@ -82,23 +90,39 @@ export default function ItemPageActionContainer({ detailItem }) {
           <div className="inline-block">
             <MetamaskActionButton
               stlye={{ display: loading ? "none" : "flex" }}
-              text={`${wallet !== detailItem.owner ? "Buy Item" : "Sell Item"}`}
+              text={
+                wallet !== detailItem.owner
+                  ? "Buy Item"
+                  : `${detailItem.forSale ? "Save Item" : "Sell Item"}`
+              }
               _onClick={handleOpenModal}
               Modal={
                 <ActionModal
                   item={detailItem}
                   showModal={showModal}
                   action={
-                    wallet !== detailItem.owner ? buyToken : putItemforSale
+                    wallet !== detailItem.owner
+                      ? buyToken
+                      : detailItem.forSale
+                      ? saveItemInInventory
+                      : putItemforSale
                   }
                   onceCompleted={goToInventory}
                   handleCloseModal={handleCloseModal}
                   completed={itemBought}
                   inputValue={
-                    wallet !== detailItem.owner ? undefined : priceForItem
+                    wallet !== detailItem.owner
+                      ? undefined
+                      : detailItem.forSale
+                      ? undefined
+                      : priceForItem
                   }
                   setInputValue={
-                    wallet !== detailItem.owner ? undefined : setPriceForItem
+                    wallet !== detailItem.owner
+                      ? undefined
+                      : detailItem.forSale
+                      ? undefined
+                      : setPriceForItem
                   }
                   loading={loading}
                   image={detailItem.image}
@@ -106,17 +130,28 @@ export default function ItemPageActionContainer({ detailItem }) {
                     msg: `${
                       wallet !== detailItem.owner
                         ? `Buy for ${detailItem.price} BLY`
-                        : "Add Item for sale"
+                        : `${
+                            detailItem.forSale
+                              ? "Delete item from market and save it in Inventory"
+                              : "Add Item for sale"
+                          }`
                     }`,
                     button: `${
-                      wallet !== detailItem.owner ? "Buy Item" : "Sell Item"
-                    }`,
+                      wallet !== detailItem.owner
+                        ? "Buy Item"
+                        : `${detailItem.forSale ? "Save Item" : "Sell Item"}`
+                    }
+                    `,
                   }}
                   completedText={{
                     msg: `${
                       wallet !== detailItem.owner
                         ? "Item Bought!"
-                        : "Item on Sale!"
+                        : `${
+                            detailItem.forSale
+                              ? "Item saved in Inventory"
+                              : "Item on Sale!"
+                          }`
                     }`,
                     button: "Go to Inventory",
                   }}
