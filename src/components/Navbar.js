@@ -127,7 +127,7 @@ export default function Navbar() {
         <div className="hidden  md:flex ml-auto items-center">
           <div className="px-2">
             <div className="flex flex-col items-center justify-center">
-              {balance < 0.0 && (
+              {balance <= 0.0 && (
                 <div className="mr-4 flex ">
                   <div className="flex items-center mr-4">
                     <div>BellyToken</div>

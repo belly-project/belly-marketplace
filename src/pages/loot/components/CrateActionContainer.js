@@ -15,7 +15,13 @@ export default function CrateActionContainer({ detailItem }) {
   const [showModal, setShowModal] = useState(false);
 
   const [
-    { bellyDropsContract, bellyERC20Contract, bellyERC721Contract, wallet },
+    {
+      bellyDropsContract,
+      balance,
+      bellyERC20Contract,
+      bellyERC721Contract,
+      wallet,
+    },
   ] = useContractsContext();
 
   const goToInventory = () => {
@@ -130,16 +136,23 @@ export default function CrateActionContainer({ detailItem }) {
                 _onClick={handleOpenModal}
                 Modal={
                   <ActionModal
+                    disabledAction={detailItem.price > balance}
                     item={detailItem}
                     loading={loading}
                     showModal={showModal}
-                    action={requestOpenCrate}
+                    action={
+                      detailItem.price > balance ? undefined : requestOpenCrate
+                    }
                     onceCompleted={goToInventory}
                     handleCloseModal={handleCloseModal}
                     completed={crateSuceed}
                     notCompletedText={{
                       msg: "Open Crate for 10 BLY",
-                      button: "Open Crate",
+                      button: `${
+                        detailItem.price > balance
+                          ? "Not Enough BELLY"
+                          : "Open Crate"
+                      }`,
                     }}
                     completedText={{
                       msg: `{Crate Opened!, you got a ${resultCrate?.name}}`,

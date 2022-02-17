@@ -8,7 +8,7 @@ import { useContractsContext } from "../../../context/ContractProvider";
 
 export default function ChanceBidActionContainer({ token }) {
   const [loading, setLoading] = useState(false);
-  const [{ bellyChanceBidContract }] = useContractsContext();
+  const [{ bellyChanceBidContract, balance }] = useContractsContext();
   const addBidForChanceBid = async () => {
     let tx = await bellyChanceBidContract.enterChanceBid(
       token.itemId,
@@ -60,7 +60,9 @@ export default function ChanceBidActionContainer({ token }) {
                 <ActionModal
                   item={token}
                   showModal={showModal}
-                  action={addBidForChanceBid}
+                  action={
+                    token.price > balance ? undefined : addBidForChanceBid
+                  }
                   onceCompleted={goToInventory}
                   handleCloseModal={handleCloseModal}
                   completed={bidCompleted}

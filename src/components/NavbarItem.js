@@ -4,12 +4,13 @@ import React from "react";
 export default function NavbarItem({ icon, text, to, location, disabled }) {
   return (
     <a
+      disabled
       className={`flex px-4 items-center cursor-pointer ${
         disabled && "text-[#232931] cursor-not-allowed"
       } ${
         location === to ? "bg-[#232931]" : "bg-transparent"
       } mx-4 hidden md:flex`}
-      href={to}
+      href={disabled !== true ? to : undefined}
     >
       <Icon
         width={"1.1rem"}

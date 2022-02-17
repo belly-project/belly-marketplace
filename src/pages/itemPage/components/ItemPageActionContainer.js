@@ -11,7 +11,7 @@ export default function ItemPageActionContainer({ detailItem }) {
   const [loading, setLoading] = useState(false);
   const [priceForItem, setPriceForItem] = useState(0.0);
 
-  const [{ bellyERC721Contract, bellyERC20Contract, wallet }] =
+  const [{ bellyERC721Contract, bellyERC20Contract, wallet, balance }] =
     useContractsContext();
 
   const navigate = useNavigate();
@@ -102,7 +102,9 @@ export default function ItemPageActionContainer({ detailItem }) {
                   showModal={showModal}
                   action={
                     wallet !== detailItem.owner
-                      ? buyToken
+                      ? detailItem.price > balance
+                        ? undefined
+                        : buyToken
                       : detailItem.forSale
                       ? saveItemInInventory
                       : putItemforSale
@@ -124,6 +126,7 @@ export default function ItemPageActionContainer({ detailItem }) {
                       ? undefined
                       : setPriceForItem
                   }
+                  disabledAction={detailItem.price > balance}
                   loading={loading}
                   image={detailItem.image}
                   notCompletedText={{
@@ -138,7 +141,11 @@ export default function ItemPageActionContainer({ detailItem }) {
                     }`,
                     button: `${
                       wallet !== detailItem.owner
-                        ? "Buy Item"
+                        ? `${
+                            detailItem.price > balance
+                              ? "Not Enough BELLY"
+                              : "Buy Item"
+                          }`
                         : `${detailItem.forSale ? "Save Item" : "Sell Item"}`
                     }
                     `,

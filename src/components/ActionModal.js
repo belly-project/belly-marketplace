@@ -15,6 +15,7 @@ export default function ActionModal({
   completedText,
   image,
   loading,
+  disabledAction,
 }) {
   return (
     <ReactModal
@@ -55,6 +56,7 @@ export default function ActionModal({
                   </button>
                 ) : (
                   <MetamaskActionButton
+                    disabled={disabledAction}
                     className={"mt-4"}
                     text={notCompletedText.button}
                     _onClick={action}
@@ -67,6 +69,7 @@ export default function ActionModal({
               <div className="flex flex-col items-center justify-between">
                 <h1 className="text-white">{completedText.msg}</h1>
                 <MetamaskActionButton
+                  disabled={disabledAction}
                   className={"mt-4"}
                   text={completedText.button}
                   _onClick={() => onceCompleted()}
