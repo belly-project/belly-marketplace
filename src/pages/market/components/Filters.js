@@ -15,7 +15,7 @@ const classFilters = [
   {
     classText: "Mage",
     icon: "mdi:auto-fix",
-    color: "#c584cf",
+    color: "#FFEE00",
   },
   {
     classText: "Rider",
