@@ -84,8 +84,7 @@ export default function Filters({
       setState: statsFiltersState.magic.setState,
     },
   ];
-  const [{ marketItems, marketItemsFiltered }, dispatch] =
-    useContractsContext();
+  const [{ marketItems }, dispatch] = useContractsContext();
 
   const filterByClass = (_class) => {
     let filteredItems = marketItems;
@@ -94,7 +93,7 @@ export default function Filters({
       setClassSelected("");
     } else {
       filteredItems = marketItems.filter(
-        (item) => item.class === _class.toUpperCase()
+        (item) => item._class === _class.toUpperCase()
       );
 
       setClassSelected(_class);
@@ -145,7 +144,7 @@ export default function Filters({
 
     if (classSelected !== "") {
       filteredItems = marketItems.filter(
-        (item) => item.class === classSelected.toUpperCase()
+        (item) => item._class === classSelected.toUpperCase()
       );
     }
 
@@ -163,7 +162,7 @@ export default function Filters({
     let filteredItems = marketItems;
     if (classSelected !== "") {
       filteredItems = marketItems.filter(
-        (item) => item.class === classSelected.toUpperCase()
+        (item) => item._class === classSelected.toUpperCase()
       );
     }
     filteredItems = orderItems(orderSelected, filteredItems);
@@ -223,11 +222,8 @@ export default function Filters({
           <div className="" style={{ boxSizing: "border-box" }}>
             <div className="py-4 pr-2 pl-4 border-t border-[#3a3f50]">
               <div className="flex items-center justify-between">
-                <div
-                  onClick={() => setCollapseStats(!collapsedStats)}
-                  className="flex items-center cursor-pointer w-full"
-                >
-                  <div>
+                <div className="flex items-center cursor-pointer w-full">
+                  <div onClick={() => setCollapseStats(!collapsedStats)}>
                     <Icon
                       icon={`ant-design:caret-${
                         collapsedStats ? "down" : "right"
@@ -236,7 +232,12 @@ export default function Filters({
                     />
                   </div>
                   <div className="flex w-full justify-between">
-                    <div className="ml-3 font-la text-28">Stats</div>
+                    <div
+                      onClick={() => setCollapseStats(!collapsedStats)}
+                      className="ml-3 font-la text-28"
+                    >
+                      Stats
+                    </div>
                     {collapsedStats && (
                       <>
                         <button

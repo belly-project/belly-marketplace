@@ -1,12 +1,11 @@
-import axios from "axios";
 import { formatEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect } from "react";
 import { useContractsContext } from "../../context/ContractProvider.js";
 import { actionTypes } from "../../context/reducer.js";
-import InventoryFilters from "./components/InventoryFilters.js";
 import ProfileSidebar from "./components/ProfileSidebar.js";
-import InventoryItem from "./components/InventoryItem.js";
-import { profileFetchURI } from "../../context/utils.js";
+import MarketItem from "../market/components/MarketItem.js";
+import { basicFetchURI } from "../../context/utils.js";
+import OrdenableItemsContainer from "../../components/OrdenableItemsContainer.js";
 
 export default function ProfileContainer() {
   const [
@@ -18,7 +17,7 @@ export default function ProfileContainer() {
     let formattedItems = [];
     formattedItems = await Promise.all(
       _response.map(async (item) => {
-        return await profileFetchURI(item);
+        return await basicFetchURI(item);
       })
     );
 
@@ -52,31 +51,12 @@ export default function ProfileContainer() {
   return (
     <div className="flex flex-row">
       <ProfileSidebar />
-      <div className="flex flex-col w-full mt-10">
-        <div
-          className="overflow-x-auto flex-1 px-8 py-4 md:px-32 md:py-0"
-          style={{ maxHeight: "100vh" }}
-        >
-          <div className="w-full h-full relative">
-            <div className="w-full h-full relative">
-              <InventoryFilters />
-
-              <div className="flex mt-8 flex-wrap justify-center w-full">
-                {myItems?.map((item) => {
-                  return (
-                    <InventoryItem
-                      key={item.tokenId}
-                      tokenId={item.tokenId}
-                      name={item.name}
-                      price={item.price}
-                      img={item.image}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="w-full h-full mt-4  ">
+        <OrdenableItemsContainer
+          itemList={myItems}
+          ItemComponentGrid={MarketItem}
+          ItemComponentList={MarketItem}
+        />
       </div>
     </div>
   );

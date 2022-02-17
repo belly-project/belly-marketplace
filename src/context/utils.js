@@ -16,7 +16,7 @@ export const basicFetchURI = async (item) => {
         itemURI: tokenURI,
         image: image,
         name: name,
-        class: _class,
+        _class: _class,
         description: description,
         weapons: weapons,
         stats: keyvalues,

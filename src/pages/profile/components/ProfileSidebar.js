@@ -1,10 +1,8 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import { useContractsContext } from "../../../context/ContractProvider.js";
-import ActionModal from "../../../components/ActionModal.js";
 import FaucetModal from "../../../components/FaucetModal.js";
-import { useNavigate } from "react-router-dom";
-import { localMarketplaceApi, marketplaceApi } from "../../../context/axios.js";
+import { marketplaceApi } from "../../../context/axios.js";
 import { parseEther } from "ethers/lib/utils";
 export default function ProfileSidebar() {
   const [{ wallet, balance }] = useContractsContext();
@@ -42,7 +40,7 @@ export default function ProfileSidebar() {
 
   return (
     <div
-      className="hidden md:flex flex-col flex-none border-[#3a3f50] border-r"
+      className="md:flex fixed flex-col flex-none border-[#3a3f50] border-r"
       style={{ height: "94vh", width: "280px" }}
     >
       <div className="w-full flex flex-col pt-6 px-12">

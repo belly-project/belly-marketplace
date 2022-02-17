@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react";
-import { parseEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BuyableItemWrapper from "../../components/BuyableItemWrapper";
@@ -10,10 +9,7 @@ import ItemPageActionContainer from "./components/ItemPageActionContainer";
 
 export default function ItemPageContainer() {
   const [token, setToken] = useState({});
-  const [showModal, setShowModal] = useState(false);
-
-  const [{ bellyERC721Contract, bellyERC20Contract, wallet }] =
-    useContractsContext();
+  const [{ bellyERC721Contract, wallet }] = useContractsContext();
   let location = useLocation();
   let { tokenId } = useParams();
   let navigate = useNavigate();

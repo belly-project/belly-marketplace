@@ -11,8 +11,8 @@ import ProfileContainer from "./pages/profile/ProfileContainer.js";
 import LootContainer from "./pages/loot/LootContainer.js";
 import ItemPageContainer from "./pages/itemPage/ItemPageContainer.js";
 import ReactModal from "react-modal";
-import ActionModal from "./components/ActionModal";
 import ConnectionModal from "./components/ConnectionModal";
+import BattlegroundContainer from "./pages/battleground/BattlegroundContainer";
 
 ReactModal.defaultStyles.overlay.backgroundColor = "rgba(10, 11, 15, 0.99)";
 ReactModal.defaultStyles.content.background = "#3a3f50";
@@ -20,6 +20,10 @@ ReactModal.defaultStyles.content.width = "30%";
 ReactModal.defaultStyles.content.height = "fit-content";
 ReactModal.defaultStyles.content.margin = "auto";
 
+/* TO DO : 
+- Moure eventos a un altre lloc
+- Moure temes de metamask altre lloc
+*/
 let currentAccount = null;
 
 // For now, 'eth_accounts' will continue to always return an array
@@ -107,6 +111,7 @@ function App() {
         )}
         {wallet !== "" && correctChain && (
           <Routes>
+            <Route path="battle" element={<BattlegroundContainer />} />
             <Route path="loot" element={<LootContainer />} />
 
             <Route path="profile/inventory" element={<ProfileContainer />} />

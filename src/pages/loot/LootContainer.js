@@ -1,8 +1,4 @@
-import axios from "axios";
-import { formatEther } from "ethers/lib/utils";
-import React, { useCallback, useEffect, useState } from "react";
-import { useContractsContext } from "../../context/ContractProvider.js";
-import { actionTypes } from "../../context/reducer.js";
+import React, { useState } from "react";
 import ChanceBidContainer from "./components/ChanceBidContainer.js";
 import ChanceBidItem from "./components/ChanceBidItem.js";
 import CrateItem from "./components/CrateItem.js";
