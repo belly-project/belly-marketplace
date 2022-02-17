@@ -9,6 +9,8 @@ export default function MarketBodyOptions({
   orderSelected,
   setOrderSelected,
   statsFiltersState,
+  viewSelected,
+  setViewSelected,
 }) {
   const [{ marketItems, marketItemsFiltered }, dispatch] =
     useContractsContext();
@@ -66,13 +68,22 @@ export default function MarketBodyOptions({
               <div className="flex cursor-pointer ml-8">
                 <div className="control-group inline-flex flex-row horizontal">
                   <div
+                    onClick={() => setViewSelected("GRID")}
                     className="border hover:border-[#a1a6b6] active:border-[#3a3f50] hover:bg-gray-4 active:bg-gray-6 border-gray-2 rounded-l p-3 flex items-center justify-center border border-primary-4"
-                    style={{ background: "blue" }}
+                    style={{
+                      background: viewSelected === "GRID" ? "blue" : "",
+                    }}
+                  >
+                    <Icon icon="dashicons:grid-view" color="white" />
+                  </div>
+                  <div
+                    onClick={() => setViewSelected("LIST")}
+                    className="border hover:border-[#a1a6b6] active:border-[#3a3f50] hover:bg-gray-4 active:bg-gray-6 border-gray-2 rounded-r p-3 flex items-center justify-center"
+                    style={{
+                      background: viewSelected === "LIST" ? "blue" : "",
+                    }}
                   >
                     <Icon icon="dashicons:excerpt-view" color="white" />
-                  </div>
-                  <div className="border hover:border-[#a1a6b6] active:border-[#3a3f50] hover:bg-gray-4 active:bg-gray-6 border-gray-2 rounded-r p-3 flex items-center justify-center">
-                    <Icon icon="dashicons:grid-view" color="white" />
                   </div>
                 </div>
               </div>

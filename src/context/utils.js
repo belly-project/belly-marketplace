@@ -174,6 +174,13 @@ export const getClassIcon = (classString) => {
   }
 };
 
+export const formatWeapons = (weapons) => {
+  let formatted = weapons.map((weapon) => {
+    return processWeapon(weapon);
+  });
+  return formatted;
+};
+
 export const processWeapon = (weaponString) => {
   switch (weaponString) {
     case "bows":
@@ -208,7 +215,7 @@ export const processWeapon = (weaponString) => {
           <div className="ml-2">Axes</div>
         </div>
       );
-    case "lance":
+    case "lances":
       return (
         <div className="flex items-center p-2" key={weaponString}>
           <Icon style={{ fontSize: "36px" }} icon="mdi:spear" color="white" />

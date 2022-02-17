@@ -10,6 +10,7 @@ import MarketItem from "./components/MarketItem.js";
 export default function MarketContainer() {
   const [classSelected, setClassSelected] = useState("");
   const [orderSelected, setOrderSelected] = useState("1");
+  const [viewSelected, setViewSelected] = useState("GRID");
   const [
     { marketItems, marketItemsFiltered, bellyERC721Contract, wallet },
     dispatch,
@@ -97,21 +98,47 @@ export default function MarketContainer() {
                 orderSelected={orderSelected}
                 setOrderSelected={setOrderSelected}
                 statsFiltersState={statsFiltersState}
+                viewSelected={viewSelected}
+                setViewSelected={setViewSelected}
               />
 
-              <div className="flex mt-8 flex-wrap justify-center w-full">
-                {marketItemsFiltered?.map((item) => {
-                  return (
-                    <MarketItem
-                      key={item.tokenId}
-                      tokenId={item.tokenId}
-                      name={item.name}
-                      price={item.price}
-                      img={item.image}
-                    />
-                  );
-                })}
-              </div>
+              {viewSelected === "GRID" ? (
+                <div className="flex mt-8 flex-wrap justify-center w-full">
+                  {marketItemsFiltered?.map((item) => {
+                    return (
+                      <MarketItem
+                        type={"GRID"}
+                        key={item.tokenId}
+                        tokenId={item.tokenId}
+                        name={item.name}
+                        price={item.price}
+                        img={item.image}
+                        weaponsArray={item.weapons}
+                        statsDict={item.stats}
+                        _class={item.class}
+                      />
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="flex mt-8 flex-col justify-center w-full">
+                  {marketItemsFiltered?.map((item) => {
+                    return (
+                      <MarketItem
+                        type={"LIST"}
+                        key={item.tokenId}
+                        tokenId={item.tokenId}
+                        name={item.name}
+                        price={item.price}
+                        img={item.image}
+                        weaponsArray={item.weapons}
+                        statsDict={item.stats}
+                        _class={item.class}
+                      />
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>

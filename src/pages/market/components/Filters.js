@@ -49,6 +49,7 @@ export default function Filters({
   setClassSelected,
   orderSelected,
   statsFiltersState,
+  stats,
 }) {
   const [collapsedClass, setCollapseClass] = useState(true);
   const [collapsedStats, setCollapseStats] = useState(true);
