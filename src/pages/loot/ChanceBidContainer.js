@@ -1,8 +1,6 @@
-import axios from "axios";
-import { formatEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect, useState } from "react";
-import { useContractsContext } from "../../../context/ContractProvider";
-import { chanceBidFetchURI, chanceBidFor } from "../../../context/utils";
+import { useContractsContext } from "../../context/ContractProvider";
+import { chanceBidFetchURI } from "../../context/utils";
 
 export default function ChanceBidContainer({ setSection, setDetailItem }) {
   const [latest, setLatest] = useState([]);

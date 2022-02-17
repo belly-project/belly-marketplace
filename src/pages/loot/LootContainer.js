@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ChanceBidContainer from "./components/ChanceBidContainer.js";
+import ChanceBidContainer from "./ChanceBidContainer.js";
 import ChanceBidItem from "./components/ChanceBidItem.js";
 import CrateItem from "./components/CrateItem.js";
-import CratesContainer from "./components/CratesContainer.js";
+import CratesContainer from "./CratesContainer.js";
 import LootSidebar from "./components/LootSidebar.js";
 
 export default function LootContainer() {

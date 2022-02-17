@@ -1,6 +1,5 @@
 import { Icon } from "@iconify/react";
 import React, { useCallback, useEffect, useState } from "react";
-import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import BuyableItemWrapper from "../../../components/BuyableItemWrapper.js";
 import { useContractsContext } from "../../../context/ContractProvider.js";

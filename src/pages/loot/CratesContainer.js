@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useContractsContext } from "../../../context/ContractProvider";
-import { chanceBidFetchURI, crateFetchURI } from "../../../context/utils";
+import { useContractsContext } from "../../context/ContractProvider";
+import { chanceBidFetchURI, crateFetchURI } from "../../context/utils";
 
 export default function CratesContainer({ setSection, setDetailItem }) {
   const [latest, setLatest] = useState([]);
