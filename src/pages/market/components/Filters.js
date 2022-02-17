@@ -176,7 +176,7 @@ export default function Filters({
 
   return (
     <div
-      className="hidden md:flex  sticky left-0 border-[#3a3f50] border-r "
+      className="hidden md:flex fixed left-0 border-[#3a3f50] border-r "
       style={{ height: "94vh", width: "280px" }}
     >
       <div className="pb-32 w-full">
