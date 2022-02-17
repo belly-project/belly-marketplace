@@ -97,7 +97,7 @@ export default function Navbar() {
           setShowHelpModal={setShowHelp}
           showHelpModal={showHelp}
           closeModal={closeModal}
-          disabled
+          disabled={"true"}
         />
         <NavbarItem
           icon={"map:storage"}

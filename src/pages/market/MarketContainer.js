@@ -50,7 +50,6 @@ export default function MarketContainer() {
   useEffect(() => {
     if (wallet !== "") {
       fetchMarketItemsData().then((res) => {
-        console.log(res);
         dispatch({
           type: actionTypes.SET_MARKET_ITEMS,
           marketItems: res,

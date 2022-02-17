@@ -19,12 +19,12 @@ export default function NavbarHelpItem({
       } ${
         location === to ? "bg-[#232931]" : "bg-transparent"
       } mx-4 hidden md:flex`}
-      onClick={!disabled && (() => setShowHelpModal(true))}
+      onClick={!disabled ?  (() => setShowHelpModal(true)) : undefined}
     >
       <Icon
         width={"1.1rem"}
         icon={icon}
-        color={`${disabled ? "#232931" : "#10c274"}`}
+        color={`${disabled === "true" ? "#232931" : "#10c274"}`}
       />
       <h1 className="">{text}</h1>
       <HelpModal

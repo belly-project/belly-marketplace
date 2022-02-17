@@ -326,7 +326,7 @@ export const orderItems = (value, itemsToOrder, setValue) => {
   if (setValue) {
     setValue(parseInt(value));
   }
-  console.log(itemsToOrder);
+
   switch (value) {
     case "1":
       return itemsToOrder.sort(compareLower);
@@ -351,7 +351,6 @@ export const filterByStats = (statsFiltersState, itemsToFilter) => {
     statsFiltersState.health.state.min !== 10 &&
     statsFiltersState.health.state.min !== 300
   ) {
-    console.log(statsFiltersState.health.state);
     filteredItems = filteredItems.filter(
       (item) =>
         item.stats.health >= statsFiltersState.health.state.min &&
@@ -369,7 +368,7 @@ export const filterByStats = (statsFiltersState, itemsToFilter) => {
         item.stats.speed <= statsFiltersState.speed.state.max
     );
   }
-  console.log(statsFiltersState.strength.state);
+
   if (
     statsFiltersState.strength.state.min !== 10 &&
     statsFiltersState.strength.state.min !== 200

@@ -79,7 +79,7 @@ export default function MarketItem({
                       borderColor: "transparent",
                     }}
                   >
-                    <span className="">#4751036</span>
+                    <span className="">#0000{tokenId}</span>
                   </span>
                 </div>
               </div>

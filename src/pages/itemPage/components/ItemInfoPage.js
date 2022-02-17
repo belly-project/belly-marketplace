@@ -4,8 +4,8 @@ import { getClassIcon, processWeapon } from "../../../context/utils";
 
 export default function ItemInfoPage({ detailItem }) {
   return (
-    <div className="flex mt-8 flex-col">
-      <div className="mt-10">
+    <div className="flex flex-col">
+      <div className="">
         <div className="font-bold text-xl leading-24 text-white mb-4">
           About
         </div>
@@ -30,7 +30,7 @@ export default function ItemInfoPage({ detailItem }) {
             <div className="text-[#a1a6b6] w-75 font-bold leading-14 text-xs tracking-1 uppercase">
               Description
             </div>
-            <div className="mt-2 text-lg leading-20 flex items-center cursor-pointer">
+            <div className="mt-2 text-sm leading-20 flex items-center cursor-pointer">
               {detailItem.description}
             </div>
           </div>
@@ -117,9 +117,13 @@ export default function ItemInfoPage({ detailItem }) {
             sm:pt-4 sm:pb-4 sm:px-4
             rounded-lg bg-[#282b39] border border-[#3a3f50]"
         >
-          <div className="w-1/2 sm:w-auto mb-4">
+          <div className="flex justify-center sm:w-auto mb-4">
             {detailItem.weapons?.map((weapon) => {
-              return processWeapon(weapon);
+              return (
+                <div key={Math.random(1, 9999)} className="">
+                  {processWeapon(weapon)}
+                </div>
+              );
             })}
           </div>
         </div>
