@@ -4,7 +4,7 @@ import React from "react";
 export default function ClassFilterItem({
   selected,
   icon,
-  classText,
+  text,
   color,
   onClick,
 }) {
@@ -16,7 +16,7 @@ export default function ClassFilterItem({
       } text-md justify-center m-2  rounded-md p-1 px-2`}
     >
       <Icon className="text-xl" icon={icon} color={color} />
-      <span className="capitalize ml-2">{classText}</span>
+      <span className="capitalize ml-2">{text}</span>
     </div>
   );
 }

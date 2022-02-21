@@ -2,12 +2,29 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useContractsContext } from "../../context/ContractProvider.js";
 import { actionTypes } from "../../context/reducer.js";
-import { basicFetchURI, orderItems } from "../../context/utils.js";
-import Filters from "./components/Filters.js";
+import {
+  basicFetchURI,
+  classFilters,
+  filterByStats,
+  orderItems,
+  statsFilters,
+} from "../../context/utils.js";
+import MarketplaceFilters from "../../components/MarketplaceFilters.js";
 import OrdenableItemsContainer from "../../components/OrdenableItemsContainer.js";
 import MarketItem from "./components/MarketItem.js";
+import ButtonSelectionFilter from "../../components/filters/ButtonSelectionFilter.js";
+import FilterSection from "../../components/filters/FilterSection.js";
+import RangeGroupFilter from "../../components/filters/RangeGroupFilter.js";
+import ClassFilterItem from "../../components/filters/ClassFilterItem.js";
 
 export default function MarketContainer() {
+  const [filtersState, setFiltersState] = useState({
+    classFilterState: {},
+    statsFilterState: {},
+  });
+  const [collapsedClass, setCollapseClass] = useState(true);
+  const [collapsedStats, setCollapseStats] = useState(true);
+
   const [classSelected, setClassSelected] = useState("");
   const [orderSelected, setOrderSelected] = useState("1");
   const [
@@ -30,6 +47,59 @@ export default function MarketContainer() {
     min: 0,
     max: 200,
   });
+
+  const resetStatsFilter = () => {
+    statsFiltersState[0].setState({
+      min: 10,
+      max: 300,
+    });
+    statsFiltersState[1].setState({
+      min: 10,
+      max: 200,
+    });
+    statsFiltersState[2].setState({
+      min: 10,
+      max: 300,
+    });
+    statsFiltersState[3].setState({
+      min: 0,
+      max: 200,
+    });
+
+    let filteredItems = marketItems;
+
+    if (classSelected !== "") {
+      filteredItems = marketItems.filter(
+        (item) => item._class === classSelected.toUpperCase()
+      );
+    }
+
+    if (orderSelected) {
+      filteredItems = orderItems(orderSelected, filteredItems);
+    }
+
+    dispatch({
+      type: actionTypes.SET_MARKET_ITEMS_FILTERED,
+      marketItems: filteredItems,
+    });
+  };
+
+  const applyStatsFilter = () => {
+    let filteredItems = marketItems;
+    if (classSelected !== "") {
+      filteredItems = marketItems.filter(
+        (item) => item._class === classSelected.toUpperCase()
+      );
+    }
+
+    filteredItems = orderItems(orderSelected, filteredItems);
+    filteredItems = filterByStats(statsFiltersState, filteredItems);
+    dispatch({
+      type: actionTypes.SET_MARKET_ITEMS_FILTERED,
+      marketItems: filteredItems,
+    });
+  };
+
   const fetchMarketItemsData = useCallback(async () => {
     let _response = await bellyERC721Contract.getItemsForSale({});
 
@@ -46,6 +116,27 @@ export default function MarketContainer() {
     return formattedItems;
   }, [bellyERC721Contract, wallet]);
 
+  const filterByClass = (_class) => {
+    let filteredItems = marketItems;
+    //Filtrar por clase
+
+    if (_class === classSelected) {
+      setClassSelected("");
+    } else {
+      filteredItems = marketItems.filter(
+        (item) => item._class === _class.text.toUpperCase()
+      );
+
+      setClassSelected(_class);
+    }
+    filteredItems = orderItems(orderSelected, filteredItems);
+    filteredItems = filterByStats(statsFiltersState, filteredItems);
+    dispatch({
+      type: actionTypes.SET_MARKET_ITEMS_FILTERED,
+      marketItems: filteredItems,
+    });
+  };
+
   useEffect(() => {
     if (wallet !== "") {
       fetchMarketItemsData().then((res) => {
@@ -59,32 +150,75 @@ export default function MarketContainer() {
     return () => {};
   }, [bellyERC721Contract, dispatch, fetchMarketItemsData, wallet]);
 
-  const statsFiltersState = {
-    health: {
+  const statsFiltersState = [
+    {
+      info: statsFilters.find((f) => f.name === "Health"),
       state: healthFilter,
       setState: setHealthFilter,
     },
-    speed: {
+    {
+      info: statsFilters.find((f) => f.name === "Speed"),
       state: speedFilter,
       setState: setSpeedFilter,
     },
-    strength: {
+    {
+      info: statsFilters.find((f) => f.name === "Strength"),
       state: strengthFilter,
       setState: setStrengthFilter,
     },
-    magic: {
+    {
+      info: statsFilters.find((f) => f.name === "Magic"),
       state: magicFilter,
       setState: setMagicFilter,
     },
-  };
+  ];
   return (
     <div className="flex flex-row " style={{ height: "94vh" }}>
-      <Filters
+      <MarketplaceFilters
+        filtersState={filtersState}
         orderSelected={orderSelected}
         classSelected={classSelected}
         setClassSelected={setClassSelected}
         statsFiltersState={statsFiltersState}
-      />
+      >
+        <FilterSection
+          title={"Class"}
+          filterState={filtersState}
+          sectionState={classSelected}
+          setFiltersState={setFiltersState}
+          isCollapse={true}
+          collapseState={collapsedClass}
+          setCollapseState={setCollapseClass}
+        >
+          <ButtonSelectionFilter
+            onSelection={filterByClass}
+            state={classSelected}
+            setState={setClassSelected}
+            filterList={classFilters}
+            FilterComponent={ClassFilterItem}
+          />
+        </FilterSection>
+        <FilterSection
+          filterState={filtersState}
+          sectionState={statsFiltersState}
+          setFiltersState={setFiltersState}
+          title={"Stats"}
+          isCollapse={true}
+          collapseState={collapsedStats}
+          setCollapseState={setCollapseStats}
+          action={{
+            text: "Apply",
+            onClick: applyStatsFilter,
+          }}
+          resetSectionState={resetStatsFilter}
+        >
+          <RangeGroupFilter
+            state={statsFiltersState}
+            setState={setFiltersState}
+            filterList={statsFiltersState}
+          />
+        </FilterSection>
+      </MarketplaceFilters>
       <div className="w-full h-full mt-4  ">
         <OrdenableItemsContainer
           itemList={marketItemsFiltered}

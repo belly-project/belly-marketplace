@@ -3,6 +3,66 @@ import { Icon } from "@iconify/react";
 import axios from "axios";
 import { formatEther } from "ethers/lib/utils";
 
+export const classFilters = [
+  {
+    text: "Tank",
+    icon: "mdi:shield-account",
+    color: "#9908A3",
+  },
+  {
+    text: "Mage",
+    icon: "mdi:auto-fix",
+    color: "#FFEE00",
+  },
+  {
+    text: "Rider",
+    icon: "mdi:horse-variant",
+    color: "#2575cf",
+  },
+  {
+    text: "Shooter",
+    icon: "mdi:bow-arrow",
+    color: "#1df2bd",
+  },
+  {
+    text: "Pirate",
+    icon: "mdi:skull-crossbones",
+    color: "#e87021",
+  },
+  {
+    text: "Support",
+    icon: "mdi:bottle-tonic-plus",
+    color: "#208a19",
+  },
+  {
+    text: "Killer",
+    icon: "mdi:knife-military",
+    color: "#ad0c1f",
+  },
+];
+
+export const statsFilters = [
+  {
+    name: "Health",
+    icon: "ant-design:heart-filled",
+    color: "green",
+  },
+  {
+    name: "Speed",
+    icon: "bi:lightning-charge-fill",
+    color: "yellow",
+  },
+  {
+    name: "Strength",
+    icon: "icon-park-outline:muscle",
+    color: "red",
+  },
+  {
+    name: "Magic",
+    icon: "ant-design:star-filled",
+    color: "purple",
+  },
+];
 export const basicFetchURI = async (item) => {
   const tokenURI = item[2];
   let result = [];
@@ -346,48 +406,48 @@ export const orderItems = (value, itemsToOrder, setValue) => {
 
 export const filterByStats = (statsFiltersState, itemsToFilter) => {
   //Comprobar quins estan fora dels minims u maxims,
-
+  console.log(statsFiltersState);
   let filteredItems = itemsToFilter;
   if (
-    statsFiltersState.health.state.min !== 10 &&
-    statsFiltersState.health.state.min !== 300
+    statsFiltersState[0].state.min !== 10 &&
+    statsFiltersState[0].state.min !== 300
   ) {
     filteredItems = filteredItems.filter(
       (item) =>
-        item.stats.health >= statsFiltersState.health.state.min &&
-        item.stats.health <= statsFiltersState.health.state.max
+        item.stats.health >= statsFiltersState[0].state.min &&
+        item.stats.health <= statsFiltersState[0].state.max
     );
   }
 
   if (
-    statsFiltersState.speed.state.min !== 10 &&
-    statsFiltersState.speed.state.min !== 200
+    statsFiltersState[1].state.min !== 10 &&
+    statsFiltersState[1].speed.state.min !== 200
   ) {
     filteredItems = filteredItems.filter(
       (item) =>
-        item.stats.speed >= statsFiltersState.speed.state.min &&
-        item.stats.speed <= statsFiltersState.speed.state.max
+        item.stats.speed >= statsFiltersState.speed[1].min &&
+        item.stats.speed <= statsFiltersState.speed[1].max
     );
   }
 
   if (
-    statsFiltersState.strength.state.min !== 10 &&
-    statsFiltersState.strength.state.min !== 200
+    statsFiltersState[2].state.min !== 10 &&
+    statsFiltersState[2].state.min !== 200
   ) {
     filteredItems = filteredItems.filter(
       (item) =>
-        item.stats.strength >= parseInt(statsFiltersState.strength.state.min) &&
-        item.stats.strength <= statsFiltersState.strength.state.max
+        item.stats.strength >= parseInt(statsFiltersState[2].state.min) &&
+        item.stats.strength <= statsFiltersState[2].state.max
     );
   }
   if (
-    statsFiltersState.magic.state.min !== 0 &&
-    statsFiltersState.magic.state.min !== 200
+    statsFiltersState[3].state.min !== 0 &&
+    statsFiltersState[3].state.min !== 200
   ) {
     filteredItems = filteredItems.filter(
       (item) =>
-        item.stats.magic >= statsFiltersState.magic.min &&
-        item.stats.magic <= statsFiltersState.magic.max
+        item.stats.magic >= statsFiltersState[3].min &&
+        item.stats.magic <= statsFiltersState[3].max
     );
   }
   return filteredItems;
