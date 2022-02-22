@@ -22,7 +22,7 @@ export default function MarketBodyOptions({
     );
 
     orderedItems = filterByStats(statsFiltersState, orderedItems);
-
+    console.log(orderedItems);
     dispatch({
       type: actionTypes.SET_MARKET_ITEMS_FILTERED,
       marketItems: orderedItems,

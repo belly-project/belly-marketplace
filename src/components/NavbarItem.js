@@ -5,8 +5,9 @@ export default function NavbarItem({ icon, text, to, location, disabled }) {
   return (
     <a
       disabled
-      className={`flex px-4 items-center cursor-pointer ${
-        disabled && "text-[#232931] cursor-not-allowed"
+      className={`flex px-4 items-center ${
+        disabled ? "cursor-not-allowed" : "cursor-pointer"
+      } ${disabled && "text-[#232931]"}
       } ${
         location === to ? "bg-[#232931]" : "bg-transparent"
       } mx-4 hidden md:flex`}

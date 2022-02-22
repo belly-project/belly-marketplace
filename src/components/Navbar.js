@@ -8,7 +8,7 @@ import WalletButton from "./WalletButton";
 import NavbarItem from "./NavbarItem";
 import { useLocation } from "react-router-dom";
 import { formatEther } from "ethers/lib/utils";
-import { bellyErc20, bellyErc721 } from "../context/contracts/addresses";
+import { bellyErc20 } from "../context/contracts/addresses";
 import NavbarHelpItem from "./NavbarHelpItem";
 
 export default function Navbar() {
@@ -78,7 +78,7 @@ export default function Navbar() {
         getWalletBalance().then((res) => {
           dispatch({
             type: actionTypes.SET_BALANCE,
-            balance: res.balance,
+            balance: parseFloat(res.balance),
           });
         });
       }
@@ -87,9 +87,15 @@ export default function Navbar() {
   return (
     <div className="sticky top-0 w-full items-start z-10">
       <div className="inline-flex w-full bg-black">
-        <div className="my-3 mx-6">
-          <Icon icon="mdi:alpha-b-circle-outline" color="white" fontSize={32} />
-        </div>
+        <a href="/">
+          <div className="my-3 mx-6 cursor-pointer">
+            <Icon
+              icon="mdi:alpha-b-circle-outline"
+              color="white"
+              fontSize={32}
+            />
+          </div>
+        </a>
         <NavbarHelpItem
           icon={"map:compass"}
           to={"help"}
@@ -97,7 +103,7 @@ export default function Navbar() {
           setShowHelpModal={setShowHelp}
           showHelpModal={showHelp}
           closeModal={closeModal}
-          disabled={"true"}
+          disabled={true}
         />
         <NavbarItem
           icon={"map:storage"}
@@ -113,7 +119,7 @@ export default function Navbar() {
         />
         <NavbarItem
           icon={"map:jewelry-store"}
-          text={"Belly Loot"}
+          text={"Loot"}
           location={location.pathname}
           to={"/loot"}
         />

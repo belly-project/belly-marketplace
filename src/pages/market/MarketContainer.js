@@ -22,8 +22,8 @@ export default function MarketContainer() {
     classFilterState: {},
     statsFilterState: {},
   });
-  const [collapsedClass, setCollapseClass] = useState(true);
-  const [collapsedStats, setCollapseStats] = useState(true);
+  const [collapsedClass, setCollapseClass] = useState(false);
+  const [collapsedStats, setCollapseStats] = useState(false);
 
   const [classSelected, setClassSelected] = useState("");
   const [orderSelected, setOrderSelected] = useState("1");
@@ -31,6 +31,7 @@ export default function MarketContainer() {
     { marketItems, marketItemsFiltered, bellyERC721Contract, wallet },
     dispatch,
   ] = useContractsContext();
+
   const [healthFilter, setHealthFilter] = useState({
     min: 10,
     max: 300,
@@ -47,6 +48,29 @@ export default function MarketContainer() {
     min: 0,
     max: 200,
   });
+
+  const statsFiltersState = [
+    {
+      info: statsFilters.find((f) => f.name === "Health"),
+      state: healthFilter,
+      setState: setHealthFilter,
+    },
+    {
+      info: statsFilters.find((f) => f.name === "Speed"),
+      state: speedFilter,
+      setState: setSpeedFilter,
+    },
+    {
+      info: statsFilters.find((f) => f.name === "Strength"),
+      state: strengthFilter,
+      setState: setStrengthFilter,
+    },
+    {
+      info: statsFilters.find((f) => f.name === "Magic"),
+      state: magicFilter,
+      setState: setMagicFilter,
+    },
+  ];
 
   const resetStatsFilter = () => {
     statsFiltersState[0].setState({
@@ -68,9 +92,9 @@ export default function MarketContainer() {
 
     let filteredItems = marketItems;
 
-    if (classSelected !== "") {
+    if (classSelected.text !== "") {
       filteredItems = marketItems.filter(
-        (item) => item._class === classSelected.toUpperCase()
+        (item) => item._class === classSelected.text.toUpperCase()
       );
     }
 
@@ -86,13 +110,15 @@ export default function MarketContainer() {
 
   const applyStatsFilter = () => {
     let filteredItems = marketItems;
-    if (classSelected !== "") {
+    console.log(classSelected);
+    if (classSelected.text !== "") {
       filteredItems = marketItems.filter(
-        (item) => item._class === classSelected.toUpperCase()
+        (item) => item._class === classSelected.text.toUpperCase()
       );
     }
 
     filteredItems = orderItems(orderSelected, filteredItems);
+    console.log(filteredItems);
     filteredItems = filterByStats(statsFiltersState, filteredItems);
     dispatch({
       type: actionTypes.SET_MARKET_ITEMS_FILTERED,
@@ -150,32 +176,9 @@ export default function MarketContainer() {
     return () => {};
   }, [bellyERC721Contract, dispatch, fetchMarketItemsData, wallet]);
 
-  const statsFiltersState = [
-    {
-      info: statsFilters.find((f) => f.name === "Health"),
-      state: healthFilter,
-      setState: setHealthFilter,
-    },
-    {
-      info: statsFilters.find((f) => f.name === "Speed"),
-      state: speedFilter,
-      setState: setSpeedFilter,
-    },
-    {
-      info: statsFilters.find((f) => f.name === "Strength"),
-      state: strengthFilter,
-      setState: setStrengthFilter,
-    },
-    {
-      info: statsFilters.find((f) => f.name === "Magic"),
-      state: magicFilter,
-      setState: setMagicFilter,
-    },
-  ];
   return (
     <div className="flex flex-row " style={{ height: "94vh" }}>
       <MarketplaceFilters
-        filtersState={filtersState}
         orderSelected={orderSelected}
         classSelected={classSelected}
         setClassSelected={setClassSelected}

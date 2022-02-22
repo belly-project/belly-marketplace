@@ -17,7 +17,7 @@ export default function ItemPagePresentation({ detailItem }) {
       <br />
       <div className="mt-8 leading-16 inline-flex item-center">
         <span className="flex px-8 rounded text-12  border border-transparent pt-1 pt-2, bg-[#3a3f50] border-transparent">
-          #000000{detailItem.tokenId}
+          #{detailItem.tokenId}
         </span>
       </div>
       <div className="text-28 flex items-end"></div>

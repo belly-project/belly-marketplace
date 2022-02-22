@@ -5,7 +5,7 @@ import { formatWeapons, getClassIcon } from "../../../context/utils";
 export default function MarketItem(props) {
   const { item, type } = props;
   const [{ wallet }] = useContractsContext();
-  const { tokenId, owner, weapons, name, price, forSale, image, _class } = item;
+  const { tokenId, owner, weapons, name, price, image, _class } = item;
 
   const _weapons = formatWeapons(weapons);
 
@@ -23,7 +23,7 @@ export default function MarketItem(props) {
             <div className="flex flex-col leading-16 items-center justify-between">
               <div className="mt-2 mb-1 flex flex-col">
                 <small className=" flex-col truncate ml-2">
-                  BLY #000000{tokenId}
+                  BLY #{tokenId}
                 </small>
                 <div className="flex  flex-col justify-center items-center AxieCard_ImagePlaceholder__3rTDX ">
                   <img
@@ -89,7 +89,7 @@ export default function MarketItem(props) {
                       borderColor: "transparent",
                     }}
                   >
-                    <span className="">#0000{tokenId}</span>
+                    <span className="">#{tokenId}</span>
                   </span>
                 </div>
               </div>

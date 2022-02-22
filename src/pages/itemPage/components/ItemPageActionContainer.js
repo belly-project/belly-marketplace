@@ -23,19 +23,19 @@ export default function ItemPageActionContainer({ detailItem }) {
     setLoading(true);
     const _approveTransaction = await bellyERC20Contract.approve(
       bellyERC721Contract.address,
-      parseEther(detailItem.price)
+      parseEther(detailItem.price.toString())
     );
 
-    let tx = await _approveTransaction.wait();
+    await _approveTransaction.wait();
 
     const _buyTokenTransaction = await bellyERC721Contract.buyToken(
       wallet,
       bellyERC20Contract.address,
       detailItem.tokenId,
-      parseEther(detailItem.price)
+      parseEther(detailItem.price.toString())
     );
 
-    tx = await _buyTokenTransaction.wait();
+    await _buyTokenTransaction.wait();
 
     setLoading(false);
     setItemBought(true);
@@ -96,6 +96,7 @@ export default function ItemPageActionContainer({ detailItem }) {
                   : `${detailItem.forSale ? "Save Item" : "Sell Item"}`
               }
               _onClick={handleOpenModal}
+              disabled={detailItem.price > balance}
               Modal={
                 <ActionModal
                   item={detailItem}

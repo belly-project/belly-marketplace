@@ -7,9 +7,7 @@ export default function InventoryItem({ tokenId, name, price, img }) {
         <div className="px-4 py-3">
           <div className="flex flex-col leading-16 items-center justify-between">
             <div className="mt-2 mb-1 flex flex-col">
-              <small className=" flex-col truncate ml-2">
-                BLY #000000{tokenId}
-              </small>
+              <small className=" flex-col truncate ml-2">BLY #{tokenId}</small>
               <div className="flex  flex-col justify-center items-center AxieCard_ImagePlaceholder__3rTDX ">
                 <img
                   className="m-2 rounded-lg"

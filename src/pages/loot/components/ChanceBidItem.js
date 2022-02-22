@@ -8,13 +8,12 @@ import ChanceBidActionContainer from "./ChanceBidActionContainer.js";
 import ChanceBidItemInfo from "./ChanceBidItemInfo.js";
 
 export default function ChanceBidItem({ detailItem }) {
+  // eslint-disable-next-line no-unused-vars
   const [bidsForItem, setBidsForItem] = useState([]);
 
   const navigate = useNavigate();
 
-  const [
-    { bellyChanceBidContract, bellyERC20Contract, bellyERC721Contract, wallet },
-  ] = useContractsContext();
+  const [{ bellyChanceBidContract, wallet }] = useContractsContext();
 
   const fetchBidsForItem = useCallback(
     async (detailItem) => {
@@ -57,7 +56,7 @@ export default function ChanceBidItem({ detailItem }) {
           <br />
           <div className="mt-8 leading-16 inline-flex item-center">
             <span className="flex px-2 rounded text-12  border border-transparent pt-1 pt-2, bg-[#3a3f50] border-transparent">
-              #00000000{detailItem.itemId}
+              #{detailItem.itemId}
             </span>
           </div>
           <div className="text-28 flex items-end"></div>

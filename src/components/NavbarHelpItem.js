@@ -14,17 +14,17 @@ export default function NavbarHelpItem({
 }) {
   return (
     <button
-      className={`flex items-center cursor-pointer hover:animate-spin ${
-        disabled && "text-[#232931] cursor-not-allowed"
-      } ${
+      className={`flex items-center  hover:animate-spin ${
+        disabled ? "cursor-not-allowed" : "cursor-pointer"
+      } ${disabled === true && "text-[#232931]"} ${
         location === to ? "bg-[#232931]" : "bg-transparent"
       } mx-4 hidden md:flex`}
-      onClick={!disabled ?  (() => setShowHelpModal(true)) : undefined}
+      onClick={!disabled ? () => setShowHelpModal(true) : undefined}
     >
       <Icon
         width={"1.1rem"}
         icon={icon}
-        color={`${disabled === "true" ? "#232931" : "#10c274"}`}
+        color={`${disabled ? "#232931" : "#10c274"}`}
       />
       <h1 className="">{text}</h1>
       <HelpModal

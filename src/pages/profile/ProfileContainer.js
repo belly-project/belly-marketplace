@@ -31,10 +31,11 @@ export default function ProfileContainer() {
   useEffect(() => {
     if (wallet !== "") {
       fetchMyTokens().then((res) => {
+        console.log(res);
         dispatch({
           type: actionTypes.SET_MY_ITEMS,
           myItems: res.myItems,
-          balance: res.balance,
+          balance: parseFloat(res.balance),
         });
       });
     }

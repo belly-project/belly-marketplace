@@ -69,9 +69,7 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
               <img src={"https://i.redd.it/udq9asephmpy.png"} alt="dfaf"></img>
 
               <div>
-                <h4 className="uppercase text-[#a1a6b6]">
-                  #0000000{item.itemId}
-                </h4>
+                <h4 className="uppercase text-[#a1a6b6]">#{item.itemId}</h4>
                 <div className="flex justify-between align-center mt-2">
                   <div className="">
                     {item.paidFor} / {item.total} BLY{" "}

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ActionModal from "../../../components/ActionModal";
 import MetamaskActionButton from "../../../components/MetamaskActionButton";
-import { localMarketplaceApi, marketplaceApi } from "../../../context/axios";
+import { marketplaceApi } from "../../../context/axios";
 import { useContractsContext } from "../../../context/ContractProvider";
 import { basicFetchURI } from "../../../context/utils";
 
@@ -46,7 +46,7 @@ export default function CrateActionContainer({ detailItem }) {
       parseEther("10")
     );
 
-    let tx = await _approveTransaction.wait();
+    await _approveTransaction.wait();
 
     const _buyCrateTransaction = await bellyDropsContract.openCrate(
       bellyERC20Contract.address,
@@ -133,16 +133,17 @@ export default function CrateActionContainer({ detailItem }) {
             <div className="inline-block">
               <MetamaskActionButton
                 text={"Buy Crate"}
-                _onClick={handleOpenModal}
+                _onClick={
+                  detailItem.price > balance ? undefined : handleOpenModal
+                }
+                disabled={detailItem.price > balance}
                 Modal={
                   <ActionModal
                     disabledAction={detailItem.price > balance}
                     item={detailItem}
                     loading={loading}
                     showModal={showModal}
-                    action={
-                      detailItem.price > balance ? undefined : requestOpenCrate
-                    }
+                    action={requestOpenCrate}
                     onceCompleted={goToInventory}
                     handleCloseModal={handleCloseModal}
                     completed={crateSuceed}

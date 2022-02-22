@@ -80,7 +80,7 @@ export const basicFetchURI = async (item) => {
         description: description,
         weapons: weapons,
         stats: keyvalues,
-        price: formatEther(item[6]),
+        price: parseFloat(formatEther(item[6])),
         owner: item[4],
         forSale: formatEther(item[6]) > 0.0 ? true : false,
       };
@@ -421,12 +421,12 @@ export const filterByStats = (statsFiltersState, itemsToFilter) => {
 
   if (
     statsFiltersState[1].state.min !== 10 &&
-    statsFiltersState[1].speed.state.min !== 200
+    statsFiltersState[1].state.min !== 200
   ) {
     filteredItems = filteredItems.filter(
       (item) =>
-        item.stats.speed >= statsFiltersState.speed[1].min &&
-        item.stats.speed <= statsFiltersState.speed[1].max
+        item.stats.speed >= statsFiltersState[1].state.min &&
+        item.stats.speed <= statsFiltersState[1].state.max
     );
   }
 
