@@ -39,7 +39,7 @@ module.exports = {
 
         md: "768px",
 
-        "2lg": "768px",
+        "2md": "900px",
         // => @media (min-width: 768px) { ... }
 
         lg: "1120px",

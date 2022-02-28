@@ -7,19 +7,19 @@ export default function WalletButton({ wallet, connectToWallet }) {
       {wallet !== "" ? (
         <div
           disabled
-          className="flex px-5 items-center cursor-pointer bg-[#046CFC] hidden md:hidden lg:flex"
+          className="flex px-5 items-center cursor-pointer bg-[#046CFC]  lg:flex"
           style={{ pointerEvents: "none", cursor: "default" }}
         >
           <a
             href="/profile/inventory"
-            className="flex items-center"
+            className="flex items-center text-xs"
             style={{ pointerEvents: "auto", cursor: "pointer" }}
             disabled
           >
             <Icon icon="logos:metamask-icon" color="white" />
             <div className="mt-2 mr-2"></div>
-            {wallet.substring(0, 6)}...
-            {wallet.substring(wallet.length - 6, wallet.lenght)}
+            {wallet.substring(0, 2)}...
+            {wallet.substring(wallet.length - 3, wallet.lenght)}
           </a>
         </div>
       ) : (

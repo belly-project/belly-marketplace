@@ -22,7 +22,7 @@ export default function NavbarHelpItem({
       onClick={!disabled ? () => setShowHelpModal(true) : undefined}
     >
       <Icon
-        width={"1.1rem"}
+        className="md:text-xs"
         icon={icon}
         color={`${disabled ? "#232931" : "#10c274"}`}
       />

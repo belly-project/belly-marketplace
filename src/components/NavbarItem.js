@@ -7,12 +7,12 @@ export default function NavbarItem({ icon, text, to, location, disabled }) {
       disabled
       className={`flex px-4 items-center ${
         disabled ? "cursor-not-allowed" : "cursor-pointer"
-      } ${disabled && "text-[#232931]"}
+      } ${disabled && "text-[#232931] sm:hidden lg:flex"}
       } ${location === to ? "bg-[#232931]" : "bg-transparent"} mx-4`}
       href={disabled !== true ? to : undefined}
     >
       <Icon
-        width={"1.1rem"}
+        width={"1.02rem"}
         icon={icon}
         color={`${disabled ? "#232931" : "white"}`}
       />

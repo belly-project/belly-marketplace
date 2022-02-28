@@ -130,12 +130,12 @@ export default function Navbar() {
           location={location.pathname}
           disabled={true}
         />
-        <div className="flex ml-auto items-center">
+        <div className="hidden lg:flex flex ml-auto items-center">
           <div className="px-2">
             <div className="flex flex-col items-center justify-center">
               {balance <= 0.0 && (
                 <div className="mr-4 flex ">
-                  <div className="flex items-center mr-4">
+                  <div className="hidden lg:flex items-center mr-4">
                     <div>BellyToken</div>
                     <Icon
                       className="animate-bounce mx-2 cursor-pointer hover:animate-ping"
@@ -146,7 +146,7 @@ export default function Navbar() {
                     />
                   </div>
 
-                  <div className="mr- text-gray-1">
+                  <div className="hidden lg:flex mr- text-gray-1">
                     {bellyErc20.substring(0, 4)}...
                     {bellyErc20.substring(wallet.length - 4)}
                   </div>
@@ -155,12 +155,12 @@ export default function Navbar() {
             </div>
           </div>
           <div className="px-2">
-            <div className="flex items-center justify-center">
+            <div className="hidden lg:flex items-center justify-center">
               <div className="mr-2">
                 <Icon icon="entypo:wallet" color="white" />
               </div>
-              <div className="flex items-center justify-center">
-                <small className="px-4">{balance} BLY</small>
+              <div className="flex items-center justify-center ">
+                <small className="px-4 text-xs">{balance} BLY</small>
                 <div className="cursor-pointer"></div>
               </div>
             </div>

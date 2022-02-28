@@ -12,12 +12,12 @@ export default function ConnectionModal({ showModal, handleCloseModal }) {
       contentLabel="Minimal Modal Example"
     >
       <>
-        <div className="flex flex-col justify-between align-center">
+        <div className="flex w-80 sm:flex-col justify-between align-center">
           <h1 className="text-xl text-white">
             You are in the incorrect Network!
           </h1>
           <div className=" flex my-5 items-center text-white">
-            <div className="mr-5">
+            <div className="mr-5 md:text-xs">
               Please, switch the network to Mumbai Polygon Testnet
             </div>
             <MetamaskActionButton
