@@ -36,7 +36,7 @@ export default function FaucetModal({
               )}
               {loading ? (
                 <button
-                  className={`flex justify-evenly items-center border-[#3a3f50] border px-4 py-4 relative rounded transition  border text-gray-2`}
+                  className={`flex justify-evenly items-center border-primary-3 border px-4 py-4 relative rounded transition  border text-gray-2`}
                 >
                   <div className="w-2 h-2 p-2 border-blue border-4 rounded-lg animate-spin">
                     {" "}

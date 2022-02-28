@@ -31,7 +31,7 @@ export default function OrdenableItemsContainer({
       className="flex-1 px-8 py-4 md:px-4 md:py-0 overflow-auto h-full"
       ref={topRef}
       onScroll={onScroll}
-      style={{ maxHeight: "100vh", marginLeft: "280px" }}
+      style={{ maxHeight: "100vh" }}
     >
       <div className="w-full  relative ">
         <div className="w-full h-full relative flex flex-col items-center justify-center ">
@@ -75,7 +75,7 @@ export default function OrdenableItemsContainer({
         {scrolled && (
           <button
             onClick={() => goToTop()}
-            className="absolute bottom-5 right-10 border vborder-white p-2 rounded-full bg-[#3a3f50] cursor-pointer hover:animate-bounce"
+            className="absolute bottom-5 right-10 border vborder-white p-2 rounded-full bg-primary-3 cursor-pointer hover:animate-bounce"
           >
             <Icon icon="ant-design:up-outlined" width={32} color="white" />
           </button>

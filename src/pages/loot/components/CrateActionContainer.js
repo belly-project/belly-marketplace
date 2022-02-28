@@ -113,57 +113,43 @@ export default function CrateActionContainer({ detailItem }) {
   }, [bellyDropsContract, mintCrateToken, openCrate, wallet]);
 
   return (
-    <div className="block max-w-md md:inline-block md:w-50 align-top">
-      <div className="w-full">
-        <div className="flex items-center w-full flex-wrap md:justify-end">
-          <div className="border-r border-gray-2 py-4 md:hidden">
-            <div className="flex items-center text-gray-2 cursor-pointer pr-20">
-              Auction info
-            </div>
-          </div>
+    <div className="w-full">
+      <div className="flex items-center py-4 w-full md:justify-end  ">
+        <div className="text-right md:p-0">
+          <h3 className="">Ξ&nbsp;{detailItem.price}</h3>
+          <h5 className="mt-4 text-gray-1 ">${detailItem.price}</h5>
+        </div>
 
-          <div className="ml-24 text-right">
-            <h3 className="break-all">Ξ&nbsp;{detailItem.price}</h3>
-            <h5 className="mt-4 text-[#a1a6b6] break-all">
-              ${detailItem.price}
-            </h5>
-          </div>
-
-          <div className="ml-0 md:ml-8 mt-7 w-full md:w-auto md:mt-0">
-            <div className="inline-block">
-              <MetamaskActionButton
-                text={"Buy Crate"}
-                _onClick={
-                  detailItem.price > balance ? undefined : handleOpenModal
-                }
-                disabled={detailItem.price > balance}
-                Modal={
-                  <ActionModal
-                    disabledAction={detailItem.price > balance}
-                    item={detailItem}
-                    loading={loading}
-                    showModal={showModal}
-                    action={requestOpenCrate}
-                    onceCompleted={goToInventory}
-                    handleCloseModal={handleCloseModal}
-                    completed={crateSuceed}
-                    notCompletedText={{
-                      msg: "Open Crate for 10 BLY",
-                      button: `${
-                        detailItem.price > balance
-                          ? "Not Enough BELLY"
-                          : "Open Crate"
-                      }`,
-                    }}
-                    completedText={{
-                      msg: `{Crate Opened!, you got a ${resultCrate?.name}}`,
-                      button: "Go to Inventory",
-                    }}
-                  />
-                }
+        <div className="ml-7 w-full md:mt-0 ">
+          <MetamaskActionButton
+            text={"Buy Crate"}
+            _onClick={detailItem.price > balance ? undefined : handleOpenModal}
+            disabled={detailItem.price > balance}
+            Modal={
+              <ActionModal
+                disabledAction={detailItem.price > balance}
+                item={detailItem}
+                loading={loading}
+                showModal={showModal}
+                action={requestOpenCrate}
+                onceCompleted={goToInventory}
+                handleCloseModal={handleCloseModal}
+                completed={crateSuceed}
+                notCompletedText={{
+                  msg: "Open Crate for 10 BLY",
+                  button: `${
+                    detailItem.price > balance
+                      ? "Not Enough BELLY"
+                      : "Open Crate"
+                  }`,
+                }}
+                completedText={{
+                  msg: `{Crate Opened!, you got a ${resultCrate?.name}}`,
+                  button: "Go to Inventory",
+                }}
               />
-            </div>
-          </div>
+            }
+          />
         </div>
       </div>
     </div>

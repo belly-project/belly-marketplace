@@ -38,18 +38,18 @@ export default function CratesContainer({ setSection, setDetailItem }) {
     return () => {};
   }, [bellyERC20Contract, dispatch, fetchLatestChanceBids, wallet]);
   return (
-    <div className="flex flex-row justify-between w-75">
-      <div className="border rounded-lg m-3 h-full border-gray bg-gray rounded transition hover:shadow hover:border-[#046cfc] cursor-pointer">
-        <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]">
+    <div className="flex sm:flex-col lg:flex-row justify-between w-full">
+      <div className="border mx-auto rounded-lg m-3 h-full border-gray bg-gray-6 rounded transition hover:shadow hover:border-primary-4 cursor-pointer">
+        <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-gray-6">
           <img src="https://i.redd.it/udq9asephmpy.png" alt="dfaf"></img>
 
-          <div>
-            <h4 className="uppercase text-[#a1a6b6]">Simple Crate</h4>
-            <div className="flex justify-between align-center mt-2">
+          <div className="bg-color-6">
+            <h4 className="uppercase text-gray-1">Simple Crate</h4>
+            <div className="flex justify-between align-center mt-2 bg-color-6">
               <div className="">10 BLY </div>
               <button
                 onClick={() => goToOpenCrate()}
-                className="bg-[#6b7185] p-2 rounded-lg"
+                className="bg-gray-2 p-2 rounded-lg"
               >
                 Open
               </button>
@@ -65,10 +65,10 @@ export default function CratesContainer({ setSection, setDetailItem }) {
           return (
             <div
               key={Math.random(1, 999)}
-              className="flex items-center justify-between w-full mt-2 my-4 py-4 px-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg"
+              className="flex items-center justify-between w-full mt-2 my-4 py-4 px-4 border border-primary-3 bg-gray-6 rounded-lg"
             >
               <div>
-                <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                   OPENED BY
                 </div>
                 <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
@@ -77,7 +77,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
                 </div>
               </div>
               <div className="ml-8">
-                <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                   BLY Paid
                 </div>
                 <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
@@ -85,7 +85,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
                 </div>
               </div>
               <div className="ml-8">
-                <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                   Minted
                 </div>
                 <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">

@@ -37,7 +37,7 @@ export default function SortItemsFilters({
             <div className="text-left" style={{ width: "158px" }}>
               <select
                 onChange={(e) => orderMarketItems(e.target.value)}
-                className="text-white bg-[#242735] px-2 py-2 relative rounded transition focus:outline-none border w-full text-white border-gray-2 hover:border-[#a1a6b6] active:border-[#3a3f50] bg-gray-5 hover:bg-gray-4 active:bg-gray-6"
+                className="text-white bg-gray-5 px-2 py-2 relative rounded transition focus:outline-none border w-full text-white border-gray-2 hover:border-gray-1 active:border-primary-3 bg-gray-5 hover:bg-gray-4 active:bg-gray-6"
               >
                 <option value={1}>Lowest Price</option>
                 <option value={2}>Highest Price</option>
@@ -50,7 +50,7 @@ export default function SortItemsFilters({
           <div className="flex items-centerbtn-groups">
             <div className="ml-8 relative hidden md:hidden">
               <div className="flex">
-                <button className="px-20 py-8 relative rounded transition focus:outline-none border text-white border-gray-2 hover:border-[#a1a6b6] active:border-[#3a3f50] bg-gray-5 hover:bg-gray-4 active:bg-gray-6">
+                <button className="px-20 py-8 relative rounded transition focus:outline-none border text-white border-gray-2 hover:border-gray-1 active:border-primary-3 bg-gray-5 hover:bg-gray-4 active:bg-gray-6">
                   <span className="visible">
                     <div className="flex items-center">
                       <div
@@ -69,7 +69,7 @@ export default function SortItemsFilters({
                 <div className="control-group inline-flex flex-row horizontal">
                   <div
                     onClick={() => setViewSelected("GRID")}
-                    className="border hover:border-[#a1a6b6] active:border-[#3a3f50] hover:bg-gray-4 active:bg-gray-6 border-gray-2 rounded-l p-3 flex items-center justify-center border border-primary-4"
+                    className="border hover:border-gray-1 active:border-primary-3 hover:bg-gray-4 active:bg-gray-6 border-gray-2 rounded-l p-3 flex items-center justify-center border border-primary-4"
                     style={{
                       background: viewSelected === "GRID" ? "blue" : "",
                     }}
@@ -78,7 +78,7 @@ export default function SortItemsFilters({
                   </div>
                   <div
                     onClick={() => setViewSelected("LIST")}
-                    className="border hover:border-[#a1a6b6] active:border-[#3a3f50] hover:bg-gray-4 active:bg-gray-6 border-gray-2 rounded-r p-3 flex items-center justify-center"
+                    className="border hover:border-gray-1 active:border-primary-3 hover:bg-gray-4 active:bg-gray-6 border-gray-2 rounded-r p-3 flex items-center justify-center"
                     style={{
                       background: viewSelected === "LIST" ? "blue" : "",
                     }}

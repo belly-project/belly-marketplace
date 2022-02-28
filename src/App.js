@@ -16,7 +16,7 @@ import BattlegroundContainer from "./pages/battleground/BattlegroundContainer";
 
 ReactModal.defaultStyles.overlay.backgroundColor = "rgba(10, 11, 15, 0.99)";
 ReactModal.defaultStyles.content.background = "#3a3f50";
-ReactModal.defaultStyles.content.width = "30%";
+ReactModal.defaultStyles.content.width = "max-content";
 ReactModal.defaultStyles.content.height = "fit-content";
 ReactModal.defaultStyles.content.margin = "auto";
 

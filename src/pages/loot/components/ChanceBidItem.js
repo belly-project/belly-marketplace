@@ -55,7 +55,7 @@ export default function ChanceBidItem({ detailItem }) {
           </div>
           <br />
           <div className="mt-8 leading-16 inline-flex item-center">
-            <span className="flex px-2 rounded text-12  border border-transparent pt-1 pt-2, bg-[#3a3f50] border-transparent">
+            <span className="flex px-2 rounded text-12  border border-transparent pt-1 pt-2, bg-primary-3 border-transparent">
               #{detailItem.itemId}
             </span>
           </div>

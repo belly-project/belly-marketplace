@@ -12,7 +12,7 @@ export default function ClassFilterItem({
     <div
       onClick={onClick}
       className={`cursor-pointer flex items-center ${
-        selected ? "bg-[#6b7185]" : "bg-[#3a3f50]"
+        selected ? "bg-gray-2" : "bg-primary-3"
       } text-md justify-center m-2  rounded-md p-1 px-2`}
     >
       <Icon className="text-xl" icon={icon} color={color} />

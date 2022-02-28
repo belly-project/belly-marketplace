@@ -17,7 +17,7 @@ export default function MetamaskActionButton({
         style={{ borderColor: "[#3a3f50]" }}
         className={`${className} px-4 py-4 relative rounded ${
           disabled ? "cursor-not-allowed" : "text-white"
-        } transition  border `}
+        } transition border text-xs md:text-base `}
       >
         <div className="flex items-center">
           <Icon icon="logos:metamask-icon" color="white" />

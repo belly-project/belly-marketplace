@@ -43,7 +43,7 @@ export default function RangeGroupFilter({
                     size="20"
                     required=""
                     type="number"
-                    className="p-1 mx-1 w-28 border transition text-14 input-field border-[#3a3f50] focus:border-[#046cfc] bg-[#11131b] text-white placeholder-[#6b7185]"
+                    className="p-1 mx-1 w-28 border transition text-14 input-field border-primary-3 focus:border-primary-4 bg-gray-6 text-white placeholder-gray-2"
                     value={filterItem.state.min}
                     onChange={(e) =>
                       handleChange("min", e.target.value, filterItem)
@@ -57,7 +57,7 @@ export default function RangeGroupFilter({
                   <input
                     size="20"
                     type="number"
-                    className="p-1 mx-2 w-28 border transition text-14 input-field border-[#3a3f50] focus:border-[#046cfc] bg-[#11131b] text-white placeholder-[#6b7185]"
+                    className="p-1 mx-2 w-28 border transition text-14 input-field border-primary-3 focus:border-primary-4 bg-gray-6 text-white placeholder-gray-2"
                     value={filterItem.state.max}
                     onChange={(e) =>
                       handleChange("max", e.target.value, filterItem)

@@ -51,7 +51,7 @@ export default function FilterSection({
                 {action && (
                   <button
                     onClick={(e) => action.onClick()}
-                    className="mr-3 font-la text-[#046cfc] text-28"
+                    className="mr-3 font-la text-primary-4 text-28"
                   >
                     Apply
                   </button>
@@ -59,7 +59,7 @@ export default function FilterSection({
                 {resetSectionState && (
                   <button
                     onClick={(e) => resetSectionState()}
-                    className="mr-3 font-la text-[#046cfc] text-28"
+                    className="mr-3 font-la text-primary-4 text-28"
                   >
                     Reset
                   </button>

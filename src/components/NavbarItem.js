@@ -8,9 +8,7 @@ export default function NavbarItem({ icon, text, to, location, disabled }) {
       className={`flex px-4 items-center ${
         disabled ? "cursor-not-allowed" : "cursor-pointer"
       } ${disabled && "text-[#232931]"}
-      } ${
-        location === to ? "bg-[#232931]" : "bg-transparent"
-      } mx-4 hidden md:flex`}
+      } ${location === to ? "bg-[#232931]" : "bg-transparent"} mx-4`}
       href={disabled !== true ? to : undefined}
     >
       <Icon
@@ -18,7 +16,7 @@ export default function NavbarItem({ icon, text, to, location, disabled }) {
         icon={icon}
         color={`${disabled ? "#232931" : "white"}`}
       />
-      <h1 className="ml-2">{text}</h1>
+      <h1 className="ml-2 hidden md:flex">{text}</h1>
     </a>
   );
 }

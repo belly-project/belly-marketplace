@@ -18,14 +18,14 @@ export default function MarketItem(props) {
             : `/token/${tokenId}`
         }
       >
-        <div className="border rounded-lg m-2 border-gray bg-gray transition rounded hover:shadow hover:border-[#046cfc] cursor-pointer">
+        <div className="border rounded-lg m-2 border-gray bg-gray-6 transition rounded hover:shadow hover:border-primary-4 cursor-pointer">
           <div className="px-4 py-3">
             <div className="flex flex-col leading-16 items-center justify-between">
               <div className="mt-2 mb-1 flex flex-col">
                 <small className=" flex-col truncate ml-2">
                   BLY #{tokenId}
                 </small>
-                <div className="flex  flex-col justify-center items-center AxieCard_ImagePlaceholder__3rTDX ">
+                <div className="flex  flex-col justify-center items-center ">
                   <img
                     className="m-2 rounded-lg"
                     src={image}
@@ -45,7 +45,7 @@ export default function MarketItem(props) {
                   <h5 className="truncate font-medium md:text-20 md:leading-24">
                     Ξ {price}
                   </h5>
-                  <h6 className="truncate ml-4 text-[#a1a6b6] font-medium">
+                  <h6 className="truncate ml-4 text-gray-1 font-medium">
                     ${price}
                   </h6>
                 </div>
@@ -64,7 +64,7 @@ export default function MarketItem(props) {
             : `/token/${tokenId}`
         }
       >
-        <div className="border rounded-lg m-3 border-gray bg-gray rounded transition hover:shadow hover:border-[#046cfc]  cursor-pointer">
+        <div className="border rounded-lg m-3 border-gray bg-gray-6 rounded transition hover:shadow hover:border-primary-4  cursor-pointer">
           <div className="flex items-center justify-between flex-wrap w-full">
             <div className="w-1/5">
               <div className="w-full">

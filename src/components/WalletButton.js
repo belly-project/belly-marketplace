@@ -7,7 +7,7 @@ export default function WalletButton({ wallet, connectToWallet }) {
       {wallet !== "" ? (
         <div
           disabled
-          className="flex px-5 items-center cursor-pointer bg-[#046CFC] hidden md:flex"
+          className="flex px-5 items-center cursor-pointer bg-[#046CFC] hidden md:hidden lg:flex"
           style={{ pointerEvents: "none", cursor: "default" }}
         >
           <a

@@ -17,10 +17,10 @@ export default function ChanceBidItemInfo({ detailItem, wallet, bidsForItem }) {
         return (
           <div
             key={Math.random(1, 9999)}
-            className="flex jusify-evenly w-fit mt-2 my-4 py-4 px-4 sm:px-4 sm:py-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg"
+            className="flex jusify-evenly w-fit mt-2 my-4 py-4 px-4 sm:px-4 sm:py-4 bg-color-gray-4 border border-primary-3 bg-gray-4 rounded-lg"
           >
             <div>
-              <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+              <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                 Owner
               </div>
               <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
@@ -29,7 +29,7 @@ export default function ChanceBidItemInfo({ detailItem, wallet, bidsForItem }) {
               </div>
             </div>
             <div className="ml-8">
-              <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+              <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                 BLY Paid
               </div>
               <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
@@ -37,7 +37,7 @@ export default function ChanceBidItemInfo({ detailItem, wallet, bidsForItem }) {
               </div>
             </div>
             <div className="ml-8">
-              <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+              <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                 Pertentatge
               </div>
               <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">

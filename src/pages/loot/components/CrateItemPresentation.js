@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function CrateItemPresentation({ detailItem }) {
   const navigate = useNavigate();
   return (
-    <div className="block align-top" style={{ top: "120px" }}>
+    <div className="flex flex-col h-fit" style={{ top: "120px" }}>
       <div
         role="button"
         className="inline-flex items-center cursor-pointer"
@@ -15,22 +15,18 @@ export default function CrateItemPresentation({ detailItem }) {
       </div>
       <br />
       <div className="mt-8 leading-16 inline-flex item-center">
-        <span className="flex px-8 rounded text-12  border border-transparent pt-1 pt-2, bg-[#3a3f50] border-transparent">
+        <span className="flex px-8 rounded text-12  border border-transparent pt-1 pt-2, bg-primary-3 border-transparent">
           {detailItem.crateId}
         </span>
       </div>
       <div className="text-28 flex items-end"></div>
       <div className="w-full my-auto">
-        <div
-          className="relative pointer-events-none"
-          style={{ width: "480px", height: "480px", marginLeft: "30px" }}
-        >
+        <div className="relative pointer-events-none">
           <img
             className="mt-5"
             src={detailItem.img}
             alt={detailItem.crateId}
-            width="480"
-            height="480"
+            style={{ minWidth: "200px", objectFit: "contain" }}
           />
         </div>
       </div>

@@ -64,19 +64,19 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
           return (
             <div
               key={Math.random(1, 999)}
-              className="flex flex-col justify-center h-fit  p-2 m-2 bg-[#282b39]"
+              className="flex flex-col justify-center h-fit  p-2 m-2 bg-gray-4"
             >
               <img src={"https://i.redd.it/udq9asephmpy.png"} alt="dfaf"></img>
 
               <div>
-                <h4 className="uppercase text-[#a1a6b6]">#{item.itemId}</h4>
+                <h4 className="uppercase text-gray-1">#{item.itemId}</h4>
                 <div className="flex justify-between align-center mt-2">
                   <div className="">
                     {item.paidFor} / {item.total} BLY{" "}
                   </div>
                   <button
                     onClick={() => goToOpenCrate(item)}
-                    className="bg-[#6b7185] p-2 rounded-lg"
+                    className="bg-gray-2 p-2 rounded-lg"
                   >
                     BID
                   </button>
@@ -95,10 +95,10 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
           return (
             <div
               key={Math.random(1, 999)}
-              className="flex jusify-evenly w-fit mt-2 my-4 py-4 px-4 sm:px-4 sm:py-4 bg-color-[#282b39] border border-[#3a3f50] bg-[#282b39] rounded-lg"
+              className="flex jusify-evenly w-fit mt-2 my-4 py-4 px-4 sm:px-4 sm:py-4 bg-color-gray-4 border border-primary-3 bg-gray-4 rounded-lg"
             >
               <div>
-                <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                   Winner
                 </div>
                 <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
@@ -107,7 +107,7 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
                 </div>
               </div>
               <div className="ml-8">
-                <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                   BLY Paid
                 </div>
                 <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
@@ -115,7 +115,7 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
                 </div>
               </div>
               <div className="ml-8">
-                <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                   End price
                 </div>
                 <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">
@@ -123,7 +123,7 @@ export default function ChanceBidContainer({ setSection, setDetailItem }) {
                 </div>
               </div>
               <div className="ml-8">
-                <div className="text-[#a1a6b6] font-bold leading-14 text-xs tracking-1 uppercase">
+                <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
                   Minted
                 </div>
                 <div className="mt-4 text-white font-bold leading-14 text-xs tracking-1 uppercase">

@@ -18,7 +18,7 @@ export default function NavbarHelpItem({
         disabled ? "cursor-not-allowed" : "cursor-pointer"
       } ${disabled === true && "text-[#232931]"} ${
         location === to ? "bg-[#232931]" : "bg-transparent"
-      } mx-4 hidden md:flex`}
+      } mx-4 hidden color-white`}
       onClick={!disabled ? () => setShowHelpModal(true) : undefined}
     >
       <Icon

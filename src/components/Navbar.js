@@ -86,7 +86,7 @@ export default function Navbar() {
   }, [correctChain, dispatch, getWalletBalance, location.pathname, wallet]);
   return (
     <div className="sticky top-0 w-full items-start z-10">
-      <div className="inline-flex w-full bg-black">
+      <div className="inline-flex w-full bg-gray-6">
         <a href="/">
           <div className="my-3 mx-6 cursor-pointer">
             <Icon
@@ -130,7 +130,7 @@ export default function Navbar() {
           location={location.pathname}
           disabled={true}
         />
-        <div className="hidden  md:flex ml-auto items-center">
+        <div className="flex ml-auto items-center">
           <div className="px-2">
             <div className="flex flex-col items-center justify-center">
               {balance <= 0.0 && (
@@ -146,7 +146,7 @@ export default function Navbar() {
                     />
                   </div>
 
-                  <div className="mr- text-[#a1a6b6]">
+                  <div className="mr- text-gray-1">
                     {bellyErc20.substring(0, 4)}...
                     {bellyErc20.substring(wallet.length - 4)}
                   </div>

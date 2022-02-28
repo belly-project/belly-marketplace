@@ -56,11 +56,17 @@ export default function ItemPageContainer() {
     wallet,
   ]);
   return (
-    <BuyableItemWrapper
-      detailItem={token}
-      ItemPresentation={ItemPagePresentation}
-      ItemAction={ItemPageActionContainer}
-      ItemInfo={ItemInfoPage}
-    />
+    <div className="overflow-auto h-full h-full">
+      <div className="mx-auto px-16 md:mt-10 flex justify-center items-center">
+        <div className="flex sm:flex-col lg:flex-row align-top w-full justify-evenly">
+          <ItemPagePresentation detailItem={token} />
+
+          <div className="">
+            <ItemPageActionContainer detailItem={token} />
+            <ItemInfoPage detailItem={token} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
