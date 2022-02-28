@@ -6,8 +6,6 @@ export default function OrdenableItemsContainer({
   itemList,
   ItemComponentGrid,
   ItemComponentList,
-  ItemComponent,
-  options,
   classSelected,
   statsFiltersState,
 }) {
