@@ -38,7 +38,10 @@ export default function CratesContainer({ setSection, setDetailItem }) {
     return () => {};
   }, [bellyERC20Contract, dispatch, fetchLatestChanceBids, wallet]);
   return (
-    <div className="flex sm:flex-col lg:flex-row justify-between w-full">
+    <div
+      className="flex sm:flex-col lg:flex-row justify-between w-full  overflow-auto h-full  "
+      style={{ maxHeight: "100vh" }}
+    >
       <div className="border mx-auto rounded-lg m-3 h-full border-gray bg-gray-6 rounded transition hover:shadow hover:border-primary-4 cursor-pointer">
         <div className="flex flex-col justify-center h-fit  p-2 m-2 bg-gray-6">
           <img src="https://i.redd.it/udq9asephmpy.png" alt="dfaf"></img>
@@ -57,7 +60,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
           </div>
         </div>
       </div>
-      <div className="h-full mt-8 w-25">
+      <div className=" mt-8 mr-0 lg:mr-20 w-25  mb-20 ">
         <div className="font-bold text-xl leading-24 text-white mb-4 ">
           Latest Crates Drops
         </div>
@@ -92,7 +95,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
                   {item.name}
                 </div>
               </div>
-              <div className="ml-8">
+              <div className="ml-8 ">
                 <img src={item.image} alt={item.name} width={64} />
               </div>
             </div>

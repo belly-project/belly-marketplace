@@ -13,25 +13,23 @@ export default function LootContainer() {
   return (
     <div className="flex flex-row">
       <LootSidebar setSection={setSection} />
-      <div className="flex flex-col w-full mt-10">
-        <div className="w-full h-full relative">
-          {section === "crates" && (
-            <CratesContainer
-              setSection={setSection}
-              setDetailItem={setDetailItem}
-            />
-          )}
-          {section === "chanceBid" && (
-            <ChanceBidContainer
-              setSection={setSection}
-              setDetailItem={setDetailItem}
-            />
-          )}
-          {section === "crateItem" && <CrateItem detailItem={detailItem} />}
-          {section === "chanceBidItem" && (
-            <ChanceBidItem detailItem={detailItem} />
-          )}
-        </div>
+      <div className="w-full h-full mt-4  ">
+        {section === "crates" && (
+          <CratesContainer
+            setSection={setSection}
+            setDetailItem={setDetailItem}
+          />
+        )}
+        {section === "chanceBid" && (
+          <ChanceBidContainer
+            setSection={setSection}
+            setDetailItem={setDetailItem}
+          />
+        )}
+        {section === "crateItem" && <CrateItem detailItem={detailItem} />}
+        {section === "chanceBidItem" && (
+          <ChanceBidItem detailItem={detailItem} />
+        )}
       </div>
     </div>
   );

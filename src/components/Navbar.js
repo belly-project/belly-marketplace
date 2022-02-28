@@ -160,7 +160,7 @@ export default function Navbar() {
                 <Icon icon="entypo:wallet" color="white" />
               </div>
               <div className="flex items-center justify-center ">
-                <small className="px-4 text-xs">{balance} BLY</small>
+                <small className="px-4">{balance} BLY</small>
                 <div className="cursor-pointer"></div>
               </div>
             </div>
