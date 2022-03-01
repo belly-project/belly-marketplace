@@ -14,7 +14,7 @@ export default function MetamaskActionButton({
       <button
         disabled={disabled}
         onClick={() => _onClick()}
-        style={{ borderColor: "[#3a3f50]" }}
+        style={{ borderColor: "#3a3f50" }}
         className={`${className} px-4 py-4 relative rounded ${
           disabled ? "cursor-not-allowed" : "text-white"
         } transition border text-xs md:text-base `}

@@ -85,14 +85,14 @@ export default function Navbar() {
     }
   }, [correctChain, dispatch, getWalletBalance, location.pathname, wallet]);
   return (
-    <div className="sticky top-0 w-full items-start z-10">
-      <div className="inline-flex w-full bg-gray-6">
+    <div className="sticky top-0 w-full items-start z-10 border-b border-primary-3 ">
+      <div className="flex w-full bg-gray-6 h-fit">
         <a href="/">
           <div className="my-3 mx-6 cursor-pointer">
             <Icon
               icon="mdi:alpha-b-circle-outline"
               color="white"
-              fontSize={32}
+              fontSize={28}
             />
           </div>
         </a>

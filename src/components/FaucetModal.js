@@ -23,7 +23,7 @@ export default function FaucetModal({
       contentLabel="Minimal Modal Example"
     >
       <>
-        <div className="flex justify-between align-center">
+        <div className="flex justify-between w-full align-center">
           {!completed ? (
             <div className="flex items-center justify-between w-full h-full">
               <h1 className="text-white">{notCompletedText.msg}</h1>

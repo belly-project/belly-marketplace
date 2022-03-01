@@ -5,7 +5,7 @@ module.exports = {
     colors: {
       "gray-1": "#a1a6b6",
       "gray-2": "#6b7185",
-      "gray-3": "#ff49db",
+      "gray-3": "#3a3f50",
       "gray-4": "#282b39",
       "gray-5": "#242735",
       "gray-6": "#11131b",

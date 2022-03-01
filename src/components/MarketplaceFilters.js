@@ -3,8 +3,8 @@ import React from "react";
 export default function MarketplaceFilters({ children }) {
   return (
     <div
-      className="hidden md:flex left-0 border-primary-3 border-r "
-      style={{ height: "94vh", width: "280px" }}
+      className="hidden md:flex left-0 border-primary-3 border-r bg-gray-6"
+      style={{ height: "100vh", width: "280px" }}
     >
       <div className="pb-32 w-full">
         <div className="w-full ">
