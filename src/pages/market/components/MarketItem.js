@@ -80,32 +80,19 @@ export default function MarketItem(props) {
               </div>
             </div>
             <div className="flex  w-1/5 flex-col py-2">
-              <div className="inline-flex leading-2 items-center">
-                <div>
-                  <span
-                    className="flex px-4 rounded text-12 py-1  border border-transparent"
-                    style={{
-                      backgroundColor: "green",
-                      borderColor: "transparent",
-                    }}
-                  >
-                    <span className="">#{tokenId}</span>
-                  </span>
-                </div>
-              </div>
-              <div className="mt-4 flex flex-row">
+              <div className="flex flex-row">
                 <small className="text-lg">{name}</small>
               </div>
             </div>
             <div className="w-1/5">
               <div className="flex items-center">
                 <div className="flex flex-row items-center mb-2 text-gray-1 w-2/4">
-                  {getClassIcon(_class)}
+                  {/* {getClassIcon(_class)} */}
                   <div className="ml-5">{_class}</div>
                 </div>
               </div>
             </div>
-            <div className="w-1/5 flex-col items-center">
+            <div className="hidden 2md:flex w-1/5 flex-col items-center">
               <div className="flex flex-col mr-10 items-center">
                 {_weapons?.map((weapon) => {
                   return (

@@ -79,8 +79,8 @@ export default function ItemPageActionContainer({ detailItem }) {
   };
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4 w-full md:justify-end  ">
+    <div className="w-ful mb-10">
+      <div className="flex  items-center p-4 w-full bg-gray-4 border sm:py-4 rounded-lg border-primary-3 md:justify-end  ">
         <div className="text-right md:p-0">
           <h3 className=" p-1">Ξ&nbsp;{detailItem.price}</h3>
           <h5 className="mt-4 text-gray-1  p-1">${detailItem.price}</h5>

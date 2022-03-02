@@ -39,7 +39,7 @@ export default function CratesContainer({ setSection, setDetailItem }) {
   }, [bellyERC20Contract, dispatch, fetchLatestChanceBids, wallet]);
   return (
     <div
-      className="flex sm:flex-col lg:flex-row justify-between w-full  overflow-auto h-full  "
+      className="flex flex-col md::flex-row lg:flex-row justify-between w-full  overflow-auto h-full  "
       style={{ maxHeight: "100vh" }}
     >
       <div className="border mx-auto rounded-lg m-3 h-full border-gray bg-gray-6 rounded transition hover:shadow hover:border-primary-4 cursor-pointer">

@@ -1,13 +1,15 @@
 import { Icon } from "@iconify/react";
 import React from "react";
 
-export default function WalletButton({ wallet, connectToWallet }) {
+export default function WalletButton({ wallet, type, connectToWallet }) {
   return (
     <>
       {wallet !== "" ? (
         <div
           disabled
-          className="flex px-5 items-center cursor-pointer bg-[#046CFC]  lg:flex"
+          className={`px-5 ${
+            type === "round" ? "p-5 rounded-full" : ""
+          }  items-center cursor-pointer bg-[#046CFC]  sm:flex `}
           style={{ pointerEvents: "none", cursor: "default" }}
         >
           <a
@@ -25,7 +27,7 @@ export default function WalletButton({ wallet, connectToWallet }) {
       ) : (
         <div
           disabled
-          className="flex px-5 items-center cursor-pointer bg-[#046CFC] hidden md:flex"
+          className="px-5 items-center cursor-pointer bg-[#046CFC]  flex"
           style={{ pointerEvents: "none", cursor: "default" }}
         >
           <button

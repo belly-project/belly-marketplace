@@ -58,11 +58,16 @@ export default function ItemPageContainer() {
   return (
     <div className="overflow-auto h-full h-full">
       <div className="mx-auto px-16 md:mt-10 flex justify-center items-center">
-        <div className="flex sm:flex-col lg:flex-row align-top w-full justify-evenly">
+        <div className="flex flex-col 2md:flex-row align-top w-full justify-evenly">
           <ItemPagePresentation detailItem={token} />
 
           <div className="">
-            <ItemPageActionContainer detailItem={token} />
+            <div className="">
+              <div className="font-bold mt-10 text-xl leading-24 text-white mb-4">
+                About
+              </div>
+              <ItemPageActionContainer detailItem={token} />
+            </div>
             <ItemInfoPage detailItem={token} />
           </div>
         </div>

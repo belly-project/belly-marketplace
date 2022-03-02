@@ -13,6 +13,7 @@ import ItemPageContainer from "./pages/itemPage/ItemPageContainer.js";
 import ReactModal from "react-modal";
 import ConnectionModal from "./components/ConnectionModal";
 import BattlegroundContainer from "./pages/battleground/BattlegroundContainer";
+import WalletButton from "./components/WalletButton";
 
 ReactModal.defaultStyles.overlay.backgroundColor = "rgba(10, 11, 15, 0.99)";
 ReactModal.defaultStyles.content.background = "#3a3f50";
@@ -103,6 +104,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar />
+
         {!correctChain && (
           <ConnectionModal
             showModal={showModal}

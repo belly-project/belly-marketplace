@@ -86,7 +86,7 @@ export default function Navbar() {
   }, [correctChain, dispatch, getWalletBalance, location.pathname, wallet]);
   return (
     <div className="sticky top-0 w-full items-start z-10 border-b border-primary-3 ">
-      <div className="flex w-full bg-gray-6 h-fit">
+      <div className="flex w-full sm:justify-between bg-gray-6 bg-opacity-50 h-fit">
         <a href="/">
           <div className="my-3 mx-6 cursor-pointer">
             <Icon
@@ -166,7 +166,9 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-        <WalletButton wallet={wallet} connectToWallet={connectToWallet} />
+        <div className="hidden 2sm:flex">
+          <WalletButton wallet={wallet} connectToWallet={connectToWallet} />
+        </div>
       </div>
     </div>
   );

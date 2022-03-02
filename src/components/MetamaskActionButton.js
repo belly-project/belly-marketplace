@@ -14,14 +14,13 @@ export default function MetamaskActionButton({
       <button
         disabled={disabled}
         onClick={() => _onClick()}
-        style={{ borderColor: "#3a3f50" }}
         className={`${className} px-4 py-4 relative rounded ${
           disabled ? "cursor-not-allowed" : "text-white"
-        } transition border text-xs md:text-base `}
+        } transition border border-primary-1 hover:border-primary-4  text-xs md:text-base `}
       >
         <div className="flex items-center">
           <Icon icon="logos:metamask-icon" color="white" />
-          <p className={`ml-2 ${disabled ? "text-[#6b7185]" : "text-white"}`}>
+          <p className={`ml-2 ${disabled ? "text-gray-2" : "text-white"}`}>
             {text}
           </p>
         </div>

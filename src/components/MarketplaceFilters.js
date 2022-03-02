@@ -3,7 +3,7 @@ import React from "react";
 export default function MarketplaceFilters({ children }) {
   return (
     <div
-      className="hidden md:flex left-0 border-primary-3 border-r bg-gray-6"
+      className="hidden md:flex left-0 border-primary-3 border-r bg-gray-6 bg-opacity-50"
       style={{ height: "100vh", width: "280px" }}
     >
       <div className="pb-32 w-full">

@@ -11,8 +11,8 @@ export default function LootSidebar({ setSection }) {
 
   return (
     <div
-      className="hidden md:flex flex-col flex-none border-primary-3 border-r  bg-gray-6"
-      style={{ height: "94vh", width: "280px" }}
+      className="hidden md:flex flex-col flex-none border-primary-3 border-r  bg-gray-6 bg-opacity-50"
+      style={{ height: "100vh", width: "280px" }}
     >
       <div className="w-full flex flex-col pt-6 px-12">
         <div className="rounded w-full pt-5 pb-5 px-2 border border-primary-3 text-center">

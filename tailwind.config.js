@@ -34,8 +34,11 @@ module.exports = {
         /* Customize spacing */
       },
       screens: {
-        sm: "100px",
+        xs: "100px",
+
+        sm: "520px",
         // => @media (min-width: 640px) { ... }
+        "2sm": "600px",
 
         md: "768px",
 
