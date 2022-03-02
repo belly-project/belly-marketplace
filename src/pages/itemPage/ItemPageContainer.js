@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BuyableItemWrapper from "../../components/BuyableItemWrapper";
 import { useContractsContext } from "../../context/ContractProvider";
-import { basicFetchURI } from "../../context/utils";
+import { basicFetchURI, nftToUi } from "../../context/utils";
 import ItemInfoPage from "./components/ItemInfoPage";
 import ItemPageActionContainer from "./components/ItemPageActionContainer";
 import ItemPagePresentation from "./components/ItemPagePresentation";
 
 export default function ItemPageContainer() {
   const [token, setToken] = useState({});
-  const [{ bellyERC721Contract, wallet }] = useContractsContext();
+  const [{ bellyERC721Contract, wallet, marketData }] = useContractsContext();
   let location = useLocation();
   let { tokenId } = useParams();
   let navigate = useNavigate();
@@ -41,7 +41,8 @@ export default function ItemPageContainer() {
     if (wallet !== "" && !token.owner) {
       fetchTokenData().then((res) => {
         if (res !== 0) {
-          setToken(res);
+          let formatted = nftToUi(res, marketData);
+          setToken(formatted);
         } else {
           //navigate("/");
         }
@@ -51,6 +52,7 @@ export default function ItemPageContainer() {
     bellyERC721Contract.bellyCharactersForSale,
     fetchTokenData,
     location.pathname,
+    marketData,
     navigate,
     token,
     wallet,

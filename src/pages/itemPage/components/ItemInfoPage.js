@@ -1,6 +1,6 @@
-import { Icon } from "@iconify/react";
 import React from "react";
-import { getClassIcon, processWeapon } from "../../../context/utils";
+import { processWeapon } from "../../../context/utils";
+import StatWrapper from "./StatWrapper";
 
 export default function ItemInfoPage({ detailItem }) {
   return (
@@ -40,8 +40,8 @@ export default function ItemInfoPage({ detailItem }) {
             </div>
 
             <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
-              {getClassIcon(detailItem.class)}
-              <div className="ml-2">{detailItem.class}</div>
+              {detailItem._class?.icon}
+              <div className="ml-2">{detailItem._class?.text}</div>
               <small className="text-gray-2 truncate"></small>
             </div>
           </div>
@@ -51,6 +51,7 @@ export default function ItemInfoPage({ detailItem }) {
         <div className="font-bold text-xl leading-24 text-white mb-2">
           Stats
         </div>
+
         <div
           className="
             flex flex-wrap
@@ -59,52 +60,14 @@ export default function ItemInfoPage({ detailItem }) {
             sm:pt-4 sm:pb-4 sm:px-4
             rounded-lg bg-gray-4 border border-primary-3"
         >
-          <div className="w-1/2 sm:w-auto mb-4">
-            <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
-              Health
-            </div>
-            <div className="flex items-center">
-              <Icon icon="ant-design:heart-filled" color="green" />
-              <div className="ml-2 text-xl leading-24">
-                {detailItem.stats?.health}
-              </div>
-            </div>
-          </div>
-          <div className="w-1/2 sm:w-auto mb-2">
-            <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
-              Speed
-            </div>
-            <div className="flex items-center">
-              <Icon icon="bi:lightning-charge-fill" color="yellow" />
-              <div className="ml-2 text-xl leading-24">
-                {detailItem.stats?.speed}
-              </div>
-            </div>
-          </div>
-          <div className="w-1/2 sm:w-auto mb-2">
-            <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
-              strength
-            </div>
-            <div className="flex items-center">
-              <Icon icon="icon-park-outline:muscle" color="red" />
-              <div className="ml-2 text-xl leading-24">
-                {detailItem.stats?.strength}
-              </div>
-            </div>
-          </div>
-          <div className="w-1/2 sm:w-auto mb-2">
-            <div className="text-10 leading-14 font-bold tracking-1 mb-2 uppercase text-gray-1">
-              Magic
-            </div>
-            <div className="flex items-center">
-              <Icon icon="ant-design:star-filled" color="purple" />
-              <div className="ml-2 text-xl leading-24">
-                {detailItem.stats?.magic}
-              </div>
-            </div>
-          </div>
+          {detailItem.stats?.map((stat) => {
+            return <StatWrapper key={Math.random(0, 99999)} stat={stat} />;
+          })}
         </div>
       </div>
+
+      {/** EXTRA COMPONENTS */}
+
       <div className="mt-10 mb-20">
         <div className="font-bold text-xl leading-24 text-white mb-2">
           Weapons

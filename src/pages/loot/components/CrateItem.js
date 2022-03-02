@@ -7,7 +7,7 @@ export default function CrateItem({ detailItem }) {
   return (
     <div className="mx-auto px-16 md:mt-10 flex-col justify-center items-center">
       <div
-        className="flex sm:flex-col lg:flex-row align-top w-full h-fit justify-evenly"
+        className="flex flex-col md:flex-row lg:flex-row align-top w-full h-fit justify-evenly"
         style={{ height: "60vh" }}
       >
         <CrateItemPresentation detailItem={detailItem} />

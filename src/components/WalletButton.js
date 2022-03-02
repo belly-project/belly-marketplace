@@ -20,7 +20,7 @@ export default function WalletButton({ wallet, type, connectToWallet }) {
           >
             <Icon icon="logos:metamask-icon" color="white" />
             <div className="mt-2 mr-2"></div>
-            {wallet.substring(0, 2)}...
+            {wallet.substring(0, 4)}...
             {wallet.substring(wallet.length - 3, wallet.lenght)}
           </a>
         </div>

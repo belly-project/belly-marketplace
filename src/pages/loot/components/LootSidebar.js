@@ -19,7 +19,7 @@ export default function LootSidebar({ setSection }) {
           <div className="flex justify-center items-center">
             <div className="flex items-center">
               <h4 className="mr-4 text-lg font-medium">
-                {wallet.substring(0, 4)}...
+                {wallet.substring(0, 5)}...
                 {wallet.substring(wallet.length - 4)}
               </h4>
               <div className="hover:cursor-pointer">

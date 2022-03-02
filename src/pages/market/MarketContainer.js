@@ -28,7 +28,13 @@ export default function MarketContainer() {
   const [classSelected, setClassSelected] = useState("");
   const [orderSelected, setOrderSelected] = useState("1");
   const [
-    { marketItems, marketItemsFiltered, bellyERC721Contract, wallet },
+    {
+      marketData,
+      marketItems,
+      marketItemsFiltered,
+      bellyERC721Contract,
+      wallet,
+    },
     dispatch,
   ] = useContractsContext();
 
@@ -127,7 +133,7 @@ export default function MarketContainer() {
   };
 
   const fetchMarketItemsData = useCallback(async () => {
-    let _response = await bellyERC721Contract.getItemsForSale({});
+    let _response = await bellyERC721Contract.getItemsForSale();
 
     _response = _response.filter((item) => item[4] !== wallet);
 
@@ -165,6 +171,7 @@ export default function MarketContainer() {
 
   useEffect(() => {
     if (wallet !== "") {
+      console.log(wallet);
       fetchMarketItemsData().then((res) => {
         dispatch({
           type: actionTypes.SET_MARKET_ITEMS,
@@ -197,7 +204,7 @@ export default function MarketContainer() {
             onSelection={filterByClass}
             state={classSelected}
             setState={setClassSelected}
-            filterList={classFilters}
+            filterList={marketData.nftTypes}
             FilterComponent={ClassFilterItem}
           />
         </FilterSection>

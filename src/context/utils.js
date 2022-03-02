@@ -3,66 +3,7 @@ import { Icon } from "@iconify/react";
 import axios from "axios";
 import { formatEther } from "ethers/lib/utils";
 
-export const classFilters = [
-  {
-    text: "Tank",
-    icon: "mdi:shield-account",
-    color: "#9908A3",
-  },
-  {
-    text: "Mage",
-    icon: "mdi:auto-fix",
-    color: "#FFEE00",
-  },
-  {
-    text: "Rider",
-    icon: "mdi:horse-variant",
-    color: "#2575cf",
-  },
-  {
-    text: "Shooter",
-    icon: "mdi:bow-arrow",
-    color: "#1df2bd",
-  },
-  {
-    text: "Pirate",
-    icon: "mdi:skull-crossbones",
-    color: "#e87021",
-  },
-  {
-    text: "Support",
-    icon: "mdi:bottle-tonic-plus",
-    color: "#208a19",
-  },
-  {
-    text: "Killer",
-    icon: "mdi:knife-military",
-    color: "#ad0c1f",
-  },
-];
-
-export const statsFilters = [
-  {
-    name: "Health",
-    icon: "ant-design:heart-filled",
-    color: "green",
-  },
-  {
-    name: "Speed",
-    icon: "bi:lightning-charge-fill",
-    color: "yellow",
-  },
-  {
-    name: "Strength",
-    icon: "icon-park-outline:muscle",
-    color: "red",
-  },
-  {
-    name: "Magic",
-    icon: "ant-design:star-filled",
-    color: "purple",
-  },
-];
+export const statsFilters = [];
 export const basicFetchURI = async (item) => {
   const tokenURI = item[2];
   let result = [];
@@ -161,6 +102,61 @@ export const crateFetchURI = async (item) => {
     }
   });
   return result;
+};
+
+export const getUIdataForClass = (clss, nftConfig) => {
+  const configClass = nftConfig.nftTypes;
+  const configObj = configClass.find(
+    (cl) => cl.text.toUpperCase() === clss.toUpperCase()
+  );
+
+  if (configObj) {
+    return {
+      icon: <Icon icon={configObj.icon} color={configObj.color} />,
+      text: configObj.text.toUpperCase(),
+    };
+  }
+
+  return {};
+};
+
+export const getUIdataForStats = (stats, nftConfig) => {
+  const configStats = nftConfig.nftStats;
+  let array = [];
+  configStats.forEach((cnf) => {
+    let name = cnf.name.toLowerCase();
+
+    if (name.toLowerCase() in stats) {
+      array.push({
+        ...cnf,
+        icon: <Icon icon={cnf.icon} color={cnf.color} />,
+        value: stats[name.toLowerCase()],
+      });
+    }
+  });
+  return array;
+};
+
+export const nftToUi = (nftData, nftConfig) => {
+  const {
+    description,
+    forSale,
+    image,
+    itemURI,
+    name,
+    owner,
+    price,
+    stats,
+    tokenId,
+    weapons,
+    _class,
+  } = nftData;
+
+  return {
+    ...nftData,
+    _class: getUIdataForClass(_class, nftConfig),
+    stats: getUIdataForStats(stats, nftConfig),
+  };
 };
 
 export const chanceBidFor = async (item, detailItem) => {

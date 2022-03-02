@@ -13,7 +13,81 @@ import {
   bellyLoot,
 } from "./contracts/addresses";
 
+const initialData = {
+  chainInfo: {
+    chainId: 80001,
+  },
+  contracts: [
+    {
+      name: "DOlympusChatacterERC721",
+      address: "",
+      abi: "",
+    },
+  ],
+  nftStats: [
+    {
+      name: "Health",
+      icon: "ant-design:heart-filled",
+      color: "green",
+    },
+    {
+      name: "Speed",
+      icon: "bi:lightning-charge-fill",
+      color: "yellow",
+    },
+    {
+      name: "Strength",
+      icon: "icon-park-outline:muscle",
+      color: "red",
+    },
+    {
+      name: "Magic",
+      icon: "ant-design:star-filled",
+      color: "purple",
+    },
+  ],
+  nftTypes: [
+    {
+      text: "Tank",
+      icon: "mdi:shield-account",
+      color: "#9908A3",
+    },
+    {
+      text: "Mage",
+      icon: "mdi:auto-fix",
+      color: "#FFEE00",
+    },
+    {
+      text: "Rider",
+      icon: "mdi:horse-variant",
+      color: "#2575cf",
+    },
+    {
+      text: "Shooter",
+      icon: "mdi:bow-arrow",
+      color: "#1df2bd",
+    },
+    {
+      text: "Pirate",
+      icon: "mdi:skull-crossbones",
+      color: "#e87021",
+    },
+    {
+      text: "Support",
+      icon: "mdi:bottle-tonic-plus",
+      color: "#208a19",
+    },
+    {
+      text: "Killer",
+      icon: "mdi:knife-military",
+      color: "#ad0c1f",
+    },
+  ],
+  orderType: ["Highest Price", "Lowest Price", "More Recent", "Older"],
+};
+
 export const initialState = {
+  marketData: initialData,
   provider: {},
   bellyERC721Contract: {},
   bellyERC20Contract: {},
