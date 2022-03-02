@@ -35,7 +35,7 @@ export function useWindowDimensions() {
 export default function ProfileContainer() {
   const { height, width } = useWindowDimensions();
   const [
-    { wallet, myItems, bellyERC721Contract, bellyERC20Contract },
+    { wallet, myItems, bellyERC721Contract, bellyERC20Contract, marketData },
     dispatch,
   ] = useContractsContext();
   const fetchMyTokens = useCallback(async () => {

@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import { formatEther } from "ethers/lib/utils";
 import { bellyErc20 } from "../context/contracts/addresses";
 import NavbarHelpItem from "./NavbarHelpItem";
+import { configData } from "../configData";
 
 export default function Navbar() {
   const location = useLocation();
@@ -101,54 +102,22 @@ export default function Navbar() {
           closeModal={closeModal}
           disabled={true}
         />
-        <NavbarItem
-          icon={"map:storage"}
-          text={"Inventory"}
-          to={"/profile/inventory"}
-          location={location.pathname}
-        />
-        <NavbarItem
-          icon={"map:grocery-or-supermarket"}
-          text={"Marketplace"}
-          to={"/"}
-          location={location.pathname}
-        />
-        <NavbarItem
-          icon={"map:jewelry-store"}
-          text={"Loot"}
-          location={location.pathname}
-          to={"/loot"}
-        />
-        <NavbarItem
-          icon={"map:museum"}
-          text={"Battleground"}
-          to={"/battle"}
-          location={location.pathname}
-          disabled={true}
-        />
+        {configData.pages?.map((page) => {
+          return (
+            <NavbarItem
+              key={Math.random(0, 999)}
+              icon={page.icon}
+              text={page.name}
+              to={page.route}
+              location={location.pathname}
+              disabled={page.disabled}
+            />
+          );
+        })}
+
         <div className="hidden lg:flex flex ml-auto items-center">
           <div className="px-2">
-            <div className="flex flex-col items-center justify-center">
-              {balance <= 0.0 && (
-                <div className="mr-4 flex ">
-                  <div className="hidden lg:flex items-center mr-4">
-                    <div>BellyToken</div>
-                    <Icon
-                      className="animate-bounce mx-2 cursor-pointer hover:animate-ping"
-                      onClick={() => addToken(bellyErc20)}
-                      icon="gg:import"
-                      color="white"
-                      width={24}
-                    />
-                  </div>
-
-                  <div className="hidden lg:flex mr- text-gray-1">
-                    {bellyErc20.substring(0, 4)}...
-                    {bellyErc20.substring(wallet.length - 4)}
-                  </div>
-                </div>
-              )}
-            </div>
+            <div className="flex flex-col items-center justify-center"></div>
           </div>
           <div className="px-2">
             <div className="hidden lg:flex items-center justify-center">
@@ -156,7 +125,9 @@ export default function Navbar() {
                 <Icon icon="entypo:wallet" color="white" />
               </div>
               <div className="flex items-center justify-center ">
-                <small className="px-4">{balance} BLY</small>
+                <small className="px-4">
+                  {balance} {configData.chainInfo?.coinCurrency}
+                </small>
                 <div className="cursor-pointer"></div>
               </div>
             </div>

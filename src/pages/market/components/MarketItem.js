@@ -1,4 +1,6 @@
+import { Icon } from "@iconify/react";
 import React from "react";
+import { configData } from "../../../configData";
 import { useContractsContext } from "../../../context/ContractProvider";
 import { formatWeapons, getClassIcon } from "../../../context/utils";
 
@@ -6,7 +8,6 @@ export default function MarketItem(props) {
   const { item, type } = props;
   const [{ wallet }] = useContractsContext();
   const { tokenId, owner, weapons, name, price, image, _class } = item;
-
   const _weapons = formatWeapons(weapons);
 
   return type === "GRID" ? (
@@ -23,7 +24,7 @@ export default function MarketItem(props) {
             <div className="flex flex-col leading-16 items-center justify-between">
               <div className="mt-2 mb-1 flex flex-col">
                 <small className=" flex-col truncate ml-2">
-                  BLY #{tokenId}
+                  {configData.nftCollection.name} #{tokenId}
                 </small>
                 <div className="flex  flex-col justify-center items-center ">
                   <img
@@ -41,13 +42,19 @@ export default function MarketItem(props) {
                     {name}
                   </h5>
                 </div>
-                <div className="h-0 pb-12 flex flex-row flex-wrap justify-center overflow-hidden items-baseline">
-                  <h5 className="truncate font-medium md:text-20 md:leading-24">
-                    Ξ {price}
-                  </h5>
-                  <h6 className="truncate ml-4 text-gray-1 font-medium">
+                <div className="h-0 pb-12 flex items-center flex-row flex-wrap justify-center overflow-hidden items-baseline">
+                  <div className="truncate flex items-center font-medium md:text-20 md:leading-24">
+                    <Icon
+                      className="mr-5"
+                      color={configData.chainInfo?.color}
+                      width={28}
+                      icon={configData.chainInfo?.coinIcon}
+                    />{" "}
+                    {price}
+                  </div>
+                  {/*  <h6 className="truncate ml-4 text-gray-1 font-medium">
                     ${price}
-                  </h6>
+                  </h6> */}
                 </div>
               </div>
             </div>
@@ -111,7 +118,9 @@ export default function MarketItem(props) {
             </div>
 
             <div className="w-1/5 flex flex-col items-center">
-              <h4 className="truncate font-medium break-all">Ξ 0.011</h4>
+              <div className="truncate font-medium break-all">
+                <Icon icon={configData.nftCollection?.coinIcon} /> 0.011
+              </div>
               <h6 className="truncate text-gray-1 font-medium break-all">
                 $35
               </h6>

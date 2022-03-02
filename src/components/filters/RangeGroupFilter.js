@@ -1,12 +1,7 @@
 import { Icon } from "@iconify/react";
 import React from "react";
 
-export default function RangeGroupFilter({
-  filterList,
-  state,
-  setState,
-  FilterComponent,
-}) {
+export default function RangeGroupFilter({ filterList }) {
   const handleChange = (type, value, item) => {
     if (type === "max") {
       if (value <= 200) {

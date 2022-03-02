@@ -34,37 +34,42 @@ export default function ItemInfoPage({ detailItem }) {
               {detailItem.description}
             </div>
           </div>
-          <div className="mt-6">
-            <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
-              Class
-            </div>
+          {detailItem._class?.icon && (
+            <div className="mt-6">
+              <div className="text-gray-1 font-bold leading-14 text-xs tracking-1 uppercase">
+                Class
+              </div>
 
-            <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
-              {detailItem._class?.icon}
-              <div className="ml-2">{detailItem._class?.text}</div>
-              <small className="text-gray-2 truncate"></small>
+              <div className="mt-2 text-lg leading-20 truncate flex items-center cursor-pointer">
+                {detailItem._class?.icon}
+                <div className="ml-2">{detailItem._class?.text}</div>
+                <small className="text-gray-2 truncate"></small>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
-      <div className="mt-10">
-        <div className="font-bold text-xl leading-24 text-white mb-2">
-          Stats
-        </div>
 
-        <div
-          className="
+      {detailItem.stats !== undefined && (
+        <div className="mt-10">
+          <div className="font-bold text-xl leading-24 text-white mb-2">
+            Stats
+          </div>
+
+          <div
+            className="
             flex flex-wrap
             justify-between
             py-2 px-2 pb-0
             sm:pt-4 sm:pb-4 sm:px-4
             rounded-lg bg-gray-4 border border-primary-3"
-        >
-          {detailItem.stats?.map((stat) => {
-            return <StatWrapper key={Math.random(0, 99999)} stat={stat} />;
-          })}
+          >
+            {detailItem.stats?.map((stat) => {
+              return <StatWrapper key={Math.random(0, 99999)} stat={stat} />;
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/** EXTRA COMPONENTS */}
 

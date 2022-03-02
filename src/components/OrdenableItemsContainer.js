@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import React, { useCallback, useRef, useState } from "react";
+import { configData } from "../configData";
 import SortItemsFilters from "./SortItemsFilters";
 
 export default function OrdenableItemsContainer({
@@ -33,14 +34,18 @@ export default function OrdenableItemsContainer({
     >
       <div className="w-full  relative ">
         <div className="w-full h-full relative flex flex-col items-center justify-center ">
-          <SortItemsFilters
-            classSelected={classSelected}
-            orderSelected={orderSelected}
-            setOrderSelected={setOrderSelected}
-            statsFiltersState={statsFiltersState}
-            viewSelected={viewSelected}
-            setViewSelected={setViewSelected}
-          />
+          {configData.orderType !== undefined && (
+            <SortItemsFilters
+              classSelected={classSelected}
+              orderSelected={orderSelected}
+              setOrderSelected={setOrderSelected}
+              statsFiltersState={statsFiltersState}
+              viewSelected={viewSelected}
+              setViewSelected={setViewSelected}
+              sortOptions={configData.orderType?.sort}
+              viewOptions={configData.orderType?.view}
+            />
+          )}
 
           {viewSelected === "GRID" ? (
             <div className="flex  mt-2 flex-wrap justify-center w-full h-full">

@@ -9,7 +9,7 @@ import ItemPagePresentation from "./components/ItemPagePresentation";
 
 export default function ItemPageContainer() {
   const [token, setToken] = useState({});
-  const [{ bellyERC721Contract, wallet, marketData }] = useContractsContext();
+  const [{ bellyERC721Contract, wallet }] = useContractsContext();
   let location = useLocation();
   let { tokenId } = useParams();
   let navigate = useNavigate();
@@ -41,7 +41,8 @@ export default function ItemPageContainer() {
     if (wallet !== "" && !token.owner) {
       fetchTokenData().then((res) => {
         if (res !== 0) {
-          let formatted = nftToUi(res, marketData);
+          let formatted = nftToUi(res);
+          console.log(formatted);
           setToken(formatted);
         } else {
           //navigate("/");
@@ -52,7 +53,6 @@ export default function ItemPageContainer() {
     bellyERC721Contract.bellyCharactersForSale,
     fetchTokenData,
     location.pathname,
-    marketData,
     navigate,
     token,
     wallet,

@@ -16,6 +16,7 @@ import ButtonSelectionFilter from "../../components/filters/ButtonSelectionFilte
 import FilterSection from "../../components/filters/FilterSection.js";
 import RangeGroupFilter from "../../components/filters/RangeGroupFilter.js";
 import ClassFilterItem from "../../components/filters/ClassFilterItem.js";
+import { configData } from "../../configData.js";
 
 export default function MarketContainer() {
   const [filtersState, setFiltersState] = useState({
@@ -28,13 +29,7 @@ export default function MarketContainer() {
   const [classSelected, setClassSelected] = useState("");
   const [orderSelected, setOrderSelected] = useState("1");
   const [
-    {
-      marketData,
-      marketItems,
-      marketItemsFiltered,
-      bellyERC721Contract,
-      wallet,
-    },
+    { marketItems, marketItemsFiltered, bellyERC721Contract, wallet },
     dispatch,
   ] = useContractsContext();
 
@@ -171,7 +166,6 @@ export default function MarketContainer() {
 
   useEffect(() => {
     if (wallet !== "") {
-      console.log(wallet);
       fetchMarketItemsData().then((res) => {
         dispatch({
           type: actionTypes.SET_MARKET_ITEMS,
@@ -191,43 +185,48 @@ export default function MarketContainer() {
         setClassSelected={setClassSelected}
         statsFiltersState={statsFiltersState}
       >
-        <FilterSection
-          title={"Class"}
-          filterState={filtersState}
-          sectionState={classSelected}
-          setFiltersState={setFiltersState}
-          isCollapse={true}
-          collapseState={collapsedClass}
-          setCollapseState={setCollapseClass}
-        >
-          <ButtonSelectionFilter
-            onSelection={filterByClass}
-            state={classSelected}
-            setState={setClassSelected}
-            filterList={marketData.nftTypes}
-            FilterComponent={ClassFilterItem}
-          />
-        </FilterSection>
-        <FilterSection
-          filterState={filtersState}
-          sectionState={statsFiltersState}
-          setFiltersState={setFiltersState}
-          title={"Stats"}
-          isCollapse={true}
-          collapseState={collapsedStats}
-          setCollapseState={setCollapseStats}
-          action={{
-            text: "Apply",
-            onClick: applyStatsFilter,
-          }}
-          resetSectionState={resetStatsFilter}
-        >
-          <RangeGroupFilter
-            state={statsFiltersState}
-            setState={setFiltersState}
-            filterList={statsFiltersState}
-          />
-        </FilterSection>
+        {configData.nftTypes && (
+          <FilterSection
+            title={"Class"}
+            filterState={filtersState}
+            sectionState={classSelected}
+            setFiltersState={setFiltersState}
+            isCollapse={true}
+            collapseState={collapsedClass}
+            setCollapseState={setCollapseClass}
+          >
+            <ButtonSelectionFilter
+              onSelection={filterByClass}
+              state={classSelected}
+              setState={setClassSelected}
+              filterList={configData.nftTypes}
+              FilterComponent={ClassFilterItem}
+            />
+          </FilterSection>
+        )}
+
+        {configData.nftTypesFilters && configData.nftStats && (
+          <FilterSection
+            filterState={filtersState}
+            sectionState={statsFiltersState}
+            setFiltersState={setFiltersState}
+            title={"Stats"}
+            isCollapse={true}
+            collapseState={collapsedStats}
+            setCollapseState={setCollapseStats}
+            action={{
+              text: "Apply",
+              onClick: applyStatsFilter,
+            }}
+            resetSectionState={resetStatsFilter}
+          >
+            <RangeGroupFilter
+              state={statsFiltersState}
+              setState={setFiltersState}
+              filterList={statsFiltersState}
+            />
+          </FilterSection>
+        )}
       </MarketplaceFilters>
       <div className="w-full h-full mt-4  ">
         <OrdenableItemsContainer
@@ -236,6 +235,7 @@ export default function MarketContainer() {
           ItemComponentList={MarketItem}
           classSelected={classSelected}
           statsFiltersState={statsFiltersState}
+          configData={configData}
         />
       </div>
     </div>

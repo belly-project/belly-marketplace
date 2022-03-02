@@ -2,6 +2,7 @@
 import { Icon } from "@iconify/react";
 import axios from "axios";
 import { formatEther } from "ethers/lib/utils";
+import { configData } from "../configData";
 
 export const statsFilters = [];
 export const basicFetchURI = async (item) => {
@@ -104,8 +105,8 @@ export const crateFetchURI = async (item) => {
   return result;
 };
 
-export const getUIdataForClass = (clss, nftConfig) => {
-  const configClass = nftConfig.nftTypes;
+export const getUIdataForClass = (clss) => {
+  const configClass = configData.nftTypes;
   const configObj = configClass.find(
     (cl) => cl.text.toUpperCase() === clss.toUpperCase()
   );
@@ -120,8 +121,8 @@ export const getUIdataForClass = (clss, nftConfig) => {
   return {};
 };
 
-export const getUIdataForStats = (stats, nftConfig) => {
-  const configStats = nftConfig.nftStats;
+export const getUIdataForStats = (stats) => {
+  const configStats = configData.nftStats;
   let array = [];
   configStats.forEach((cnf) => {
     let name = cnf.name.toLowerCase();
@@ -137,7 +138,7 @@ export const getUIdataForStats = (stats, nftConfig) => {
   return array;
 };
 
-export const nftToUi = (nftData, nftConfig) => {
+export const nftToUi = (nftData) => {
   const {
     description,
     forSale,
@@ -154,8 +155,8 @@ export const nftToUi = (nftData, nftConfig) => {
 
   return {
     ...nftData,
-    _class: getUIdataForClass(_class, nftConfig),
-    stats: getUIdataForStats(stats, nftConfig),
+    _class: configData.nftTypes ? getUIdataForClass(_class) : undefined,
+    stats: configData.nftStats ? getUIdataForStats(stats) : undefined,
   };
 };
 
