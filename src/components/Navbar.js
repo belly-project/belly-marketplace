@@ -89,11 +89,7 @@ export default function Navbar() {
       <div className="flex w-full sm:justify-between bg-gray-6 bg-opacity-50 h-fit">
         <a href="/">
           <div className="my-3 mx-6 cursor-pointer">
-            <Icon
-              icon="mdi:alpha-b-circle-outline"
-              color="white"
-              fontSize={28}
-            />
+            <Icon icon="map:museum" color="white" fontSize={28} />
           </div>
         </a>
         <NavbarHelpItem

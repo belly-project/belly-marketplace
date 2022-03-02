@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import { useContractsContext } from "../../../context/ContractProvider.js";
-import FaucetModal from "../../../components/FaucetModal.js";
+import FaucetModal from "../../../components/modals/FaucetModal.js";
 import { marketplaceApi } from "../../../context/axios.js";
 import { parseEther } from "ethers/lib/utils";
 

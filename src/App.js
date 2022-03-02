@@ -11,7 +11,7 @@ import ProfileContainer from "./pages/profile/ProfileContainer.js";
 import LootContainer from "./pages/loot/LootContainer.js";
 import ItemPageContainer from "./pages/itemPage/ItemPageContainer.js";
 import ReactModal from "react-modal";
-import ConnectionModal from "./components/ConnectionModal";
+import ConnectionModal from "./components/modals/ConnectionModal";
 import BattlegroundContainer from "./pages/battleground/BattlegroundContainer";
 import WalletButton from "./components/WalletButton";
 

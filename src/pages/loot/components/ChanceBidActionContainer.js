@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
-import ActionModal from "../../../components/ActionModal";
+import ActionModal from "../../../components/modals/ActionModal";
 import MetamaskActionButton from "../../../components/MetamaskActionButton";
 import { useContractsContext } from "../../../context/ContractProvider";
 

@@ -1,7 +1,7 @@
 import { parseEther } from "ethers/lib/utils";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ActionModal from "../../../components/ActionModal";
+import ActionModal from "../../../components/modals/ActionModal";
 import MetamaskActionButton from "../../../components/MetamaskActionButton";
 import { marketplaceApi } from "../../../context/axios";
 import { useContractsContext } from "../../../context/ContractProvider";
