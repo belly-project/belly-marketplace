@@ -106,7 +106,7 @@ export const crateFetchURI = async (item) => {
 };
 
 export const getUIdataForClass = (clss) => {
-  const configClass = configData.nftTypes;
+  const configClass = configData.nftCollection.nftTypes;
   const configObj = configClass.find(
     (cl) => cl.text.toUpperCase() === clss.toUpperCase()
   );
@@ -122,7 +122,7 @@ export const getUIdataForClass = (clss) => {
 };
 
 export const getUIdataForStats = (stats) => {
-  const configStats = configData.nftStats;
+  const configStats = configData.nftCollection.nftStats;
   let array = [];
   configStats.forEach((cnf) => {
     let name = cnf.name.toLowerCase();
@@ -155,8 +155,12 @@ export const nftToUi = (nftData) => {
 
   return {
     ...nftData,
-    _class: configData.nftTypes ? getUIdataForClass(_class) : undefined,
-    stats: configData.nftStats ? getUIdataForStats(stats) : undefined,
+    _class: configData.nftCollection.nftTypes
+      ? getUIdataForClass(_class)
+      : undefined,
+    stats: configData.nftCollection.nftStats
+      ? getUIdataForStats(stats)
+      : undefined,
   };
 };
 

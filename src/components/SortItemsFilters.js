@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
+import { configData } from "../configData";
 import { useContractsContext } from "../context/ContractProvider";
 import { actionTypes } from "../context/reducer";
 import { filterByStats, orderItems } from "../context/utils";
@@ -17,13 +18,19 @@ export default function SortItemsFilters({
   const [{ marketItems, marketItemsFiltered }, dispatch] =
     useContractsContext();
   const orderMarketItems = (value) => {
+    console.log("KE");
     let orderedItems = orderItems(
       value,
       classSelected !== "" ? marketItemsFiltered : marketItems,
       setOrderSelected
     );
+    console.log(orderSelected);
 
-    orderedItems = filterByStats(statsFiltersState, orderedItems);
+    setOrderSelected(value);
+
+    if (configData.nftStatsFilters) {
+      orderedItems = filterByStats(statsFiltersState, orderedItems);
+    }
 
     dispatch({
       type: actionTypes.SET_MARKET_ITEMS_FILTERED,
@@ -41,6 +48,7 @@ export default function SortItemsFilters({
                 <select
                   onChange={(e) => orderMarketItems(e.target.value)}
                   className="text-white bg-gray-5 px-2 py-2 relative rounded transition focus:outline-none border w-full text-white border-gray-2 hover:border-gray-1 active:border-primary-3 bg-gray-5 hover:bg-gray-4 active:bg-gray-6"
+                  value={orderSelected}
                 >
                   {sortOptions?.map((opt) => {
                     return (

@@ -185,7 +185,7 @@ export default function MarketContainer() {
         setClassSelected={setClassSelected}
         statsFiltersState={statsFiltersState}
       >
-        {configData.nftTypes && (
+        {configData.nftCollection.nftTypes && (
           <FilterSection
             title={"Class"}
             filterState={filtersState}
@@ -199,34 +199,35 @@ export default function MarketContainer() {
               onSelection={filterByClass}
               state={classSelected}
               setState={setClassSelected}
-              filterList={configData.nftTypes}
+              filterList={configData.nftCollection.nftTypes}
               FilterComponent={ClassFilterItem}
             />
           </FilterSection>
         )}
 
-        {configData.nftTypesFilters && configData.nftStats && (
-          <FilterSection
-            filterState={filtersState}
-            sectionState={statsFiltersState}
-            setFiltersState={setFiltersState}
-            title={"Stats"}
-            isCollapse={true}
-            collapseState={collapsedStats}
-            setCollapseState={setCollapseStats}
-            action={{
-              text: "Apply",
-              onClick: applyStatsFilter,
-            }}
-            resetSectionState={resetStatsFilter}
-          >
-            <RangeGroupFilter
-              state={statsFiltersState}
-              setState={setFiltersState}
-              filterList={statsFiltersState}
-            />
-          </FilterSection>
-        )}
+        {configData.nftCollection.nftTypesFilters &&
+          configData.nftCollection.nftStats && (
+            <FilterSection
+              filterState={filtersState}
+              sectionState={statsFiltersState}
+              setFiltersState={setFiltersState}
+              title={"Stats"}
+              isCollapse={true}
+              collapseState={collapsedStats}
+              setCollapseState={setCollapseStats}
+              action={{
+                text: "Apply",
+                onClick: applyStatsFilter,
+              }}
+              resetSectionState={resetStatsFilter}
+            >
+              <RangeGroupFilter
+                state={statsFiltersState}
+                setState={setFiltersState}
+                filterList={statsFiltersState}
+              />
+            </FilterSection>
+          )}
       </MarketplaceFilters>
       <div className="w-full h-full mt-4  ">
         <OrdenableItemsContainer
