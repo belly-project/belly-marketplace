@@ -1,5 +1,6 @@
 export const configData = {
   chainInfo: {
+    name: "Mumbai Polygon Testnet",
     chainId: 80001,
     coinCurrency: "MATIC",
     coinIcon: "cryptocurrency:matic",

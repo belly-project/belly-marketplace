@@ -3,6 +3,7 @@ import ReactModal from "react-modal";
 import { changeChainToMumbai } from "../../context/utils";
 import MetamaskActionButton from "./../MetamaskActionButton";
 import BasicModal from "./../BasicModal";
+import { configData } from "../../configData";
 
 export default function ConnectionModal({ showModal, handleCloseModal }) {
   return (
@@ -13,7 +14,7 @@ export default function ConnectionModal({ showModal, handleCloseModal }) {
         </h1>
         <div className=" flex my-5 items-center text-white">
           <div className="mr-5 md:text-xs">
-            Please, switch the network to Mumbai Polygon Testnet
+            Please, switch the network to {configData.chainInfo.name}
           </div>
           <MetamaskActionButton
             text={"Connect"}
