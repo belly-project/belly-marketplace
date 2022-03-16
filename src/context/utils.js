@@ -6,27 +6,33 @@ import { configData } from "../configData";
 
 export const statsFilters = [];
 export const basicFetchURI = async (item) => {
-  const tokenURI = item[2];
+  const { tokenURI, forSale, price, currentOwner } = item;
+  let tokenId = item["id"];
   let result = [];
 
   await axios.get(tokenURI).then((res) => {
     if (res.status === 200) {
       const { name, description, keyvalues, weapons, image } = res.data;
-      const _class = res.data["class"];
-      let _item = {
-        tokenId: parseInt(item[0].toHexString().toString(16)),
-        itemURI: tokenURI,
-        image: image,
-        name: name,
-        _class: _class,
-        description: description,
-        weapons: weapons,
-        stats: keyvalues,
-        price: parseFloat(formatEther(item[6])),
-        owner: item[4],
-        forSale: formatEther(item[6]) > 0.0 ? true : false,
-      };
-      result = _item;
+      console.log(name, description, keyvalues, weapons, image);
+      if (name === undefined) {
+        result = 0;
+      } else {
+        const _class = res.data["class"];
+        let _item = {
+          tokenId: tokenId,
+          itemURI: tokenURI,
+          image: image,
+          name: name,
+          _class: _class,
+          description: description,
+          weapons: weapons,
+          stats: keyvalues,
+          price: price,
+          owner: currentOwner,
+          forSale: forSale,
+        };
+        result = _item;
+      }
     } else {
     }
   });

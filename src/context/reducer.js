@@ -14,13 +14,18 @@ import {
 } from "./contracts/addresses";
 
 export const initialState = {
+  //CONNECTION STATE
   provider: {},
+  signer: {},
+  web3Modal: {},
+
+  //CONTRACT STATE
   bellyERC721Contract: {},
   bellyERC20Contract: {},
   bellyDropsContract: {},
   bellyChanceBidContract: {},
-  signer: {},
-  web3Modal: {},
+
+  //WEB STATE
   myItems: [],
   marketItems: [],
   marketItemsFiltered: [],
@@ -82,7 +87,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         myItems: action.myItems,
-        balance: action.balance,
       };
     case actionTypes.SET_BALANCE:
       return {
@@ -101,6 +105,7 @@ const reducer = (state, action) => {
         provider: action.provider,
         web3Modal: action.web3Modal,
         correctChain: action.correctChain,
+        balance: action.balance,
       };
     default:
       return state;

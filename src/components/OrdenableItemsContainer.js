@@ -53,7 +53,7 @@ export default function OrdenableItemsContainer({
                 return (
                   <ItemComponentGrid
                     type="GRID"
-                    key={item.tokenId}
+                    key={Math.random(1, 99999)}
                     item={item}
                   />
                 );
@@ -65,7 +65,7 @@ export default function OrdenableItemsContainer({
                 return (
                   <ItemComponentList
                     type="LIST"
-                    key={item.tokenId}
+                    key={Math.random(1, 99999)}
                     item={item}
                   />
                 );

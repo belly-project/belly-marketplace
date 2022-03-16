@@ -5,12 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ContractProvider from "./context/ContractProvider";
 import reducer, { initialState } from "./context/reducer";
-
+import { ApolloProvider } from "@apollo/client";
+import client from "./apollo/client";
 ReactDOM.render(
   <React.StrictMode>
-    <ContractProvider initialState={initialState} reducer={reducer}>
-      <App />
-    </ContractProvider>
+    <ApolloProvider client={client}>
+      <ContractProvider initialState={initialState} reducer={reducer}>
+        <App />
+      </ContractProvider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import BuyableItemWrapper from "../../components/BuyableItemWrapper";
+import { getTokenInfo } from "../../apollo/queries";
 import { useContractsContext } from "../../context/ContractProvider";
 import { basicFetchURI, nftToUi } from "../../context/utils";
 import ItemInfoPage from "./components/ItemInfoPage";
@@ -15,48 +15,48 @@ export default function ItemPageContainer() {
   let navigate = useNavigate();
 
   const fetchTokenData = useCallback(async () => {
-    let _response;
+    let res;
 
     if (location.pathname.includes("profile/inventory")) {
-      _response = await bellyERC721Contract.allBellyCharacters(tokenId);
+      res = await getTokenInfo(parseInt(tokenId));
 
-      if (_response[4] !== wallet) {
+      if (res.characters[0].currentOwner.id !== wallet.toLowerCase()) {
         return 0;
       }
     } else {
-      _response = await bellyERC721Contract.bellyCharactersForSale(tokenId);
+      res = await getTokenInfo(parseInt(tokenId));
     }
 
+    console.log(res);
+    let _response = res.characters[0];
+    let owner = res.characters[0].currentOwner.id;
     let formattedItem = [];
     try {
-      formattedItem = await basicFetchURI(_response);
+      formattedItem = await basicFetchURI({
+        ..._response,
+        currentOwner: owner,
+      });
     } catch (e) {
       return 0;
     }
 
     return formattedItem;
-  }, [bellyERC721Contract, location.pathname, tokenId, wallet]);
+  }, [location.pathname, tokenId, wallet]);
 
   useEffect(() => {
-    if (wallet !== "" && !token.owner) {
+    if (wallet !== "") {
       fetchTokenData().then((res) => {
         if (res !== 0) {
           let formatted = nftToUi(res);
           console.log(formatted);
           setToken(formatted);
         } else {
-          //navigate("/");
+          navigate("/");
         }
       });
+    } else {
     }
-  }, [
-    bellyERC721Contract.bellyCharactersForSale,
-    fetchTokenData,
-    location.pathname,
-    navigate,
-    token,
-    wallet,
-  ]);
+  }, []);
   return (
     <div className="overflow-auto h-full h-full">
       <div className="mx-auto px-16 md:mt-10 flex justify-center items-center">

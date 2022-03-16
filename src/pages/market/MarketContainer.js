@@ -17,6 +17,7 @@ import FilterSection from "../../components/filters/FilterSection.js";
 import RangeGroupFilter from "../../components/filters/RangeGroupFilter.js";
 import ClassFilterItem from "../../components/filters/ClassFilterItem.js";
 import { configData } from "../../configData.js";
+import { getMarketItems } from "../../apollo/queries.js";
 
 export default function MarketContainer() {
   const [filtersState, setFiltersState] = useState({
@@ -128,10 +129,12 @@ export default function MarketContainer() {
   };
 
   const fetchMarketItemsData = useCallback(async () => {
-    let _response = await bellyERC721Contract.getItemsForSale();
+    /*  let _response = await bellyERC721Contract.getItemsForSale();
 
-    _response = _response.filter((item) => item[4] !== wallet);
-
+    _response = _response.filter((item) => item[4] !== wallet); */
+    console.log("KE");
+    let _response = await getMarketItems();
+    _response = _response.characters;
     let formattedItems = [];
     formattedItems = await Promise.all(
       _response.map(async (item) => {
@@ -141,7 +144,7 @@ export default function MarketContainer() {
 
     formattedItems = orderItems("1", formattedItems);
     return formattedItems;
-  }, [bellyERC721Contract, wallet]);
+  }, []);
 
   const filterByClass = (_class) => {
     let filteredItems = marketItems;
@@ -165,14 +168,12 @@ export default function MarketContainer() {
   };
 
   useEffect(() => {
-    if (wallet !== "") {
-      fetchMarketItemsData().then((res) => {
-        dispatch({
-          type: actionTypes.SET_MARKET_ITEMS,
-          marketItems: res,
-        });
+    fetchMarketItemsData().then((res) => {
+      dispatch({
+        type: actionTypes.SET_MARKET_ITEMS,
+        marketItems: res,
       });
-    }
+    });
 
     return () => {};
   }, [bellyERC721Contract, dispatch, fetchMarketItemsData, wallet]);

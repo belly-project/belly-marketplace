@@ -73,18 +73,6 @@ export default function Navbar() {
     });
   };
 
-  useEffect(() => {
-    if (wallet !== "") {
-      if (correctChain) {
-        getWalletBalance().then((res) => {
-          dispatch({
-            type: actionTypes.SET_BALANCE,
-            balance: parseFloat(res.balance),
-          });
-        });
-      }
-    }
-  }, [correctChain, dispatch, getWalletBalance, location.pathname, wallet]);
   return (
     <div className="sticky top-0 w-full items-start z-10 border-b border-primary-3 ">
       <div className="flex w-full sm:justify-between bg-gray-6 bg-opacity-50 h-fit">

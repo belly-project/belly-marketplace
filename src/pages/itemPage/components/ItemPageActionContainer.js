@@ -90,7 +90,7 @@ export default function ItemPageActionContainer({ detailItem }) {
           <MetamaskActionButton
             stlye={{ display: loading ? "none" : "flex" }}
             text={
-              wallet !== detailItem.owner
+              wallet.toLowerCase() !== detailItem.owner
                 ? "Buy Item"
                 : `${detailItem.forSale ? "Save Item" : "Sell Item"}`
             }

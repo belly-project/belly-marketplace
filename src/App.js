@@ -5,7 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useContractsContext } from "./context/ContractProvider";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { formatEther } from "ethers/lib/utils";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import MarketContainer from "./pages/market/MarketContainer.js";
 import ProfileContainer from "./pages/profile/ProfileContainer.js";
 import LootContainer from "./pages/loot/LootContainer.js";
@@ -14,6 +15,7 @@ import ReactModal from "react-modal";
 import ConnectionModal from "./components/modals/ConnectionModal";
 import BattlegroundContainer from "./pages/battleground/BattlegroundContainer";
 import { configData } from "./configData";
+import { getItems } from "./apollo/queries";
 
 ReactModal.defaultStyles.overlay.backgroundColor = "rgba(10, 11, 15, 0.99)";
 ReactModal.defaultStyles.content.background = "#3a3f50";
@@ -73,27 +75,49 @@ function App() {
       correctChain = false;
       handleOpenModal(true);
     }
+
+    let balance = await signer.getBalance();
+
     return {
       provider: prov,
       signer: signer,
       wallet: _wallet,
       web3Modal: web3Modal,
       correctChain: correctChain,
+      balance: parseFloat(formatEther(balance)).toFixed(4),
     };
   }, []);
 
   useEffect(() => {
-    connectToWallet().then((res) => {
-      dispatch({
-        type: actionTypes.SET_WALLET,
-        signer: res.signer,
-        provider: res.provider,
-        wallet: res.wallet,
-        web3Modal: res.web3Modal,
-        balance: res.balance,
-        correctChain: res.correctChain,
+    if (window.localStorage.getItem("belly/accesToken")) {
+      connectToWallet().then((res) => {
+        dispatch({
+          type: actionTypes.SET_WALLET,
+          signer: res.signer,
+          provider: res.provider,
+          wallet: res.wallet,
+          web3Modal: res.web3Modal,
+          balance: res.balance,
+          correctChain: res.correctChain,
+        });
       });
-    });
+    } else {
+      if (window.location.pathname === "/profile/inventory") {
+        //Request for auth
+        connectToWallet().then((res) => {
+          dispatch({
+            type: actionTypes.SET_WALLET,
+            signer: res.signer,
+            provider: res.provider,
+            wallet: res.wallet,
+            web3Modal: res.web3Modal,
+            balance: res.balance,
+            correctChain: res.correctChain,
+          });
+        });
+        window.localStorage.setItem("belly/accesToken", "eysg2ua788");
+      }
+    }
 
     return () => {
       return;

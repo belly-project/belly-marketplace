@@ -6,6 +6,10 @@ import ProfileSidebar from "./components/ProfileSidebar.js";
 import MarketItem from "../market/components/MarketItem.js";
 import { basicFetchURI } from "../../context/utils.js";
 import OrdenableItemsContainer from "../../components/OrdenableItemsContainer.js";
+import { getMyTokens } from "../../apollo/queries.js";
+import { useNavigate } from "react-router-dom";
+import { ethers } from "ethers";
+import { configData } from "../../configData.js";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -33,37 +37,43 @@ export function useWindowDimensions() {
 }
 
 export default function ProfileContainer() {
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [
-    { wallet, myItems, bellyERC721Contract, bellyERC20Contract, marketData },
+    { wallet, myItems, bellyERC721Contract, bellyERC20Contract },
     dispatch,
   ] = useContractsContext();
-  const fetchMyTokens = useCallback(async () => {
-    const _response = await bellyERC721Contract.getMyTokens({});
-    let formattedItems = [];
-    formattedItems = await Promise.all(
-      _response.map(async (item) => {
-        return await basicFetchURI(item);
-      })
-    );
 
-    const _balance = await bellyERC20Contract.balanceOf(wallet);
+  const navigate = useNavigate();
+  const fetchMyTokens = useCallback(async () => {
+    /*  const _response = await bellyERC721Contract.getMyTokens({}); */
+
+    let res = await getMyTokens(wallet);
+    let _response = res.holders[0]?.nftsOwned;
+    let owner = res.holders[0]?.id;
+    let formattedItems = [];
+    if (_response) {
+      formattedItems = await Promise.all(
+        _response.map(async (item) => {
+          return await basicFetchURI({ ...item, currentOwner: owner });
+        })
+      );
+    }
+    formattedItems = formattedItems.filter((item) => item !== 0);
     return {
       myItems: formattedItems,
-      balance: formatEther(_balance),
     };
-  }, [bellyERC20Contract, bellyERC721Contract, wallet]);
+  }, [wallet]);
 
   useEffect(() => {
     if (wallet !== "") {
       fetchMyTokens().then((res) => {
-        console.log(res);
         dispatch({
           type: actionTypes.SET_MY_ITEMS,
           myItems: res.myItems,
-          balance: parseFloat(res.balance),
         });
       });
+    } else {
+      navigate("/");
     }
 
     return () => {};
@@ -72,6 +82,7 @@ export default function ProfileContainer() {
     bellyERC721Contract,
     dispatch,
     fetchMyTokens,
+    navigate,
     wallet,
   ]);
 

@@ -1,0 +1,91 @@
+type Holder @entity {
+
+  id: ID!
+
+
+  #punksOwned: [Character!] @derivedFrom(field: "owner")
+
+  
+  #bought: [Sale!]! @derivedFrom(field: "to")
+
+
+  nftsOwned: [Character!]! @derivedFrom(field: "currentOwner")
+
+  "Punks assigned to account (if any)"
+  #assigned: [Assign!]! @derivedFrom(field: "to")
+
+
+  sent: [Transfer!]! @derivedFrom(field: "from")
+
+  received: [Transfer!]! @derivedFrom(field: "to")
+
+
+  minted: [Minted!]! @derivedFrom(field: "mintedBy")
+
+
+  #asks: [Ask!]! @derivedFrom(field: "from")
+
+  numberOfnftsOwned: BigInt!
+}
+
+type Sale @entity {
+  id: ID!
+  from: Holder
+  to: Holder
+  amount: BigInt
+  nft: Character!
+  blockNumber: BigInt!
+  blockHash: Bytes!
+  txHash: Bytes!
+  timestamp: BigInt!
+}
+
+type Character @entity {
+  id: ID!
+  tokenURI: String!
+  currentOwner: Holder! # address
+  previousOwner: Holder! # address
+  price: BigInt! # address
+  numberOfTransfers: Int! # address
+  sales:[Sale!]
+  forSale:Boolean
+  approved: Bytes! # address
+}
+
+type Transfer @entity {
+  id: ID!
+  from: Holder
+  to: Holder
+  amount: BigInt
+  contract: Contract
+  nft: Character!
+  blockNumber: BigInt!
+  blockHash: Bytes!
+  txHash: Bytes!
+  timestamp: BigInt!
+}
+
+type Contract @entity {
+  "Contract Address"
+  id: ID!
+
+  "Token Symbol"
+  symbol: String
+
+  "Token name"
+  name: String
+
+  totalSupply: Int
+}
+
+
+type Minted  @entity {
+  id: ID!
+  mintedBy: Holder
+  contract: Contract
+  nft: Character!
+  blockNumber: BigInt!
+  blockHash: Bytes!
+  txHash: Bytes!
+  timestamp: BigInt!
+}

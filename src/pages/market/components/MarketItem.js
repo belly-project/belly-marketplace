@@ -14,7 +14,7 @@ export default function MarketItem(props) {
     <div className="m-1 cursor-pointer">
       <a
         href={
-          owner === wallet
+          owner === wallet.toLowerCase()
             ? `/profile/inventory/${tokenId}`
             : `/token/${tokenId}`
         }
